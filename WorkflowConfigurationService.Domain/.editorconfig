@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA1303: Nie przekazuj literałów jako zlokalizowanych parametrów
+dotnet_diagnostic.CA1303.severity = none
