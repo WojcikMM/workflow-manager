@@ -3,6 +3,7 @@ using WorkflowConfigurationService.Domain.Commands;
 using WorkflowConfigurationService.Domain.CommandHandlers;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowConfigurationService.Domain.Exceptions;
+using System.Threading.Tasks;
 
 namespace WorkflowConfigurationService.Domain.Bus
 {
@@ -16,7 +17,7 @@ namespace WorkflowConfigurationService.Domain.Bus
         }
 
 
-        public void Send<T>(T command) where T : BaseCommand
+        public async Task Send<T>(T command) where T : BaseCommand
         {
             var commandHandler = _serviceProvider.GetService<ICommandHandler<T>>();
             if (commandHandler is null)
@@ -25,7 +26,7 @@ namespace WorkflowConfigurationService.Domain.Bus
             }
             else
             {
-                commandHandler.Handle(command);
+               await Task.Run(() =>  commandHandler.Handle(command));
             }
         }
     }
