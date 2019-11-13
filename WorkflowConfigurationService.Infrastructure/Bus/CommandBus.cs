@@ -4,8 +4,9 @@ using WorkflowConfigurationService.Domain.CommandHandlers;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowConfigurationService.Domain.Exceptions;
 using System.Threading.Tasks;
+using WorkflowConfigurationService.Domain.Bus;
 
-namespace WorkflowConfigurationService.Domain.Bus
+namespace WorkflowConfigurationService.Infrastructure.Bus
 {
     public class CommandBus : ICommandBus
     {

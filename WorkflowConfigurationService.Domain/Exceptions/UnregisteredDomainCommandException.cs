@@ -15,4 +15,5 @@ namespace WorkflowConfigurationService.Domain.Exceptions
         {
         }
     }
+
 }

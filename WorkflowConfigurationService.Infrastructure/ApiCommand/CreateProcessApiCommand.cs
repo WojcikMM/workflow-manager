@@ -1,4 +1,4 @@
-﻿namespace WorkflowConfigurationService.Infrastructure.DTO
+﻿namespace WorkflowConfigurationService.Infrastructure.ApiCommand
 {
     public class CreateProcessApiCommand
     {

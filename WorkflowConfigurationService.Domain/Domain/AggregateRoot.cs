@@ -5,7 +5,7 @@ using WorkflowConfigurationService.Domain.Events;
 
 namespace WorkflowConfigurationService.Domain.Domain
 {
-    public class AggregateRoot
+    public abstract class AggregateRoot
     {
         private readonly List<BaseEvent> _changes;
         public Guid Id { get; internal set; }
@@ -17,7 +17,7 @@ namespace WorkflowConfigurationService.Domain.Domain
             _changes = new List<BaseEvent>();
         }
 
-        public IEnumerable<BaseEvent> GetUncommitedChanges()
+        public IEnumerable<BaseEvent> GetUncommittedChanges()
         {
             return _changes;
         }
@@ -59,7 +59,7 @@ namespace WorkflowConfigurationService.Domain.Domain
             }
 
             dynamic aggregate = this;
-            aggregate.Handle(Convert.ChangeType(@event, @event.GetType(),new CultureInfo("en-US")));
+            aggregate.HandleEvent((dynamic)Convert.ChangeType(@event, @event.GetType(),new CultureInfo("en-US")));
         }
 
     }

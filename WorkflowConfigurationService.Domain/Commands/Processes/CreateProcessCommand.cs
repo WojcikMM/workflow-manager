@@ -8,9 +8,9 @@ namespace WorkflowConfiguration.Infrastructure.Commands
     {
         public string Name { get; private set; }
 
-        public CreateProcessCommand(Guid id, string name) : base(id, DomainConstants.NewAggregateVersion)
+        public CreateProcessCommand(Guid Id, string Name) : base(Id, DomainConstants.NewAggregateVersion)
         {
-            Name = name;
+            this.Name = Name;
         }      
     }
 }
