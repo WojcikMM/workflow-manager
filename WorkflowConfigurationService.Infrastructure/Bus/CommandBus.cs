@@ -1,10 +1,10 @@
 ﻿using System;
-using WorkflowConfigurationService.Domain.Commands;
-using WorkflowConfigurationService.Domain.CommandHandlers;
-using Microsoft.Extensions.DependencyInjection;
-using WorkflowConfigurationService.Domain.Exceptions;
 using System.Threading.Tasks;
-using WorkflowConfigurationService.Domain.Bus;
+using CQRS.Template.Domain.Bus;
+using CQRS.Template.Domain.Commands;
+using CQRS.Template.Domain.Exceptions;
+using CQRS.Template.Domain.CommandHandlers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowConfigurationService.Infrastructure.Bus
 {

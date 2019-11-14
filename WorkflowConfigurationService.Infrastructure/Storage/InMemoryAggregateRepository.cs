@@ -1,11 +1,11 @@
-﻿using System;
+﻿using CQRS.Template.Domain.Domain;
+using CQRS.Template.Domain.Domain.Mementos;
+using CQRS.Template.Domain.Events;
+using CQRS.Template.Domain.Exceptions;
+using CQRS.Template.Domain.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using WorkflowConfigurationService.Domain.Domain;
-using WorkflowConfigurationService.Domain.Events;
-using WorkflowConfigurationService.Domain.Storage;
-using WorkflowConfigurationService.Domain.Exceptions;
-using WorkflowConfigurationService.Domain.Domain.Mementos;
 
 namespace WorkflowConfigurationService.Infrastructure.Storage
 {
@@ -49,10 +49,10 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
 
                     if (expectedVersion != DomainConstants.NewAggregateVersion)
                     {
-                        item = GetById(aggregate.Id);
+                        item = GetById(aggregate.AggregateId);
                         if (item.Version != expectedVersion)
                         {
-                            throw new ConcurrencyException($"Aggregate {item.Id} has been previously modified");
+                            throw new ConcurrencyException($"Aggregate {item.AggregateId} has been previously modified");
                         }
                     }
 

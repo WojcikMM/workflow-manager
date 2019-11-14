@@ -1,15 +1,15 @@
+using CQRS.Template.Domain.Bus;
+using CQRS.Template.Domain.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WorkflowConfiguration.Infrastructure.Commands;
-using WorkflowConfigurationService.Domain.Bus;
-using WorkflowConfigurationService.Domain.CommandHandlers;
-using WorkflowConfigurationService.Domain.CommandHandlers.Processes;
-using WorkflowConfigurationService.Domain.Storage;
+using Microsoft.Extensions.Configuration;
+using CQRS.Template.Domain.CommandHandlers;
+using Microsoft.Extensions.DependencyInjection;
 using WorkflowConfigurationService.Infrastructure.Bus;
+using WorkflowConfigurationService.Core.Processes.Commands;
 using WorkflowConfigurationService.Infrastructure.Storage;
+using WorkflowConfigurationService.Core.Processes.CommandHandlers;
 
 namespace WorkflowConfigurationService.API
 {
@@ -44,17 +44,7 @@ namespace WorkflowConfigurationService.API
             services.AddSingleton(typeof(IRepository<>), typeof(InMemoryAggregateRepository<>));
 
             services.AddTransient<ICommandHandler<CreateProcessCommand>, CreateProcessCommandHandler>();
-            
-
-            //services.AddSingleton(AutoMapperConfig.Initialize());
-            //services.AddScoped<IProcessService, ProcessService>();
-            //services.AddScoped<IStatusService, StatusService>();
-            //services.AddScoped<ITransactionService, TransactionService>();
-
-
-            //services.AddScoped<IProcessRepository, ProcessRepository>();
-            //services.AddScoped<IStatusRepository, StatusRepository>();
-            //services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddTransient<ICommandHandler<UpdateProcessCommand>, UpdateProcessCommandHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,7 +63,7 @@ namespace WorkflowConfigurationService.API
             });
 
 
-                app.UseRouting();
+            app.UseRouting();
 
             app.UseAuthorization();
 

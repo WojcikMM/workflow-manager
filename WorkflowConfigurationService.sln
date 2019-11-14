@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.Domain", "WorkflowConfigurationService.Domain\WorkflowConfigurationService.Domain.csproj", "{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.Core", "WorkflowConfigurationService.Core\WorkflowConfigurationService.Core.csproj", "{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.Infrastructure", "WorkflowConfigurationService.Infrastructure\WorkflowConfigurationService.Infrastructure.csproj", "{B83F4BD5-DF8A-47B4-A814-F4676F16E6F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.API", "WorkflowConfigurationService.API\WorkflowConfigurationService.API.csproj", "{DB60357A-A8F2-4F55-A054-22439B5D814F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS.Template", "CQRS.Template\CQRS.Template.csproj", "{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

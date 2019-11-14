@@ -21,4 +21,8 @@
     <ProjectReference Include="..\WorkflowConfigurationService.Infrastructure\WorkflowConfigurationService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>

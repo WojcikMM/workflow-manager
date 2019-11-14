@@ -1,12 +1,13 @@
 ﻿using System;
-using WorkflowConfigurationService.Domain.Bus;
-using WorkflowConfigurationService.Domain.Events;
+using CQRS.Template.Domain.Bus;
+using CQRS.Template.Domain.EventHandlers;
+using CQRS.Template.Domain.Events;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowConfigurationService.Infrastructure.Bus
 {
     public class InMemoryEventBus : IEventBus
     {
-
         private readonly IServiceProvider _serviceProvider;
 
         public InMemoryEventBus(IServiceProvider serviceProvider)
@@ -15,13 +16,13 @@ namespace WorkflowConfigurationService.Infrastructure.Bus
         }
 
 
-        public void Publish<T>(T @event) where T : BaseEvent
+        public void Publish<TEvent>(TEvent @event) where TEvent : BaseEvent
         {
-            //var handlers = _serviceProvider.GetService<IEventHandler<T>>();
-            //foreach (var eventHandler in handlers)
-            //{
-            //    eventHandler.Handle(@event);
-            //}
+            var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
+            foreach (var eventHandler in eventHandlers)
+            {
+                eventHandler.Handle(@event);
+            }
         }
     }
 }

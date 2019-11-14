@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using WorkflowConfigurationService.Domain.Bus;
-using WorkflowConfigurationService.Domain.Domain;
-using WorkflowConfigurationService.Domain.Domain.Mementos;
-using WorkflowConfigurationService.Domain.Events;
-using WorkflowConfigurationService.Domain.Exceptions;
-using WorkflowConfigurationService.Domain.Storage;
+using CQRS.Template.Domain.Bus;
+using System.Collections.Generic;
+using CQRS.Template.Domain.Domain;
+using CQRS.Template.Domain.Events;
+using CQRS.Template.Domain.Storage;
+using CQRS.Template.Domain.Exceptions;
+using CQRS.Template.Domain.Domain.Mementos;
+
 
 namespace WorkflowConfigurationService.Infrastructure.Storage
 {
@@ -28,7 +27,7 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
         public IEnumerable<BaseEvent> GetEvents(Guid aggregateId)
         {
             var events = _events.Where(p => p.AggregateId == aggregateId).ToList();
-            if (events.Count() == 0)
+            if (!events.Any())
             {
                 throw new AggregateNotFoundException(string.Format("Aggregate with Id: {0} was not found", aggregateId));
             }
@@ -65,7 +64,7 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
             }
             foreach (var @event in uncommittedChanges)
             {
-                var desEvent = (dynamic)Convert.ChangeType(@event, @event.GetType(), new CultureInfo("en-US"));
+                var desEvent = (dynamic)Convert.ChangeType(@event, @event.GetType());
                 _eventBus.Publish(desEvent);
             }
         }

@@ -1,7 +1,0 @@
-﻿[*.cs]
-
-# CA1303: Nie przekazuj literałów jako zlokalizowanych parametrów
-dotnet_diagnostic.CA1303.severity = none
-
-# CA1716: Identyfikatory nie powinny być takie same jak słowa kluczowe
-dotnet_diagnostic.CA1716.severity = silent

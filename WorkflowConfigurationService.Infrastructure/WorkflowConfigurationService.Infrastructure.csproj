@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkflowConfigurationService.Domain\WorkflowConfigurationService.Domain.csproj" />
+    <ProjectReference Include="..\WorkflowConfigurationService.Domain\WorkflowConfigurationService.Core.csproj" />
   </ItemGroup>
 
 </Project>
