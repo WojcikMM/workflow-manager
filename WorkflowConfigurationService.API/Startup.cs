@@ -10,6 +10,9 @@ using WorkflowConfigurationService.Infrastructure.Bus;
 using WorkflowConfigurationService.Core.Processes.Commands;
 using WorkflowConfigurationService.Infrastructure.Storage;
 using WorkflowConfigurationService.Core.Processes.CommandHandlers;
+using CQRS.Template.ReadModel;
+using WorkflowConfigurationService.Infrastructure.ReadModel.Models;
+using WorkflowConfigurationService.Infrastructure.ReadModel.Repositories;
 
 namespace WorkflowConfigurationService.API
 {
@@ -45,6 +48,9 @@ namespace WorkflowConfigurationService.API
 
             services.AddTransient<ICommandHandler<CreateProcessCommand>, CreateProcessCommandHandler>();
             services.AddTransient<ICommandHandler<UpdateProcessCommand>, UpdateProcessCommandHandler>();
+
+
+            services.AddSingleton<IReadModelRepository<ProcessReadModel>, InMemoryProcessReadModelRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

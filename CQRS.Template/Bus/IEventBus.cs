@@ -1,9 +1,10 @@
 ﻿using CQRS.Template.Domain.Events;
+using System.Threading.Tasks;
 
 namespace CQRS.Template.Domain.Bus
 {
     public interface IEventBus
     {
-        void Publish<T>(T @event) where T : BaseEvent;
+        Task PublishAsync<T>(T @event) where T : BaseEvent;
     }
 }

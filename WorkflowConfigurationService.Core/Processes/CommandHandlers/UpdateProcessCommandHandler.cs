@@ -1,5 +1,4 @@
-﻿using System;
-using CQRS.Template.Domain.Storage;
+﻿using CQRS.Template.Domain.Storage;
 using CQRS.Template.Domain.CommandHandlers;
 using WorkflowConfigurationService.Core.Processes.Domain;
 using WorkflowConfigurationService.Core.Processes.Commands;
@@ -7,29 +6,19 @@ using WorkflowConfigurationService.Core.Processes.Commands;
 
 namespace WorkflowConfigurationService.Core.Processes.CommandHandlers
 {
-    public class UpdateProcessCommandHandler : ICommandHandler<UpdateProcessCommand>
+    public class UpdateProcessCommandHandler : BaseCommandHandler<UpdateProcessCommand, Process>
     {
-        private readonly IRepository<Process> _repository;
-
-        public UpdateProcessCommandHandler(IRepository<Process> repository)
+        public UpdateProcessCommandHandler(IRepository<Process> repository) : base(repository)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public void Handle(UpdateProcessCommand command)
+        public override void HandleCommand(UpdateProcessCommand command)
         {
-            if(command is null)
+            aggregate = _repository.GetById(command.Id);
+            if (aggregate.Name != command.Name)
             {
-                throw new ArgumentNullException(nameof(command), "Passed command value is null.");
+                aggregate.UpdateName(command.Name);
             }
-
-            var process = _repository.GetById(command.Id);
-            if(process.Name != command.Name)
-            {
-                process.UpdateName(command.Name);
-            }
-
-            _repository.Save(process, command.Version);
         }
     }
 }

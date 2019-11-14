@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CQRS.Template.Domain.Bus;
 using CQRS.Template.Domain.EventHandlers;
 using CQRS.Template.Domain.Events;
@@ -16,12 +17,12 @@ namespace WorkflowConfigurationService.Infrastructure.Bus
         }
 
 
-        public void Publish<TEvent>(TEvent @event) where TEvent : BaseEvent
+        public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : BaseEvent
         {
             var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
             foreach (var eventHandler in eventHandlers)
             {
-                eventHandler.Handle(@event);
+               await eventHandler.HandleAsync(@event);
             }
         }
     }

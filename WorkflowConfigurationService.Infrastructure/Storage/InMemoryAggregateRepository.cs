@@ -6,6 +6,7 @@ using CQRS.Template.Domain.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WorkflowConfigurationService.Infrastructure.Storage
 {
@@ -39,12 +40,13 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
             return obj;
         }
 
-        public void Save(TAggregate aggregate, int expectedVersion)
+        public async Task SaveAsync(TAggregate aggregate, int expectedVersion)
         {
             if (aggregate.GetUncommittedChanges().Any())
             {
-                lock (_lockStorage)
-                {
+                // TODO: Specyfi lock system in async
+               // lock (_lockStorage)
+              //  {
                     var item = new TAggregate();
 
                     if (expectedVersion != DomainConstants.NewAggregateVersion)
@@ -56,8 +58,8 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
                         }
                     }
 
-                    _storage.Save(aggregate);
-                }
+                   await _storage.SaveAsync(aggregate);
+               // }
             }
         }
     }

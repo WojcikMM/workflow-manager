@@ -1,9 +1,10 @@
 ﻿using CQRS.Template.Domain.Events;
+using System.Threading.Tasks;
 
 namespace CQRS.Template.Domain.EventHandlers
 {
     public interface IEventHandler<TEvent> where TEvent : BaseEvent
     {
-        void Handle(TEvent handle);
+        Task HandleAsync(TEvent handle);
     }
 }

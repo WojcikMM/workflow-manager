@@ -7,7 +7,7 @@ using CQRS.Template.Domain.Events;
 using CQRS.Template.Domain.Storage;
 using CQRS.Template.Domain.Exceptions;
 using CQRS.Template.Domain.Domain.Mementos;
-
+using System.Threading.Tasks;
 
 namespace WorkflowConfigurationService.Infrastructure.Storage
 {
@@ -42,7 +42,7 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
             return null;
         }
 
-        public void Save(AggregateRoot aggregate)
+        public async Task SaveAsync(AggregateRoot aggregate)
         {
             var uncommittedChanges = aggregate.GetUncommittedChanges();
             var version = aggregate.Version;
@@ -65,7 +65,7 @@ namespace WorkflowConfigurationService.Infrastructure.Storage
             foreach (var @event in uncommittedChanges)
             {
                 var desEvent = (dynamic)Convert.ChangeType(@event, @event.GetType());
-                _eventBus.Publish(desEvent);
+                await _eventBus.PublishAsync(desEvent);
             }
         }
 

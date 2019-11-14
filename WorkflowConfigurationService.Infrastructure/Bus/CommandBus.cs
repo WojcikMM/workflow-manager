@@ -27,7 +27,7 @@ namespace WorkflowConfigurationService.Infrastructure.Bus
             }
             else
             {
-               await Task.Run(() =>  commandHandler.Handle(command));
+               await commandHandler.Handle(command);
             }
         }
     }
