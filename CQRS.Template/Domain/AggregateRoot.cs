@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using CQRS.Template.Domain.Events;
 
 namespace CQRS.Template.Domain.Domain
@@ -37,6 +38,8 @@ namespace CQRS.Template.Domain.Domain
             {
                 ApplyEventChanges(@event);
             }
+            Version = eventsHistory.Last().Version;
+
         }
 
         protected void ApplyEvent(BaseEvent @event)
