@@ -9,7 +9,8 @@ namespace WorkflowConfigurationService.Core.Processes.Domain
 {
     public class Process : AggregateRoot, IOriginator,
         IAggregateEventHandler<ProcessCreatedEvent>,
-        IAggregateEventHandler<ProcessNameUpdatedEvent>
+        IAggregateEventHandler<ProcessNameUpdatedEvent>,
+        IAggregateEventHandler<ProcessRemovedEvent>
     {
         public string Name { get; private set; }
 
@@ -17,8 +18,10 @@ namespace WorkflowConfigurationService.Core.Processes.Domain
 
         public Process() { }
         public Process(Guid Id, string Name) => ApplyEvent(new ProcessCreatedEvent(Id, Name));
-        
+
         public void UpdateName(string Name) => ApplyEvent(new ProcessNameUpdatedEvent(AggregateId, Name));
+
+        public void Delete() => ApplyEvent(new ProcessRemovedEvent(AggregateId));
 
         // Event Handlers
 
@@ -32,7 +35,10 @@ namespace WorkflowConfigurationService.Core.Processes.Domain
         {
             this.Name = @event.Name;
         }
+        public void HandleEvent(ProcessRemovedEvent @event)
+        {
 
+        }
 
         // Memento 
         public BaseMemento GetMemento()

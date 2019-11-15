@@ -5,15 +5,15 @@ using WorkflowConfigurationService.Core.ReadModel.Models;
 
 namespace WorkflowConfigurationService.Core.Processes.EventHandlers
 {
-    public class ProcessCreatedEventHandler : BaseEventHandler<ProcessCreatedEvent, ProcessReadModel>
+    public class ProcessNameUpdatedEventHandler : BaseEventHandler<ProcessNameUpdatedEvent, ProcessReadModel>
     {
-        public ProcessCreatedEventHandler(IReadModelRepository<ProcessReadModel> readModelRepository) : base(readModelRepository)
+        public ProcessNameUpdatedEventHandler(IReadModelRepository<ProcessReadModel> readModelRepository) : base(readModelRepository)
         {
         }
 
-        public override async Task HandleAsync(ProcessCreatedEvent handle)
+        public async override Task HandleAsync(ProcessNameUpdatedEvent handle)
         {
-            await _readModelRepository.Add(new ProcessReadModel
+            await _readModelRepository.Update(new ProcessReadModel
             {
                 Id = handle.AggregateId,
                 Name = handle.Name
