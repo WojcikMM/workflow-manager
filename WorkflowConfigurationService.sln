@@ -3,13 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.Core", "WorkflowConfigurationService.Core\WorkflowConfigurationService.Core.csproj", "{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRS.Template", "CQRS.Template\CQRS.Template.csproj", "{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.Infrastructure", "WorkflowConfigurationService.Infrastructure\WorkflowConfigurationService.Infrastructure.csproj", "{B83F4BD5-DF8A-47B4-A814-F4676F16E6F3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowConfigurationService.API", "WorkflowConfigurationService.API\WorkflowConfigurationService.API.csproj", "{DB60357A-A8F2-4F55-A054-22439B5D814F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProcessesService", "ProcessesService", "{D4921CF0-8411-4F2E-AACD-F1F412BF7646}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS.Template", "CQRS.Template\CQRS.Template.csproj", "{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.API", "Services\ProcessService\WorkflowManager.ProcessService.API\WorkflowManager.ProcessService.API.csproj", "{3E22E7BF-2085-47CB-BED6-D34618B72535}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Core", "Services\ProcessService\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj", "{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Infrastructure", "Services\ProcessService\WorkflowManager.ProcessService.Infrastructure\WorkflowManager.ProcessService.Infrastructure.csproj", "{40866172-296A-4CDE-BB9B-AC8D55A0BC94}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusesService", "StatusesService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationService", "ApplicationService", "{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,25 +25,33 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17AE54B9-50AE-47D4-A3D9-9D1C8B09C0C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B83F4BD5-DF8A-47B4-A814-F4676F16E6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B83F4BD5-DF8A-47B4-A814-F4676F16E6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B83F4BD5-DF8A-47B4-A814-F4676F16E6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B83F4BD5-DF8A-47B4-A814-F4676F16E6F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB60357A-A8F2-4F55-A054-22439B5D814F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D4921CF0-8411-4F2E-AACD-F1F412BF7646} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
+		{3E22E7BF-2085-47CB-BED6-D34618B72535} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
+		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
+		{40866172-296A-4CDE-BB9B-AC8D55A0BC94} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
+		{25AD97C8-366A-43D1-97B0-1231D978EA4D} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
+		{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

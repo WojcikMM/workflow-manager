@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CQRS.Template.Domain.Domain;
+using CQRS.Template.Domain.Domain.Mementos;
+using CQRS.Template.Domain.Events;
+using CQRS.Template.Domain.Exceptions;
+using CQRS.Template.Domain.Storage;
+using WorkflowManager.ProcessService.Core;
+
+namespace WorkflowManager.ProcessService.Infrastructure.Storage
+{
+    public class InMemoryAggregateRepository<TAggregate> : IRepository<TAggregate> where TAggregate : AggregateRoot, new()
+    {
+        private readonly IEventStorage _storage;
+
+        public InMemoryAggregateRepository(IEventStorage storage)
+        {
+            _storage = storage;
+        }
+
+        public TAggregate GetById(Guid id)
+        {
+            IEnumerable<BaseEvent> events;
+            var memento = _storage.GetMemento<BaseMemento>(id);
+            if (memento != null)
+            {
+                events = _storage.GetEvents(id).Where(e => e.Version >= memento.Version);
+            }
+            else
+            {
+                events = _storage.GetEvents(id);
+            }
+            var obj = new TAggregate();
+            if (memento != null)
+                ((IOriginator)obj).SetMemento(memento);
+
+            obj.LoadsFromHistory(events);
+            return obj;
+        }
+
+        public async Task SaveAsync(TAggregate aggregate, int expectedVersion)
+        {
+            if (aggregate.GetUncommittedChanges().Any())
+            {
+                // TODO: Specyfi lock system in async
+                // lock (_lockStorage)
+                //  {
+                if (expectedVersion != DomainConstants.NewAggregateVersion)
+                {
+                    TAggregate item = GetById(aggregate.AggregateId);
+                    if (item.Version != expectedVersion)
+                    {
+                        throw new ConcurrencyException($"Aggregate {item.AggregateId} has been previously modified");
+                    }
+                }
+
+                await _storage.SaveAsync(aggregate);
+                // }
+            }
+        }
+    }
+}
