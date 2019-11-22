@@ -50,7 +50,8 @@ namespace WorkflowManager.ProductService.API
 
 
             services.AddSingleton<ICommandBus, CommandBus>();
-            services.AddSingleton<IEventBus, InMemoryEventBus>();
+            //services.AddSingleton<IEventBus, InMemoryEventBus>();
+            services.AddSingleton<IEventBus, RabbitMqEventBus>();
             services.AddSingleton<IEventStorage, InMemoryEventStorage>();
 
             services.AddSingleton(typeof(IRepository<>), typeof(InMemoryAggregateRepository<>));
