@@ -1,22 +1,23 @@
-using CQRS.Template.Domain.Bus;
 using CQRS.Template.Domain.CommandHandlers;
 using CQRS.Template.Domain.EventHandlers;
 using CQRS.Template.Domain.Storage;
 using CQRS.Template.ReadModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WorkflowManager.Common.EventStore;
+using WorkflowManager.Common.Messages.Commands.Processes;
+using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.ProcessService.API.Middlewares;
-using WorkflowManager.ProcessService.Infrastructure.Bus;
-using WorkflowManager.ProcessService.Infrastructure.ReadModelRepositories;
 using WorkflowManager.ProcessService.Infrastructure.Storage;
+using WorkflowManager.ProcessService.ReadModel;
+using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 using WorkflowManager.ProductService.Core.CommandHandlers;
-using WorkflowManager.ProductService.Core.Commands;
 using WorkflowManager.ProductService.Core.EventHandlers;
-using WorkflowManager.ProductService.Core.Events;
-using WorkflowManager.ProductService.Core.ReadModel.Models;
 
 namespace WorkflowManager.ProductService.API
 {
@@ -46,17 +47,23 @@ namespace WorkflowManager.ProductService.API
                     });
             });
 
-            // services.addExceptop
-
-
-            services.AddSingleton<ICommandBus, CommandBus>();
+            services.AddRabbitMq();
+            services.AddEventStore();
+            //services.AddEntityFrameworkSqlServer();
+            var readDbConnectionString = Configuration.GetConnectionString("ServiceReadDatabase");
+            services.AddDbContext<ProcessesContext>(options => options.UseSqlServer(readDbConnectionString),
+                optionsLifetime: ServiceLifetime.Transient, contextLifetime: ServiceLifetime.Transient);
+            //services.AddSingleton<ICommandBus, CommandBus>();
             //services.AddSingleton<IEventBus, InMemoryEventBus>();
-            services.AddSingleton<IEventBus, RabbitMqEventBus>();
-            services.AddSingleton<IEventStorage, InMemoryEventStorage>();
+            //
+            //services.AddSingleton<IEventBus, RabbitMqEventBus>();
+            //services.AddSingleton<IEventStorage, InMemoryEventStorage>();
 
-            services.AddSingleton(typeof(IRepository<>), typeof(InMemoryAggregateRepository<>));
+            services.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
 
-            services.AddSingleton<IReadModelRepository<ProcessReadModel>, InMemoryProcessReadModelRepository>();
+            services.AddTransient<IReadModelRepository<ProcessModel>, ProcessReadModelRepository>();
+
+            //services.AddSingleton<IReadModelRepository<ProcessReadModel>, InMemoryProcessReadModelRepository>();
 
             RegisterCommandHandlers(services);
             RegisterEventHandlers(services);
@@ -77,6 +84,14 @@ namespace WorkflowManager.ProductService.API
                 cfg.RoutePrefix = string.Empty;
             });
             app.UseRouting();
+            app.UseRabbitMq()
+                .SubscribeCommand<CreateProcessCommand>()
+                .SubscribeCommand<UpdateProcessCommand>()
+                .SubscribeCommand<RemoveProcessCommand>()
+
+                .SubscribeEvent<ProcessCreatedEvent>()
+                .SubscribeEvent<ProcessNameUpdatedEvent>()
+                .SubscribeEvent<ProcessRemovedEvent>();
 
             app.UseAuthorization();
             app.UseMiddleware<ErrorHandlingMiddleware>();

@@ -10,7 +10,7 @@ namespace CQRS.Template.Domain.Storage
     public interface IEventStorage
     {
         IEnumerable<BaseEvent> GetEvents(Guid aggregateId);
-        Task SaveAsync(AggregateRoot aggregate);
+        Task SaveAsync(AggregateRoot aggregate, Guid correlationId);
         T GetMemento<T>(Guid aggregateId) where T : BaseMemento;
         void SaveMemento(BaseMemento memento);
     }

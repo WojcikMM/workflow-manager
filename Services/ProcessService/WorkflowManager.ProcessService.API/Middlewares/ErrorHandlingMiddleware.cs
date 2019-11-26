@@ -32,7 +32,7 @@ namespace WorkflowManager.ProcessService.API.Middlewares
             {
                 await HandleExceptionAsync(context, HttpStatusCode.NotFound);
             }
-            catch (ConcurrencyException ex)
+            catch (AggregateConcurrencyException ex)
             {
                 await HandleExceptionAsync(context, HttpStatusCode.Conflict, new SimpleErrorResponse(ex.Message));
             }

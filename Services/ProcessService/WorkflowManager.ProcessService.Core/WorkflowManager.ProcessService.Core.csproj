@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CQRS.Template\CQRS.Template.csproj" />
+    <ProjectReference Include="..\..\..\WorkflowManager.Common\WorkflowManager.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Storage\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NEventStore" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

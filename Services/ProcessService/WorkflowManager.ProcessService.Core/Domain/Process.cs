@@ -2,8 +2,8 @@
 using CQRS.Template.Domain.Domain;
 using CQRS.Template.Domain.Events;
 using CQRS.Template.Domain.Domain.Mementos;
-using WorkflowManager.ProductService.Core.Events;
 using WorkflowManager.ProductService.Core.Domain.Mementos;
+using WorkflowManager.Common.Messages.Events.Processes;
 
 namespace WorkflowManager.ProductService.Core.Domain
 {

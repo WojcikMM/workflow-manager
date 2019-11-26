@@ -16,7 +16,7 @@ namespace CQRS.Template.Domain.CommandHandlers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-       public async Task Handle(TCommand command)
+       public async Task HandleAsync(TCommand command,Guid correlationId)
         {
             if (command is null)
             {
@@ -30,7 +30,7 @@ namespace CQRS.Template.Domain.CommandHandlers
                 throw new ArgumentNullException(nameof(aggregate), "Cannot save null valued aggregate.");
             }
 
-           await _repository.SaveAsync(aggregate, command.Version);
+           await _repository.SaveAsync(aggregate, command.Version, correlationId);
 
             await Task.CompletedTask;
         }

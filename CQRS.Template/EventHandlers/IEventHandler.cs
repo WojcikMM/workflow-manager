@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace CQRS.Template.Domain.EventHandlers
 {
-    public interface IEventHandler<TEvent> where TEvent : BaseEvent
+    public interface IEventHandler<TEvent> where TEvent : IEvent
     {
-        Task HandleAsync(TEvent handle);
+        Task HandleAsync(TEvent @event);
     }
 }
