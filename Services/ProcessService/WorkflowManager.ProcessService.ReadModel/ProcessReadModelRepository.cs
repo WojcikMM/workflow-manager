@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using CQRS.Template.ReadModel;
 using WorkflowManager.Common.Exceptions;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using System.Linq;
 
 namespace WorkflowManager.ProcessService.ReadModel
 {
@@ -21,8 +21,21 @@ namespace WorkflowManager.ProcessService.ReadModel
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProcessModel>> GetAll() =>
-            await _context.Processes.ToListAsync();
+
+        public async Task<IEnumerable<ProcessModel>> SearchAsync(string query)
+        {
+            var processes = _context.Processes.Select(m => m);
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                processes = processes
+                    .Where(m=> m.Name.ToLower().Contains(query.ToLower()));
+            }
+
+            return await processes.ToListAsync();
+        }
+
+        public async Task<IEnumerable<ProcessModel>> GetAllAsync() =>
+           await SearchAsync(null);
 
         public async Task<ProcessModel> GetByIdAsync(Guid id)
         {
@@ -34,7 +47,7 @@ namespace WorkflowManager.ProcessService.ReadModel
             return process;
         }
 
-        public async Task Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             var process = await GetByIdAsync(id);
             _context.Remove(process);
@@ -42,10 +55,11 @@ namespace WorkflowManager.ProcessService.ReadModel
 
         }
 
-        public async Task Update(ProcessModel model)
+        public async Task UpdateAsync(ProcessModel model)
         {
             var process = await GetByIdAsync(model.Id);
             process.Name = model.Name;
+            process.Version = model.Version;
             process.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
         }

@@ -18,7 +18,7 @@ namespace WorkflowManager.Common.RabbitMq
 
         public BusSubscriber(IApplicationBuilder app)
         {
-            _serviceProvider = app.ApplicationServices.GetService<IServiceProvider>() 
+            _serviceProvider = app.ApplicationServices.GetService<IServiceProvider>()
                 ?? throw new ArgumentNullException(nameof(_serviceProvider), "Cannot get service provider.");
             _busClient = _serviceProvider.GetService<IBusClient>() ??
                 throw new ArgumentException(nameof(_busClient), "Bus client was not registred in application.");
@@ -52,32 +52,25 @@ namespace WorkflowManager.Common.RabbitMq
         {
             _busClient.SubscribeAsync<TEvent>(async (@event, correlationContext) =>
             {
-                try
+                var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
+                foreach (var eventHandler in eventHandlers)
                 {
-
-                    var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
-                    foreach (var eventHandler in eventHandlers)
+                    try
                     {
-                        try
+                        await eventHandler.HandleAsync(@event);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!(onError is null))
                         {
-                            await eventHandler.HandleAsync(@event);
+                            IRejectedEvent rejectedEvent = onError(@event, ex);
+                            await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
                         }
-                        catch (Exception ex)
-                        {
-                            if (!(onError is null))
-                            {
-                                IRejectedEvent rejectedEvent = onError(@event, ex);
-                                await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
-                            }
-                            // add logs
-                            break;
-                        }
+                        // add logs
+                        break;
                     }
                 }
-                catch (Exception ex)
-                {
-                    var s = "";
-                }
+
             });
 
             return this;

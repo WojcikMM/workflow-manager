@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManagerGateway.Commands;
 using WorkflowManagerGateway.Services;
@@ -29,12 +29,12 @@ namespace WorkflowManagerGateway.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProcessCommandDTO createProcessCommandDTO) =>
-            await SendAsync(new CreateProcessCommand(createProcessCommandDTO), Guid.NewGuid(), "processes");
+            await SendAsync(new CreateProcessCommand(createProcessCommandDTO));
 
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] UpdateProcessCommandDTO updateProcessCommandDTO) =>
-            await SendAsync(new UpdateProcessCommand(id, updateProcessCommandDTO), Guid.NewGuid(), "processes");
+            await SendAsync(new UpdateProcessCommand(id, updateProcessCommandDTO));
 
         //HTTPDELETE
 

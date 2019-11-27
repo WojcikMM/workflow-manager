@@ -13,7 +13,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkflowManager.ProcessService.Infrastructure\WorkflowManager.ProcessService.Infrastructure.csproj" />
+    <ProjectReference Include="..\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj" />
+    <ProjectReference Include="..\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj" />
   </ItemGroup>
 
 </Project>

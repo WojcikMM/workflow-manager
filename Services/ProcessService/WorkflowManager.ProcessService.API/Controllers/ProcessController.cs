@@ -8,6 +8,7 @@ using RawRabbit.vNext.Disposable;
 using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.ProcessService.API.DTO.Commands;
 using WorkflowManager.ProcessService.API.DTO.ErrorResponses;
+using WorkflowManager.ProcessService.API.DTO.Responses;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 
 namespace WorkflowManager.ProductService.API.Controllers
@@ -30,7 +31,7 @@ namespace WorkflowManager.ProductService.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ProcessModel>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetProcesses([FromQuery]string name = "") => Ok(await _readModelRepository.GetAll());
+        public async Task<IActionResult> GetProcesses([FromQuery]string name = "") => Ok(await _readModelRepository.SearchAsync(name));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ProcessModel), (int)HttpStatusCode.OK)]
@@ -41,11 +42,19 @@ namespace WorkflowManager.ProductService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProcess([FromBody] CreateProcessDTOCommand dTOCommand)
         {
-            var correlationId = Guid.NewGuid();
-            var newProcessId = Guid.NewGuid();
-            var command = new CreateProcessCommand(newProcessId, dTOCommand.Name);
-            await _busClient.PublishAsync(command, correlationId);
-            return Accepted(correlationId);
+            var responseDTO = new AcceptedResponseDTO();
+            var command = new CreateProcessCommand(responseDTO.ProductId, dTOCommand.Name);
+            await _busClient.PublishAsync(command, responseDTO.CorrelationId);
+            return Accepted(responseDTO);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateProcess([FromRoute]Guid id, UpdateProcessDTOCommand dTOCommand)
+        {
+            var responseDTO = new AcceptedResponseDTO(id);
+            var command = new UpdateProcessCommand(id, dTOCommand.Name, dTOCommand.Version);
+            await _busClient.PublishAsync(command, responseDTO.CorrelationId);
+            return Accepted(responseDTO);
         }
     }
 }

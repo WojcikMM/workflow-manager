@@ -19,8 +19,9 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
 
             var process = await _repository.GetByIdAsync(@event.AggregateId);
             process.Name = @event.Name;
+            process.Version = @event.Version;
 
-            await _repository.Update(process);
+            await _repository.UpdateAsync(process);
         }
     }
 }

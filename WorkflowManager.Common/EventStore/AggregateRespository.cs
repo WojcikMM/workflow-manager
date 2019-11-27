@@ -8,8 +8,9 @@ using CQRS.Template.Domain.Storage;
 using CQRS.Template.Domain.Exceptions;
 using WorkflowManager.ProcessService.Core;
 using CQRS.Template.Domain.Domain.Mementos;
+using CQRS.Template.Domain.Events;
 
-namespace WorkflowManager.ProcessService.Infrastructure.Storage
+namespace WorkflowManager.Common.EventStore
 {
     public class AggregateRespository<TAggregate> : IRepository<TAggregate> where TAggregate : AggregateRoot, new()
     {
@@ -25,42 +26,20 @@ namespace WorkflowManager.ProcessService.Infrastructure.Storage
         public TAggregate GetById(Guid id)
         {
 
-            var leatestSnapshot = _storage.Advanced.GetSnapshot(id, int.MaxValue);
+            var leatestSnapshot = _storage.Advanced.GetSnapshot(id, int.MaxValue)?.Payload as BaseMemento;
 
-            using (var stream = _storage.OpenStream(id))
+            using var stream = _storage.OpenStream(id);
+            var leatestSnapshotVersion = leatestSnapshot is null ? -1 : leatestSnapshot.Version;
+            var events = stream.CommittedEvents.Select(m => m.Body as BaseEvent).Where(m => m.Version > leatestSnapshotVersion).ToList();
+
+            var obj = new TAggregate();
+            if (leatestSnapshot != null)
             {
-                var events = stream.CommittedEvents.ToList();
-
-                var obj = new TAggregate();
-                if (leatestSnapshot != null)
-                {
-                    var s = obj.EventVersion != 1;
-                    // setMemento ===
-                }
-
-                return obj;
-
-                //var latestSnapshot = _storage.Advanced.GetSnapshot(stream.StreamId, int.MaxValue);
-
+                ((IOriginator)obj).SetMemento(leatestSnapshot);
             }
 
-
-            //IEnumerable<BaseEvent> events;
-            //var memento = _storage.GetMemento<BaseMemento>(id);
-            //if (memento != null)
-            //{
-            //    events = _storage.GetEvents(id).Where(e => e.Version >= memento.Version);
-            //}
-            //else
-            //{
-            //    events = _storage.GetEvents(id);
-            //}
-            //var obj = new TAggregate();
-            //if (memento != null)
-            //    ((IOriginator)obj).SetMemento(memento);
-
-            //obj.LoadsFromHistory(events);
-            //return obj;
+            obj.LoadsFromHistory(events);
+            return obj;
         }
 
         public async Task SaveAsync(TAggregate aggregate, int expectedVersion, Guid correlationId)
@@ -70,7 +49,6 @@ namespace WorkflowManager.ProcessService.Infrastructure.Storage
             {
                 // TODO: Specyfi lock system in async
                 // lock (_lockStorage)
-                //  {
                 if (expectedVersion != DomainConstants.NewAggregateVersion)
                 {
                     TAggregate item = GetById(aggregate.AggregateId); // ???
@@ -105,11 +83,6 @@ namespace WorkflowManager.ProcessService.Infrastructure.Storage
                     var desEvent = (dynamic)Convert.ChangeType(@event, @event.GetType());
                     await _busClient.PublishAsync(desEvent, correlationId);
                 }
-
-
-                // await _storage.SaveAsync(aggregate, correlationId);
-
-                // }
             }
         }
     }

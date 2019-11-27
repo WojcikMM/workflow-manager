@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CQRS.Template.Domain.Domain;
 using CQRS.Template.Domain.Storage;
 using CQRS.Template.Domain.Commands;
-using System.Threading.Tasks;
 
 namespace CQRS.Template.Domain.CommandHandlers
 {

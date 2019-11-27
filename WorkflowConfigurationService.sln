@@ -13,13 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Core", "Services\ProcessService\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj", "{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Infrastructure", "Services\ProcessService\WorkflowManager.ProcessService.Infrastructure\WorkflowManager.ProcessService.Infrastructure.csproj", "{40866172-296A-4CDE-BB9B-AC8D55A0BC94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.ReadModel", "Services\ProcessService\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj", "{11307994-C678-496B-936E-04352AFB976F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusesService", "StatusesService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationService", "ApplicationService", "{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.ReadModel", "WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj", "{11307994-C678-496B-936E-04352AFB976F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Common", "WorkflowManager.Common\WorkflowManager.Common.csproj", "{C6E9F437-0F2A-4B12-85DB-1C1ADDB481CF}"
 EndProject
@@ -45,10 +43,6 @@ Global
 		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40866172-296A-4CDE-BB9B-AC8D55A0BC94}.Release|Any CPU.Build.0 = Release|Any CPU
 		{11307994-C678-496B-936E-04352AFB976F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11307994-C678-496B-936E-04352AFB976F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11307994-C678-496B-936E-04352AFB976F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,7 +63,6 @@ Global
 		{D4921CF0-8411-4F2E-AACD-F1F412BF7646} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{3E22E7BF-2085-47CB-BED6-D34618B72535} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
 		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
-		{40866172-296A-4CDE-BB9B-AC8D55A0BC94} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
 		{25AD97C8-366A-43D1-97B0-1231D978EA4D} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{11307994-C678-496B-936E-04352AFB976F} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}

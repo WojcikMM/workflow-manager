@@ -14,6 +14,6 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
         public ProcessRemovedEventHandler([NotNull]IReadModelRepository<ProcessModel> repository) => _repository = repository;
 
         public async Task HandleAsync(ProcessRemovedEvent @event) => 
-            await _repository.Remove(@event.AggregateId);
+            await _repository.RemoveAsync(@event.AggregateId);
     }
 }

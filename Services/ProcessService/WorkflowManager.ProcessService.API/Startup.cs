@@ -1,72 +1,60 @@
-using CQRS.Template.Domain.CommandHandlers;
-using CQRS.Template.Domain.EventHandlers;
-using CQRS.Template.Domain.Storage;
 using CQRS.Template.ReadModel;
+using CQRS.Template.Domain.EventHandlers;
+using CQRS.Template.Domain.CommandHandlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WorkflowManager.Common.EventStore;
-using WorkflowManager.Common.Messages.Commands.Processes;
-using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.Common.RabbitMq;
-using WorkflowManager.ProcessService.API.Middlewares;
-using WorkflowManager.ProcessService.Infrastructure.Storage;
+using WorkflowManager.Common.EventStore;
+using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.ProcessService.ReadModel;
+using WorkflowManager.ProcessService.API.Middlewares;
+using WorkflowManager.ProductService.Core.EventHandlers;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 using WorkflowManager.ProductService.Core.CommandHandlers;
-using WorkflowManager.ProductService.Core.EventHandlers;
+using WorkflowManager.Common.Swagger;
+using WorkflowManager.Common.ReadModelStore;
+using WorkflowManager.Common.CQRSHandlers;
 
 namespace WorkflowManager.ProductService.API
 {
     public class Startup
     {
-        private const string _appServiceName = "Product API Service";
-        private const string _appServiceVersion = "v1";
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(cfg =>
-            {
-                cfg.SwaggerDoc(_appServiceVersion,
-                    new Microsoft.OpenApi.Models.OpenApiInfo
-                    {
-                        Title = _appServiceName,
-                        Version = _appServiceVersion
-                    });
-            });
-
             services.AddRabbitMq();
             services.AddEventStore();
-            //services.AddEntityFrameworkSqlServer();
-            var readDbConnectionString = Configuration.GetConnectionString("ServiceReadDatabase");
-            services.AddDbContext<ProcessesContext>(options => options.UseSqlServer(readDbConnectionString),
-                optionsLifetime: ServiceLifetime.Transient, contextLifetime: ServiceLifetime.Transient);
-            //services.AddSingleton<ICommandBus, CommandBus>();
-            //services.AddSingleton<IEventBus, InMemoryEventBus>();
-            //
-            //services.AddSingleton<IEventBus, RabbitMqEventBus>();
-            //services.AddSingleton<IEventStorage, InMemoryEventStorage>();
+            services.AddServiceSwaggerUI();
+            services.AddReadModelStore<ProcessesContext>();
+            services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();
 
-            services.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
+            services.AddCommandHandler<CreateProcessCommand, CreateProcessCommandHandler>()
+                    .AddCommandHandler<UpdateProcessCommand, UpdateProcessCommandHandler>()
+                    .AddCommandHandler<RemoveProcessCommand, RemoveProcessCommandHandler>()
 
-            services.AddTransient<IReadModelRepository<ProcessModel>, ProcessReadModelRepository>();
+                    .AddEventHandler<ProcessCreatedEvent, ProcessCreatedEventHandler>()
+                    .AddEventHandler<ProcessNameUpdatedEvent, ProcessNameUpdatedEventHandler>()
+                    .AddEventHandler<ProcessRemovedEvent, ProcessRemovedEventHandler>();
 
-            //services.AddSingleton<IReadModelRepository<ProcessReadModel>, InMemoryProcessReadModelRepository>();
 
-            RegisterCommandHandlers(services);
-            RegisterEventHandlers(services);
+
+            //services.AddTransient<IReadModelRepository<ProcessModel>, ProcessReadModelRepository>();
+
+            // CommandHandlers
+
+            // RegisterCommandHandlers(services);
+            // RegisterEventHandlers(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,12 +65,7 @@ namespace WorkflowManager.ProductService.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(cfg =>
-            {
-                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", $"{_appServiceName} ({_appServiceVersion})");
-                cfg.RoutePrefix = string.Empty;
-            });
+
             app.UseRouting();
             app.UseRabbitMq()
                 .SubscribeCommand<CreateProcessCommand>()
@@ -94,35 +77,13 @@ namespace WorkflowManager.ProductService.API
                 .SubscribeEvent<ProcessRemovedEvent>();
 
             app.UseAuthorization();
+            app.UseServiceSwaggerUI();
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-        }
-
-
-        /// <summary>
-        /// Method to register event handlers
-        /// </summary>
-        /// <param name="services"></param>
-        private void RegisterEventHandlers(IServiceCollection services)
-        {
-            services.AddTransient<IEventHandler<ProcessCreatedEvent>, ProcessCreatedEventHandler>();
-            services.AddTransient<IEventHandler<ProcessNameUpdatedEvent>, ProcessNameUpdatedEventHandler>();
-            services.AddTransient<IEventHandler<ProcessRemovedEvent>, ProcessRemovedEventHandler>();
-        }
-
-        /// <summary>
-        /// Method to register command handlers
-        /// </summary>
-        /// <param name="services"></param>
-        private void RegisterCommandHandlers(IServiceCollection services)
-        {
-            services.AddTransient<ICommandHandler<CreateProcessCommand>, CreateProcessCommandHandler>();
-            services.AddTransient<ICommandHandler<UpdateProcessCommand>, UpdateProcessCommandHandler>();
-            services.AddTransient<ICommandHandler<RemoveProcessCommand>, RemoveProcessCommandHandler>();
         }
     }
 }
