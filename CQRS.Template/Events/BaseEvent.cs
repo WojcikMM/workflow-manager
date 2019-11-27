@@ -12,7 +12,7 @@ namespace CQRS.Template.Domain.Events
         protected BaseEvent() { }
         public BaseEvent(Guid AggregateId)
         {
-            this.Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
             this.AggregateId = AggregateId;
         }
     }

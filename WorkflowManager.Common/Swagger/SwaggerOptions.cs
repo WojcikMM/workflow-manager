@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WorkflowManager.Common.Swagger
+﻿namespace WorkflowManager.Common.Swagger
 {
     public class SwaggerOptions
     {

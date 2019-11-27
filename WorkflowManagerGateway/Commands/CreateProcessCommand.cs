@@ -13,9 +13,9 @@ namespace WorkflowManagerGateway.Commands
     {
         public CreateProcessCommand(CreateProcessCommandDTO createProductCommandDTO)
         {
-            this.Name = createProductCommandDTO.Name;
-            this.Id = Guid.NewGuid();
-            this.Version = -1;
+            Name = createProductCommandDTO.Name;
+            Id = Guid.NewGuid();
+            Version = -1;
         }
         public Guid Id { get; set; }
         public int Version { get; set; }

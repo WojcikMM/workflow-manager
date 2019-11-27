@@ -1,8 +1,7 @@
-﻿using System;
+﻿using CQRS.Template.Domain.Events;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using CQRS.Template.Domain.Events;
 
 namespace CQRS.Template.Domain.Domain
 {

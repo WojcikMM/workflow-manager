@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CQRS.Template.ReadModel;
+using Microsoft.AspNetCore.Mvc;
+using RawRabbit.vNext.Disposable;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using CQRS.Template.ReadModel;
-using Microsoft.AspNetCore.Mvc;
-using RawRabbit.vNext.Disposable;
 using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.ProcessService.API.DTO.Commands;
 using WorkflowManager.ProcessService.API.DTO.ErrorResponses;
@@ -42,8 +42,8 @@ namespace WorkflowManager.ProductService.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProcess([FromBody] CreateProcessDTOCommand dTOCommand)
         {
-            var responseDTO = new AcceptedResponseDTO();
-            var command = new CreateProcessCommand(responseDTO.ProductId, dTOCommand.Name);
+            AcceptedResponseDTO responseDTO = new AcceptedResponseDTO();
+            CreateProcessCommand command = new CreateProcessCommand(responseDTO.ProductId, dTOCommand.Name);
             await _busClient.PublishAsync(command, responseDTO.CorrelationId);
             return Accepted(responseDTO);
         }
@@ -51,8 +51,8 @@ namespace WorkflowManager.ProductService.API.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateProcess([FromRoute]Guid id, UpdateProcessDTOCommand dTOCommand)
         {
-            var responseDTO = new AcceptedResponseDTO(id);
-            var command = new UpdateProcessCommand(id, dTOCommand.Name, dTOCommand.Version);
+            AcceptedResponseDTO responseDTO = new AcceptedResponseDTO(id);
+            UpdateProcessCommand command = new UpdateProcessCommand(id, dTOCommand.Name, dTOCommand.Version);
             await _busClient.PublishAsync(command, responseDTO.CorrelationId);
             return Accepted(responseDTO);
         }

@@ -6,7 +6,7 @@ namespace WorkflowManager.ProcessService.API.DTO.Responses
     {
         public CorrelationIdResponseDTO()
         {
-            this.CorrelationId = Guid.NewGuid();
+            CorrelationId = Guid.NewGuid();
         }
 
         public Guid CorrelationId { get; }

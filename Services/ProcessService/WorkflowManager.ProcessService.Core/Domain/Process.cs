@@ -1,9 +1,9 @@
-﻿using System;
-using CQRS.Template.Domain.Domain;
-using CQRS.Template.Domain.Events;
+﻿using CQRS.Template.Domain.Domain;
 using CQRS.Template.Domain.Domain.Mementos;
-using WorkflowManager.ProductService.Core.Domain.Mementos;
+using CQRS.Template.Domain.Events;
+using System;
 using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.ProductService.Core.Domain.Mementos;
 
 namespace WorkflowManager.ProductService.Core.Domain
 {
@@ -27,13 +27,13 @@ namespace WorkflowManager.ProductService.Core.Domain
 
         public void HandleEvent(ProcessCreatedEvent @event)
         {
-            this.AggregateId = @event.AggregateId;
-            this.Name = @event.Name;
-            this.Version = @event.Version;
+            AggregateId = @event.AggregateId;
+            Name = @event.Name;
+            Version = @event.Version;
         }
         public void HandleEvent(ProcessNameUpdatedEvent @event)
         {
-            this.Name = @event.Name;
+            Name = @event.Name;
         }
         public void HandleEvent(ProcessRemovedEvent @event)
         {
@@ -43,7 +43,7 @@ namespace WorkflowManager.ProductService.Core.Domain
         // Memento 
         public BaseMemento GetMemento()
         {
-            return new ProcessMemento(this.AggregateId, this.Name, this.Version);
+            return new ProcessMemento(AggregateId, Name, Version);
         }
 
         public void SetMemento(BaseMemento memento)
@@ -53,9 +53,9 @@ namespace WorkflowManager.ProductService.Core.Domain
                 throw new ArgumentNullException(nameof(memento), "Passed memento value is null");
             }
 
-            this.AggregateId = memento.Id;
-            this.Version = memento.Version;
-            this.Name = ((ProcessMemento)memento).Name;
+            AggregateId = memento.Id;
+            Version = memento.Version;
+            Name = ((ProcessMemento)memento).Name;
         }
     }
 }

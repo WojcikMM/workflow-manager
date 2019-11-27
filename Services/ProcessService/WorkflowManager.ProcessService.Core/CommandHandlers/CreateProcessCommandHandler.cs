@@ -1,7 +1,7 @@
-﻿using CQRS.Template.Domain.Storage;
-using CQRS.Template.Domain.CommandHandlers;
-using WorkflowManager.ProductService.Core.Domain;
+﻿using CQRS.Template.Domain.CommandHandlers;
+using CQRS.Template.Domain.Storage;
 using WorkflowManager.Common.Messages.Commands.Processes;
+using WorkflowManager.ProductService.Core.Domain;
 
 namespace WorkflowManager.ProductService.Core.CommandHandlers
 {

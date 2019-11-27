@@ -12,9 +12,9 @@ namespace WorkflowManager.Common.ReadModelStore
         public static void AddReadModelStore<TContext>(this IServiceCollection services) where TContext : DbContext
         {
             string connectionString;
-            using (var serviceProvider = services.BuildServiceProvider())
+            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
-                var configuration = serviceProvider.GetService<IConfiguration>();
+                IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
                 connectionString = configuration.GetConnectionString(_readDbConnectionStringName);
             }
             if (connectionString is null)

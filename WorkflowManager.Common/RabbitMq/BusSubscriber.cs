@@ -1,11 +1,11 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
-using CQRS.Template.Domain.Events;
+﻿using CQRS.Template.Domain.CommandHandlers;
 using CQRS.Template.Domain.Commands;
 using CQRS.Template.Domain.EventHandlers;
-using CQRS.Template.Domain.CommandHandlers;
+using CQRS.Template.Domain.Events;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using RawRabbit.vNext.Disposable;
+using System;
 
 namespace WorkflowManager.Common.RabbitMq
 {
@@ -28,7 +28,7 @@ namespace WorkflowManager.Common.RabbitMq
         {
             _busClient.SubscribeAsync<TCommand>(async (command, correlationContext) =>
             {
-                var commandHandler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
+                ICommandHandler<TCommand> commandHandler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
 
                 try
                 {
@@ -52,8 +52,8 @@ namespace WorkflowManager.Common.RabbitMq
         {
             _busClient.SubscribeAsync<TEvent>(async (@event, correlationContext) =>
             {
-                var eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
-                foreach (var eventHandler in eventHandlers)
+                System.Collections.Generic.IEnumerable<IEventHandler<TEvent>> eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
+                foreach (IEventHandler<TEvent> eventHandler in eventHandlers)
                 {
                     try
                     {

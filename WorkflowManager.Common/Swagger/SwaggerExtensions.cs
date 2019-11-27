@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowManager.Common.Configuration;
@@ -30,7 +29,7 @@ namespace WorkflowManager.Common.Swagger
         {
 
             SwaggerOptions options;
-            using (var serviceProvider = services.BuildServiceProvider())
+            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
                 options = serviceProvider.GetService<IConfiguration>()
                                          .GetOptions<SwaggerOptions>(_swaggerOptionsName);

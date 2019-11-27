@@ -1,24 +1,20 @@
-using CQRS.Template.ReadModel;
-using CQRS.Template.Domain.EventHandlers;
-using CQRS.Template.Domain.CommandHandlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WorkflowManager.Common.RabbitMq;
+using WorkflowManager.Common.CQRSHandlers;
 using WorkflowManager.Common.EventStore;
-using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.Common.Messages.Commands.Processes;
-using WorkflowManager.ProcessService.ReadModel;
+using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.Common.RabbitMq;
+using WorkflowManager.Common.ReadModelStore;
+using WorkflowManager.Common.Swagger;
 using WorkflowManager.ProcessService.API.Middlewares;
-using WorkflowManager.ProductService.Core.EventHandlers;
+using WorkflowManager.ProcessService.ReadModel;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 using WorkflowManager.ProductService.Core.CommandHandlers;
-using WorkflowManager.Common.Swagger;
-using WorkflowManager.Common.ReadModelStore;
-using WorkflowManager.Common.CQRSHandlers;
+using WorkflowManager.ProductService.Core.EventHandlers;
 
 namespace WorkflowManager.ProductService.API
 {
@@ -46,15 +42,6 @@ namespace WorkflowManager.ProductService.API
                     .AddEventHandler<ProcessCreatedEvent, ProcessCreatedEventHandler>()
                     .AddEventHandler<ProcessNameUpdatedEvent, ProcessNameUpdatedEventHandler>()
                     .AddEventHandler<ProcessRemovedEvent, ProcessRemovedEventHandler>();
-
-
-
-            //services.AddTransient<IReadModelRepository<ProcessModel>, ProcessReadModelRepository>();
-
-            // CommandHandlers
-
-            // RegisterCommandHandlers(services);
-            // RegisterEventHandlers(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

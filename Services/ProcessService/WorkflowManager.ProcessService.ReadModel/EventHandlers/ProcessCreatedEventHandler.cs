@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CQRS.Template.Domain.EventHandlers;
+using CQRS.Template.ReadModel;
+using System;
 using System.Diagnostics.CodeAnalysis;
-using CQRS.Template.Domain.EventHandlers;
+using System.Threading.Tasks;
 using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
-using CQRS.Template.ReadModel;
 
 namespace WorkflowManager.ProductService.Core.EventHandlers
 {
@@ -16,7 +16,7 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
 
         public async Task HandleAsync(ProcessCreatedEvent @event)
         {
-            var process = new ProcessModel()
+            ProcessModel process = new ProcessModel()
             {
                 Id = @event.AggregateId,
                 Name = @event.Name,

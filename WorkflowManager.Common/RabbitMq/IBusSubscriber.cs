@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CQRS.Template.Domain.Commands;
 using CQRS.Template.Domain.Events;
-using CQRS.Template.Domain.Commands;
+using System;
 
 namespace WorkflowManager.Common.RabbitMq
 {

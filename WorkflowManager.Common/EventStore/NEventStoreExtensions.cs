@@ -1,9 +1,6 @@
 ﻿using CQRS.Template.Domain.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using NEventStore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace WorkflowManager.Common.EventStore
 {

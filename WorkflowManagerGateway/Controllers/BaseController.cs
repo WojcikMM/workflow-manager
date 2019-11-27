@@ -24,7 +24,7 @@ namespace WorkflowManagerGateway.Controllers
             {
                 return NotFound();
             }
-            var isValid = criteria == null || criteria(model);
+            bool isValid = criteria == null || criteria(model);
             if (isValid)
             {
                 return Ok(model);
@@ -39,7 +39,7 @@ namespace WorkflowManagerGateway.Controllers
             {
                 return NotFound();
             }
-            var isValid = criteria == null || criteria(pagedResult);
+            bool isValid = criteria == null || criteria(pagedResult);
             if (!isValid)
             {
                 return NotFound();
@@ -60,7 +60,7 @@ namespace WorkflowManagerGateway.Controllers
         protected async Task<IActionResult> SendAsync<T>(T command) where T : ICommand
         {
             //var context = GetContext<T>(resourceId, resource);
-            var correlationId = Guid.NewGuid();
+            Guid correlationId = Guid.NewGuid();
             await _busPublisher.SendAsync(command, correlationId);
 
             return Accepted(new

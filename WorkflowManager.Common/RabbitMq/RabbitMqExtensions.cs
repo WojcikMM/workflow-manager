@@ -14,7 +14,7 @@ namespace WorkflowManager.Common.RabbitMq
 
         public static void AddRabbitMq(this IServiceCollection services)
         {
-            var config = new RawRabbitConfiguration()
+            RawRabbitConfiguration config = new RawRabbitConfiguration()
             {
                 AutoCloseConnection = false,
                 Username = "guest",
@@ -25,7 +25,7 @@ namespace WorkflowManager.Common.RabbitMq
                 PublishConfirmTimeout = TimeSpan.FromMilliseconds(500)
             };
 
-            var busClient = BusClientFactory.CreateDefault(config);
+            IBusClient busClient = BusClientFactory.CreateDefault(config);
             services.AddSingleton<IBusClient>(busClient);
 
             services.AddTransient<IBusPublisher, BusPublisher>();

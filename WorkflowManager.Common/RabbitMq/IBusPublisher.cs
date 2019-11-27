@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using CQRS.Template.Domain.Commands;
+﻿using CQRS.Template.Domain.Commands;
 using CQRS.Template.Domain.Events;
+using System;
+using System.Threading.Tasks;
 
 namespace WorkflowManager.Common.RabbitMq
 {

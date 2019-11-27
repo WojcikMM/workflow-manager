@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CQRS.Template.Domain.Commands;
+using System;
 using System.Threading.Tasks;
-using CQRS.Template.Domain.Commands;
 
 namespace CQRS.Template.Domain.CommandHandlers
 {

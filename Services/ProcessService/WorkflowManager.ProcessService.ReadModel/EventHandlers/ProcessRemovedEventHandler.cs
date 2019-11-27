@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Diagnostics.CodeAnalysis;
+﻿using CQRS.Template.Domain.EventHandlers;
 using CQRS.Template.ReadModel;
-using CQRS.Template.Domain.EventHandlers;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 
@@ -13,7 +13,7 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
 
         public ProcessRemovedEventHandler([NotNull]IReadModelRepository<ProcessModel> repository) => _repository = repository;
 
-        public async Task HandleAsync(ProcessRemovedEvent @event) => 
+        public async Task HandleAsync(ProcessRemovedEvent @event) =>
             await _repository.RemoveAsync(@event.AggregateId);
     }
 }

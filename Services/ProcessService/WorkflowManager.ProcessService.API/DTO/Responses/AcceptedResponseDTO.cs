@@ -6,12 +6,12 @@ namespace WorkflowManager.ProcessService.API.DTO.Responses
     {
         public AcceptedResponseDTO() : base()
         {
-            this.ProductId = Guid.NewGuid();
+            ProductId = Guid.NewGuid();
         }
 
         public AcceptedResponseDTO(Guid productId) : base()
         {
-            this.ProductId = productId;
+            ProductId = productId;
         }
         public Guid ProductId { get; }
     }

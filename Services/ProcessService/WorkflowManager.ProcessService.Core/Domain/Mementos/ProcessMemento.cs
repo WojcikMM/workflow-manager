@@ -1,5 +1,5 @@
-﻿using System;
-using CQRS.Template.Domain.Domain.Mementos;
+﻿using CQRS.Template.Domain.Domain.Mementos;
+using System;
 
 namespace WorkflowManager.ProductService.Core.Domain.Mementos
 {

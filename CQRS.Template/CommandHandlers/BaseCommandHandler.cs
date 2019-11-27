@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CQRS.Template.Domain.Commands;
 using CQRS.Template.Domain.Domain;
 using CQRS.Template.Domain.Storage;
-using CQRS.Template.Domain.Commands;
+using System;
+using System.Threading.Tasks;
 
 namespace CQRS.Template.Domain.CommandHandlers
 {
-    public abstract class BaseCommandHandler<TCommand, TAggregate>: ICommandHandler<TCommand> where TCommand : BaseCommand where TAggregate : AggregateRoot, new()
+    public abstract class BaseCommandHandler<TCommand, TAggregate> : ICommandHandler<TCommand> where TCommand : BaseCommand where TAggregate : AggregateRoot, new()
     {
         protected readonly IRepository<TAggregate> _repository;
         protected TAggregate aggregate;
@@ -16,7 +16,7 @@ namespace CQRS.Template.Domain.CommandHandlers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-       public async Task HandleAsync(TCommand command,Guid correlationId)
+        public async Task HandleAsync(TCommand command, Guid correlationId)
         {
             if (command is null)
             {
@@ -25,16 +25,16 @@ namespace CQRS.Template.Domain.CommandHandlers
 
             HandleCommand(command);
 
-            if(aggregate is null)
+            if (aggregate is null)
             {
                 throw new ArgumentNullException(nameof(aggregate), "Cannot save null valued aggregate.");
             }
 
-           await _repository.SaveAsync(aggregate, command.Version, correlationId);
+            await _repository.SaveAsync(aggregate, command.Version, correlationId);
 
             await Task.CompletedTask;
         }
 
-        public abstract void HandleCommand(TCommand command); 
+        public abstract void HandleCommand(TCommand command);
     }
 }

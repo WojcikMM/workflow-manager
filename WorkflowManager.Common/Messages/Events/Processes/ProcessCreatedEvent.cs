@@ -1,5 +1,5 @@
-﻿using System;
-using CQRS.Template.Domain.Events;
+﻿using CQRS.Template.Domain.Events;
+using System;
 
 namespace WorkflowManager.Common.Messages.Events.Processes
 {

@@ -1,7 +1,7 @@
-﻿using CQRS.Template.Domain.Events;
+﻿using CQRS.Template.Domain.CommandHandlers;
 using CQRS.Template.Domain.Commands;
 using CQRS.Template.Domain.EventHandlers;
-using CQRS.Template.Domain.CommandHandlers;
+using CQRS.Template.Domain.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.CQRSHandlers
