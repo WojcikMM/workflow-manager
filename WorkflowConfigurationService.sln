@@ -3,27 +3,36 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CQRS.Template", "CQRS.Template\CQRS.Template.csproj", "{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProcessesService", "ProcessesService", "{D4921CF0-8411-4F2E-AACD-F1F412BF7646}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.API", "Services\ProcessService\WorkflowManager.ProcessService.API\WorkflowManager.ProcessService.API.csproj", "{3E22E7BF-2085-47CB-BED6-D34618B72535}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Core", "Services\ProcessService\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj", "{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.ReadModel", "Services\ProcessService\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj", "{11307994-C678-496B-936E-04352AFB976F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusesService", "StatusesService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationService", "ApplicationService", "{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Common", "WorkflowManager.Common\WorkflowManager.Common.csproj", "{C6E9F437-0F2A-4B12-85DB-1C1ADDB481CF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Gateway", "WorkflowManagerGateway\WorkflowManager.Gateway.csproj", "{53760F5F-70A4-4E70-9437-E339A6AB8042}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{6262B9BF-905D-44A0-BE22-113EFD28C169}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F47C202-95EE-4DDD-A374-8E237A977D72}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.APIGateway", "src\WorkflowManager.APIGateway\WorkflowManager.APIGateway.csproj", "{2BD2718B-44B0-4550-8847-21C45AEA467C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Common", "src\WorkflowManager.Common\WorkflowManager.Common.csproj", "{CB579927-C753-43E2-A5EA-04D40199B556}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.CQRS", "src\WorkflowManager.CQRS\WorkflowManager.CQRS.csproj", "{DA8264B0-E8E6-4108-BB26-2C345B916533}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Core", "src\Services\ProcessService\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj", "{58F8766B-92A9-4A6A-84FB-329912213C76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.API", "src\Services\ProcessService\WorkflowManager.ProcessService.API\WorkflowManager.ProcessService.API.csproj", "{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.ReadModel", "src\Services\ProcessService\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj", "{AF189BA9-C91C-42F9-805C-26042547C74A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.Core", "src\Services\StatusService\WorkflowManager.StatusService.Core\WorkflowManager.StatusService.Core.csproj", "{38C262B9-76FD-48F7-A1FD-A06309556663}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.ReadModel", "src\Services\StatusService\WorkflowManager.StatusService.ReadModel\WorkflowManager.StatusService.ReadModel.csproj", "{7DDFCED1-29A0-4AEB-A809-11FB87B39202}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,43 +40,53 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F29442B-4A7F-422A-A904-CC8DEEEEEB2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E22E7BF-2085-47CB-BED6-D34618B72535}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11307994-C678-496B-936E-04352AFB976F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11307994-C678-496B-936E-04352AFB976F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11307994-C678-496B-936E-04352AFB976F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11307994-C678-496B-936E-04352AFB976F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6E9F437-0F2A-4B12-85DB-1C1ADDB481CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6E9F437-0F2A-4B12-85DB-1C1ADDB481CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6E9F437-0F2A-4B12-85DB-1C1ADDB481CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6E9F437-0F2A-4B12-85DB-1C1ADDB481CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53760F5F-70A4-4E70-9437-E339A6AB8042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53760F5F-70A4-4E70-9437-E339A6AB8042}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53760F5F-70A4-4E70-9437-E339A6AB8042}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53760F5F-70A4-4E70-9437-E339A6AB8042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BD2718B-44B0-4550-8847-21C45AEA467C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BD2718B-44B0-4550-8847-21C45AEA467C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BD2718B-44B0-4550-8847-21C45AEA467C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BD2718B-44B0-4550-8847-21C45AEA467C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB579927-C753-43E2-A5EA-04D40199B556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB579927-C753-43E2-A5EA-04D40199B556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB579927-C753-43E2-A5EA-04D40199B556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB579927-C753-43E2-A5EA-04D40199B556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA8264B0-E8E6-4108-BB26-2C345B916533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8264B0-E8E6-4108-BB26-2C345B916533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8264B0-E8E6-4108-BB26-2C345B916533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8264B0-E8E6-4108-BB26-2C345B916533}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58F8766B-92A9-4A6A-84FB-329912213C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F8766B-92A9-4A6A-84FB-329912213C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58F8766B-92A9-4A6A-84FB-329912213C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58F8766B-92A9-4A6A-84FB-329912213C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF189BA9-C91C-42F9-805C-26042547C74A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF189BA9-C91C-42F9-805C-26042547C74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF189BA9-C91C-42F9-805C-26042547C74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF189BA9-C91C-42F9-805C-26042547C74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38C262B9-76FD-48F7-A1FD-A06309556663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38C262B9-76FD-48F7-A1FD-A06309556663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38C262B9-76FD-48F7-A1FD-A06309556663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38C262B9-76FD-48F7-A1FD-A06309556663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DDFCED1-29A0-4AEB-A809-11FB87B39202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DDFCED1-29A0-4AEB-A809-11FB87B39202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DDFCED1-29A0-4AEB-A809-11FB87B39202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DDFCED1-29A0-4AEB-A809-11FB87B39202}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D4921CF0-8411-4F2E-AACD-F1F412BF7646} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
-		{3E22E7BF-2085-47CB-BED6-D34618B72535} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
-		{6460DB5F-FE01-40AA-B451-F70DDC96F1D4} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
 		{25AD97C8-366A-43D1-97B0-1231D978EA4D} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
-		{11307994-C678-496B-936E-04352AFB976F} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
-		{53760F5F-70A4-4E70-9437-E339A6AB8042} = {6262B9BF-905D-44A0-BE22-113EFD28C169}
 		{6262B9BF-905D-44A0-BE22-113EFD28C169} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
+		{2BD2718B-44B0-4550-8847-21C45AEA467C} = {6262B9BF-905D-44A0-BE22-113EFD28C169}
+		{58F8766B-92A9-4A6A-84FB-329912213C76} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
+		{E66BCE37-148B-40EE-9321-0A17DA3BE8BA} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
+		{AF189BA9-C91C-42F9-805C-26042547C74A} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
+		{38C262B9-76FD-48F7-A1FD-A06309556663} = {25AD97C8-366A-43D1-97B0-1231D978EA4D}
+		{7DDFCED1-29A0-4AEB-A809-11FB87B39202} = {25AD97C8-366A-43D1-97B0-1231D978EA4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

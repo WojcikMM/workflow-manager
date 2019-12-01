@@ -1,0 +1,9 @@
+version: '3'
+services:
+  process_service_db:
+    image: "microsoft/mssql-server-windows-developer"
+    environment:
+      ACCEPT_EULA: "Y"
+      sa_password: "Spec!alPassword"
+
+
