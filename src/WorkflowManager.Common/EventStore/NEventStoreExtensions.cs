@@ -11,18 +11,9 @@ namespace WorkflowManager.Common.EventStore
 {
     public static class NEventStoreExtensions
     {
-        public static void AddEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info, string connectionStringName = "EventStoreDatabase")
+        public static void AddEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info, string configurationSectionName = "EventStoreDatabase")
         {
-            string connectionString = null;
-            using (ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider())
-            {
-                IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
-                connectionString = configuration.GetConnectionString(connectionStringName);
-            }
-            if (connectionString is null)
-            {
-                throw new ApplicationException("Cannot find event store connectionString value.");
-            }
+            var connectionString = MsSQL.MsSqlExtensions.GetConnectionString(serviceCollection, configurationSectionName);
 
             serviceCollection.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
 

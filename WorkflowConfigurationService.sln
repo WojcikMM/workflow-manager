@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F47C202-95EE-4DDD-A374-8E237A977D72}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		rabbitmq-isolated.conf = rabbitmq-isolated.conf
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.APIGateway", "src\WorkflowManager.APIGateway\WorkflowManager.APIGateway.csproj", "{2BD2718B-44B0-4550-8847-21C45AEA467C}"

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.Configuration
 {
@@ -14,6 +15,15 @@ namespace WorkflowManager.Common.Configuration
             }
             section.Bind(option);
             return option;
+        }
+
+        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : class, new()
+        {
+            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+            {
+                IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
+                return configuration.GetOptions<T>(sectionName);
+            }
         }
     }
 }

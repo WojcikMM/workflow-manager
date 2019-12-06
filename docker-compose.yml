@@ -1,9 +1,36 @@
-version: '3'
+version: '3.4'
 services:
+  process_service_api:
+    build:
+      context: ./src
+      dockerfile: ProcessService.Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - rabbitmq
+      - process_service_db
+    links:
+      - rabbitmq
+      - process_service_db
+    deploy:
+      restart_policy:
+        condition: always
+
   process_service_db:
-    image: "microsoft/mssql-server-windows-developer"
+    image: "mcr.microsoft.com/mssql/server"
     environment:
       ACCEPT_EULA: "Y"
-      sa_password: "Spec!alPassword"
+      sa_password: "sa"
+    ports:
+      - "1433:1433"
+      - "1434:1434"
 
-
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    command: rabbitmq-server
+    hostname: "rabbitmq"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
