@@ -19,7 +19,7 @@ namespace WorkflowManager.Common.RabbitMq
                 AutoCloseConnection = false,
                 Username = "guest",
                 Password = "guest",
-                Port = 5372,
+                Port = 5672,
                 VirtualHost = "/",
                 Hostnames = { "rabbitmq" },
                 PublishConfirmTimeout = TimeSpan.FromMilliseconds(500)

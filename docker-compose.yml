@@ -4,6 +4,8 @@ services:
     build:
       context: ./src
       dockerfile: ProcessService.Dockerfile
+      args:
+        rabbit_port: 5672
     ports:
       - "8000:80"
     depends_on:
@@ -12,18 +14,16 @@ services:
     links:
       - rabbitmq
       - process_service_db
-    deploy:
-      restart_policy:
-        condition: always
+    restart: on-failure
 
-  process_service_db:
-    image: "mcr.microsoft.com/mssql/server"
+   process_service_db:
+    image: "microsoft/mssql-server-linux"
     environment:
+      SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"
-      sa_password: "sa"
     ports:
-      - "1433:1433"
-      - "1434:1434"
+      - "1453:1433"
+      - "1454:1434"
 
   rabbitmq:
     image: "rabbitmq:3-management"

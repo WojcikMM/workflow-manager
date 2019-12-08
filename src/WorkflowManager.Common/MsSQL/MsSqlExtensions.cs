@@ -10,7 +10,9 @@ namespace WorkflowManager.Common.MsSQL
             var options = services.GetOptions<MsSqlConfigurationModel>(sectionName);
             var connecionBuilder = new Microsoft.Data.SqlClient.SqlConnectionStringBuilder();
 
-            connecionBuilder.DataSource = string.IsNullOrWhiteSpace(options.DataSource) ? "no_database" : options.DataSource;
+            connecionBuilder.DataSource = string.IsNullOrWhiteSpace(options.DataSource) ? "no_data_source" : options.DataSource;
+            connecionBuilder.InitialCatalog = string.IsNullOrEmpty(options.DatabaseName) ? "no_database" :
+                options.DatabaseName;
             connecionBuilder.UserID = string.IsNullOrWhiteSpace(options.UserId) ? "sa--" : options.UserId;
             connecionBuilder.Password = string.IsNullOrWhiteSpace(options.UserPassword) ? "no_password" : options.UserPassword;
             connecionBuilder.ConnectTimeout = options.ConnectTimeout ?? 30;

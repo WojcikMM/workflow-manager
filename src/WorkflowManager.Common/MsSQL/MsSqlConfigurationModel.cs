@@ -7,6 +7,7 @@ namespace WorkflowManager.Common.MsSQL
     public class MsSqlConfigurationModel
     {
         public string DataSource { get; set; }
+        public string DatabaseName { get; set; }
         public string UserId { get; set; }
         public string UserPassword { get; set; }
         public int? ConnectTimeout { get; set; }
