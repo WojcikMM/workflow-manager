@@ -4,6 +4,8 @@ using RawRabbit.Configuration;
 using RawRabbit.vNext;
 using RawRabbit.vNext.Disposable;
 using System;
+using System.Collections.Generic;
+using WorkflowManager.Common.Configuration;
 
 namespace WorkflowManager.Common.RabbitMq
 {
@@ -12,17 +14,19 @@ namespace WorkflowManager.Common.RabbitMq
         public static IBusSubscriber UseRabbitMq(this IApplicationBuilder app) =>
             new BusSubscriber(app);
 
-        public static void AddRabbitMq(this IServiceCollection services)
+        public static void AddRabbitMq(this IServiceCollection services, string sectionName = "RabbitMq")
         {
+            var options = services.GetOptions<RabbitMqConfigurationModel>(sectionName);          
+
             RawRabbitConfiguration config = new RawRabbitConfiguration()
             {
-                AutoCloseConnection = false,
-                Username = "guest",
-                Password = "guest",
-                Port = 5672,
-                VirtualHost = "/",
-                Hostnames = { "rabbitmq" },
-                PublishConfirmTimeout = TimeSpan.FromMilliseconds(500)
+                AutoCloseConnection = options.AutoCloseConnection,
+                Username = options.Username,
+                Password = options.Password,
+                Port = options.Port,
+                VirtualHost = options.VirtualHost,
+                Hostnames = new List<string>() { options.Hostname } ,
+                PublishConfirmTimeout = TimeSpan.FromMilliseconds(options.PublishConfirmTimeout)
             };
 
             IBusClient busClient = BusClientFactory.CreateDefault(config);

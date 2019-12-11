@@ -5,11 +5,11 @@ namespace WorkflowManager.Common.Configuration
 {
     public static class ConfigurationExtensions
     {
-        public static T GetOptions<T>(this IConfiguration configuration, string sectionName) where T : class, new()
+        public static T GetOptions<T>(this IConfiguration configuration, string sectionName, bool failIfNotExists = false) where T : class, new()
         {
             T option = new T();
             IConfigurationSection section = configuration.GetSection(sectionName);
-            if (!section.Exists())
+            if (!section.Exists() && failIfNotExists)
             {
                 throw new System.Exception($"Cannot get configuration for: {sectionName}.");
             }
@@ -17,12 +17,12 @@ namespace WorkflowManager.Common.Configuration
             return option;
         }
 
-        public static T GetOptions<T>(this IServiceCollection services, string sectionName) where T : class, new()
+        public static T GetOptions<T>(this IServiceCollection services, string sectionName, bool failIfNotExists = false) where T : class, new()
         {
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
                 IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
-                return configuration.GetOptions<T>(sectionName);
+                return configuration.GetOptions<T>(sectionName, failIfNotExists);
             }
         }
     }

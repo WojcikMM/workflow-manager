@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Data.SqlClient;
 
 namespace WorkflowManager.Common.MsSQL
 {
     public class MsSqlConfigurationModel
     {
-        public string DataSource { get; set; }
-        public string DatabaseName { get; set; }
-        public string UserId { get; set; }
-        public string UserPassword { get; set; }
-        public int? ConnectTimeout { get; set; }
-        public Microsoft.Data.SqlClient.ApplicationIntent? ApplicationIntent { get; set; }
-        public bool? MultiSubnetFailover { get; set; }
+        public string DataSource
+        {
+            get
+            {
+                return this.Port.HasValue ? $"{this.Server},{this.Port}" : this.Server;
+            }
+        }
+        public string Server { get; set; } = "localhost";
+        public int? Port { get; set; } = 1453;
+        public string DatabaseName { get; set; } = "db";
+        public string UserId { get; set; } = "sa";
+        public string UserPassword { get; set; } = "sa";
+        public int ConnectTimeout { get; set; } = 30;
+        public ApplicationIntent ApplicationIntent { get; set; } = ApplicationIntent.ReadWrite;
+        public bool MultiSubnetFailover { get; set; } = false;
     }
 }

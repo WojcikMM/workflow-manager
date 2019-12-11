@@ -1,22 +1,25 @@
 version: '3.4'
 services:
-  process_service_api:
+  workflowmanager.processservice.api:
+    image: ${DOCKER_REGISTRY-}workflowmanagerprocessserviceapi
     build:
-      context: ./src
-      dockerfile: ProcessService.Dockerfile
+      context: .
+      dockerfile: src/Services/ProcessService/WorkflowManager.ProcessService.API/Dockerfile
       args:
         rabbit_port: 5672
     ports:
       - "8000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
-      - rabbitmq
-      - process_service_db
+      - workflowmanager.rabbitmq
+      - workflowmanager.processservice.db
     links:
-      - rabbitmq
-      - process_service_db
+      - workflowmanager.rabbitmq
+      - workflowmanager.processservice.db
     restart: on-failure
 
-   process_service_db:
+  workflowmanager.processservice.db:
     image: "microsoft/mssql-server-linux"
     environment:
       SA_PASSWORD: "Your_password123"
@@ -25,12 +28,12 @@ services:
       - "1453:1433"
       - "1454:1434"
 
-  rabbitmq:
+  workflowmanager.rabbitmq:
     image: "rabbitmq:3-management"
     command: rabbitmq-server
     hostname: "rabbitmq"
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "8001:15672"
+      - "5652:5672"
     labels:
       NAME: "rabbitmq"

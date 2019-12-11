@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  workflowmanager.processservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "8000:80"
