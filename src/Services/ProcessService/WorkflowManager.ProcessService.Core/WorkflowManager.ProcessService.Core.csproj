@@ -8,8 +8,4 @@
     <ProjectReference Include="..\..\..\WorkflowManager.Common\WorkflowManager.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NEventStore" Version="7.0.0" />
-  </ItemGroup>
-
 </Project>

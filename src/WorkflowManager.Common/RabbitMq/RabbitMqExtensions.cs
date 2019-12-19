@@ -26,7 +26,8 @@ namespace WorkflowManager.Common.RabbitMq
                 Port = options.Port,
                 VirtualHost = options.VirtualHost,
                 Hostnames = new List<string>() { options.Hostname } ,
-                PublishConfirmTimeout = TimeSpan.FromMilliseconds(options.PublishConfirmTimeout)
+                PublishConfirmTimeout = TimeSpan.FromMilliseconds(options.PublishConfirmTimeout),
+                RequestTimeout = TimeSpan.FromSeconds(60)
             };
 
             IBusClient busClient = BusClientFactory.CreateDefault(config);

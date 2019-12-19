@@ -2,11 +2,6 @@ version: '3.4'
 services:
   workflowmanager.processservice.api:
     image: wojcikmm/workflow-manager-process-service-api
-    build:
-      context: .
-      dockerfile: src/Services/ProcessService/WorkflowManager.ProcessService.API/Dockerfile
-      args:
-        rabbit_port: 5672
     ports:
       - "8000:80"
     environment:
@@ -30,11 +25,6 @@ services:
 
   workflowmanager.statusservice.api:
     image: wojcikmm/workflow-manager-status-service-api
-    build:
-      context: .
-      dockerfile: src/Services/StatusService/WorkflowManager.StatusService.API/Dockerfile
-      args:
-        rabbit_port: 5672
     ports:
       - "9000:80"
     environment:

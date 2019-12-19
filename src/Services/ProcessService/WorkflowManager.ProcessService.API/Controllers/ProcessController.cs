@@ -1,15 +1,15 @@
-﻿using WorkflowManager.CQRS.ReadModel;
-using Microsoft.AspNetCore.Mvc;
-using RawRabbit.vNext.Disposable;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using RawRabbit.vNext.Disposable;
+using WorkflowManager.CQRS.ReadModel;
+using WorkflowManager.Common.ErrorResponses;
 using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.ProcessService.API.DTO.Commands;
-using WorkflowManager.ProcessService.API.DTO.ErrorResponses;
-using WorkflowManager.ProcessService.API.DTO.Responses;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using WorkflowManager.Common.ApiResponses;
 
 namespace WorkflowManager.ProductService.API.Controllers
 {

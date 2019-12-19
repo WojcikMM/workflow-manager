@@ -5,7 +5,7 @@ namespace WorkflowManager.Common.Messages.Events.Processes
 {
     public class ProcessCreatedEvent : BaseEvent
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
         public ProcessCreatedEvent(Guid Id, string Name) : base(Id)
         {

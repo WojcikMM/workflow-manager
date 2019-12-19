@@ -5,7 +5,7 @@ namespace WorkflowManager.Common.Messages.Commands.Processes
 {
     public class CreateProcessCommand : BaseCommand
     {
-        public string Name { get; private set; }
+        public string Name { get; }
 
         public CreateProcessCommand(Guid Id, string Name) : base(Id, -1)
         {

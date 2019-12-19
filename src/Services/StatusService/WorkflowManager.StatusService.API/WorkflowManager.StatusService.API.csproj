@@ -12,14 +12,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj" />
-    <ProjectReference Include="..\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj" />
+    <ProjectReference Include="..\WorkflowManager.StatusService.Core\WorkflowManager.StatusService.Core.csproj" />
+    <ProjectReference Include="..\WorkflowManager.StatusService.ReadModel\WorkflowManager.StatusService.ReadModel.csproj" />
   </ItemGroup>
 
   <ProjectExtensions>
@@ -27,5 +31,5 @@
       <UserProperties appsettings_1development_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
-
+  
 </Project>

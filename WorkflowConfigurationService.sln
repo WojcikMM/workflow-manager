@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProcessesService", "ProcessesService", "{D4921CF0-8411-4F2E-AACD-F1F412BF7646}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProcessService", "ProcessService", "{D4921CF0-8411-4F2E-AACD-F1F412BF7646}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusesService", "StatusesService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusService", "StatusService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationService", "ApplicationService", "{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1}"
 EndProject
@@ -30,6 +30,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.ReadModel", "src\Services\StatusService\WorkflowManager.StatusService.ReadModel\WorkflowManager.StatusService.ReadModel.csproj", "{7DDFCED1-29A0-4AEB-A809-11FB87B39202}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4138FA9B-5890-40DE-B812-63B6F329B770}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManager.StatusService.API", "src\Services\StatusService\WorkflowManager.StatusService.API\WorkflowManager.StatusService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{4138FA9B-5890-40DE-B812-63B6F329B770}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4138FA9B-5890-40DE-B812-63B6F329B770}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4138FA9B-5890-40DE-B812-63B6F329B770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{AF189BA9-C91C-42F9-805C-26042547C74A} = {D4921CF0-8411-4F2E-AACD-F1F412BF7646}
 		{38C262B9-76FD-48F7-A1FD-A06309556663} = {25AD97C8-366A-43D1-97B0-1231D978EA4D}
 		{7DDFCED1-29A0-4AEB-A809-11FB87B39202} = {25AD97C8-366A-43D1-97B0-1231D978EA4D}
+		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835} = {25AD97C8-366A-43D1-97B0-1231D978EA4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManager.ProcessService.API.DTO.Responses
+namespace WorkflowManager.Common.ApiResponses
 {
     public class AcceptedResponseDTO : CorrelationIdResponseDTO
     {

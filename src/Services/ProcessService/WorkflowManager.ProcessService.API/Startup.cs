@@ -10,7 +10,6 @@ using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.Common.ReadModelStore;
 using WorkflowManager.Common.Swagger;
-using WorkflowManager.ProcessService.API.Middlewares;
 using WorkflowManager.ProcessService.ReadModel;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 using WorkflowManager.ProductService.Core.CommandHandlers;
@@ -65,7 +64,6 @@ namespace WorkflowManager.ProductService.API
 
             app.UseAuthorization();
             app.UseServiceSwaggerUI();
-            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

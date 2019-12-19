@@ -6,3 +6,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker
     ports:
       - "8000:80"
+  workflowmanager.statusservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - "9000:80"

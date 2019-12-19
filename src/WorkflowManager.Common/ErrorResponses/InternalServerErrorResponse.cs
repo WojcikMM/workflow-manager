@@ -1,4 +1,4 @@
-﻿namespace WorkflowManager.ProcessService.API.DTO.ErrorResponses
+﻿namespace WorkflowManager.Common.ErrorResponses
 {
     public class InternalServerErrorResponse
     {

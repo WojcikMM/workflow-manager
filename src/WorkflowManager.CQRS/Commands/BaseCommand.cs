@@ -12,8 +12,8 @@ namespace WorkflowManager.CQRS.Domain.Commands
     [Serializable]
     public class BaseCommand : ICommand
     {
-        public Guid Id { get; private set; }
-        public int Version { get; private set; }
+        public Guid Id { get; }
+        public int Version { get; }
 
         public BaseCommand(Guid id, int version)
         {

@@ -1,5 +1,5 @@
-﻿using WorkflowManager.CQRS.Domain.Commands;
-using System;
+﻿using System;
+using WorkflowManager.CQRS.Domain.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Processes
 {
