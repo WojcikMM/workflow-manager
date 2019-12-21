@@ -20,5 +20,4 @@ RUN dotnet publish "WorkflowManager.StatusService.API.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY ["src/scripts/wait-for-it.sh", "/app/wait-for-it.sh"]
-ENTRYPOINT ./wait-for-it.sh rabbitmq:5672 -- dotnet  WorkflowManager.StatusService.API.dll
+ENTRYPOINT ["dotnet", "WorkflowManager.StatusService.API.dll"]

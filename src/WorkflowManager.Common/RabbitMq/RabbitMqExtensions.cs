@@ -16,7 +16,7 @@ namespace WorkflowManager.Common.RabbitMq
 
         public static void AddRabbitMq(this IServiceCollection services, string sectionName = "RabbitMq")
         {
-            var options = services.GetOptions<RabbitMqConfigurationModel>(sectionName);          
+            var options = services.GetOptions<RabbitMqConfigurationModel>(sectionName);
 
             RawRabbitConfiguration config = new RawRabbitConfiguration()
             {
@@ -26,8 +26,8 @@ namespace WorkflowManager.Common.RabbitMq
                 Port = options.Port,
                 VirtualHost = options.VirtualHost,
                 Hostnames = new List<string>() { options.Hostname } ,
-                PublishConfirmTimeout = TimeSpan.FromMilliseconds(options.PublishConfirmTimeout),
-                RequestTimeout = TimeSpan.FromSeconds(60)
+                PublishConfirmTimeout = TimeSpan.FromSeconds(options.PublishConfirmTimeout),
+                RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout)
             };
 
             IBusClient busClient = BusClientFactory.CreateDefault(config);

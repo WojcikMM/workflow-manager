@@ -14,6 +14,7 @@ using WorkflowManager.StatusService.ReadModel;
 using WorkflowManager.StatusService.Core.CommandHandlers;
 using WorkflowManager.StatusService.ReadModel.ReadDatabase;
 using WorkflowManager.StatusService.ReadModel.EventHandlers;
+using System;
 
 namespace WorkflowManager.StatusService.API
 {
@@ -33,9 +34,9 @@ namespace WorkflowManager.StatusService.API
             services.AddRabbitMq();
 
             services.AddRabbitMq();
-            services.AddEventStore();
+            services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();
-            services.AddReadModelStore<StatusesContext>();
+            services.AddReadModelStore<StatusesContext>("MsSqlDatabase");
             services.AddReadModelRepository<StatusModel, StatusReadModelRepository>();
 
             services.AddCommandHandler<CreateStatusCommand, CreateStatusCommandHandler>()
@@ -51,6 +52,8 @@ namespace WorkflowManager.StatusService.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Console.WriteLine(env.EnvironmentName);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

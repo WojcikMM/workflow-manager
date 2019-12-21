@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WorkflowManager.Common.RabbitMq
+﻿namespace WorkflowManager.Common.RabbitMq
 {
     public class RabbitMqConfigurationModel
     {
@@ -11,6 +8,7 @@ namespace WorkflowManager.Common.RabbitMq
         public int Port { get; set; } = 5672;
         public string VirtualHost { get; set; } = "/";
         public string Hostname { get; set; } =  "localhost";
-        public double PublishConfirmTimeout { get; set; } = 500;
+        public int PublishConfirmTimeout { get; set; } = 10;
+        public int RequestTimeout { get; set; } = 360;
     }
 }

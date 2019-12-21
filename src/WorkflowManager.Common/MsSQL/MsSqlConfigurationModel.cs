@@ -12,7 +12,7 @@ namespace WorkflowManager.Common.MsSQL
             }
         }
         public string Server { get; set; } = "localhost";
-        public int? Port { get; set; } = 1453;
+        public int? Port { get; set; }
         public string DatabaseName { get; set; } = "db";
         public string UserId { get; set; } = "sa";
         public string UserPassword { get; set; } = "sa";

@@ -29,9 +29,9 @@ namespace WorkflowManager.ProductService.API
         {
             services.AddControllers();
             services.AddRabbitMq();
-            services.AddEventStore();
+            services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();
-            services.AddReadModelStore<ProcessesContext>();
+            services.AddReadModelStore<ProcessesContext>("MsSqlDatabase");
             services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();
 
             services.AddCommandHandler<CreateProcessCommand, CreateProcessCommandHandler>()

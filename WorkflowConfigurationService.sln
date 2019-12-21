@@ -29,8 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.ReadModel", "src\Services\StatusService\WorkflowManager.StatusService.ReadModel\WorkflowManager.StatusService.ReadModel.csproj", "{7DDFCED1-29A0-4AEB-A809-11FB87B39202}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4138FA9B-5890-40DE-B812-63B6F329B770}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManager.StatusService.API", "src\Services\StatusService\WorkflowManager.StatusService.API\WorkflowManager.StatusService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
 EndProject
 Global
