@@ -25,9 +25,15 @@ namespace WorkflowManager.Common.RabbitMq
                 Password = options.Password,
                 Port = options.Port,
                 VirtualHost = options.VirtualHost,
-                Hostnames = new List<string>() { options.Hostname } ,
+                Hostnames = new List<string>() { options.Hostname },
                 PublishConfirmTimeout = TimeSpan.FromSeconds(options.PublishConfirmTimeout),
-                RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout)
+                RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout),
+                Exchange = new GeneralExchangeConfiguration()
+                {
+                    AutoDelete = false,
+                    Durable = true,
+                    Type = RawRabbit.Configuration.Exchange.ExchangeType.Direct
+                }
             };
 
             IBusClient busClient = BusClientFactory.CreateDefault(config);

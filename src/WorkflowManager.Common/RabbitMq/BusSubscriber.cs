@@ -9,8 +9,6 @@ using System;
 
 namespace WorkflowManager.Common.RabbitMq
 {
-
-
     public class BusSubscriber : IBusSubscriber
     {
         private readonly IServiceProvider _serviceProvider;
@@ -24,7 +22,9 @@ namespace WorkflowManager.Common.RabbitMq
                 throw new ArgumentException(nameof(_busClient), "Bus client was not registred in application.");
         }
 
-        public IBusSubscriber SubscribeCommand<TCommand>(string @namespace = null, string queueName = null, Func<TCommand, Exception, IRejectedEvent> onError = null) where TCommand : ICommand
+
+        public IBusSubscriber SubscribeCommand<TCommand>()
+            where TCommand : ICommand
         {
             _busClient.SubscribeAsync<TCommand>(async (command, correlationContext) =>
             {
@@ -36,19 +36,69 @@ namespace WorkflowManager.Common.RabbitMq
                 }
                 catch (Exception ex)
                 {
-                    if (!(onError is null))
-                    {
-                        IRejectedEvent rejectedEvent = onError(command, ex);
-                        await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
-                    }
-                    // add logs
+                    LogErrorOnHandlers(ex, correlationContext.GlobalRequestId);
                 }
             });
 
             return this;
         }
 
-        public IBusSubscriber SubscribeEvent<TEvent>(string @namespace = null, string queueName = null, Func<TEvent, Exception, IRejectedEvent> onError = null) where TEvent : IEvent
+        public IBusSubscriber SubscribeCommand<TCommand, TRejectedEvent>()
+         where TCommand : ICommand
+         where TRejectedEvent : IRejectedEvent, new()
+        {
+            _busClient.SubscribeAsync<TCommand>(async (command, correlationContext) =>
+            {
+                ICommandHandler<TCommand> commandHandler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
+
+                try
+                {
+                    await commandHandler.HandleAsync(command, correlationContext.GlobalRequestId);
+                }
+                catch (Exception ex)
+                {
+                    LogErrorOnHandlers(ex, correlationContext.GlobalRequestId);
+                    var rejectedEvent = new TRejectedEvent()
+                                        .Initialize(command, ex, correlationContext.GlobalRequestId);
+                    await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
+                }
+            });
+
+            return this;
+        }
+
+        public IBusSubscriber SubscribeCommand<TCommand, TRejectedEvent, TCompleteEvent>()
+            where TCommand : ICommand
+            where TRejectedEvent : IRejectedEvent, new()
+            where TCompleteEvent : ICompleteEvent, new()
+        {
+            _busClient.SubscribeAsync<TCommand>(async (command, correlationContext) =>
+            {
+                ICommandHandler<TCommand> commandHandler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
+
+                try
+                {
+                    await commandHandler.HandleAsync(command, correlationContext.GlobalRequestId);
+
+                    var completeEvent = new TCompleteEvent()
+                                            .Initialize(command, correlationContext.GlobalRequestId);
+                    await _busClient.PublishAsync(completeEvent, correlationContext.GlobalRequestId);
+                }
+                catch (Exception ex)
+                {
+                    LogErrorOnHandlers(ex, correlationContext.GlobalRequestId);
+                    var rejectedEvent = new TRejectedEvent()
+                                        .Initialize(command, ex, correlationContext.GlobalRequestId);
+                    await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
+                }
+            });
+
+            return this;
+        }
+
+
+        public IBusSubscriber SubscribeEvent<TEvent>()
+           where TEvent : IEvent
         {
             _busClient.SubscribeAsync<TEvent>(async (@event, correlationContext) =>
             {
@@ -61,12 +111,35 @@ namespace WorkflowManager.Common.RabbitMq
                     }
                     catch (Exception ex)
                     {
-                        if (!(onError is null))
-                        {
-                            IRejectedEvent rejectedEvent = onError(@event, ex);
-                            await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
-                        }
-                        // add logs
+                        LogErrorOnHandlers(ex, correlationContext.GlobalRequestId);
+                        break;
+                    }
+                }
+            });
+
+            return this;
+        }
+
+
+        public IBusSubscriber SubscribeEvent<TEvent, TRejectedEvent>()
+           where TEvent : IEvent
+           where TRejectedEvent : IRejectedEvent, new()
+        {
+            _busClient.SubscribeAsync<TEvent>(async (@event, correlationContext) =>
+            {
+                System.Collections.Generic.IEnumerable<IEventHandler<TEvent>> eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
+                foreach (IEventHandler<TEvent> eventHandler in eventHandlers)
+                {
+                    try
+                    {
+                        await eventHandler.HandleAsync(@event);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogErrorOnHandlers(ex, correlationContext.GlobalRequestId);
+                        var rejectedEvent = new TRejectedEvent().Initialize(
+                                                                @event, ex, correlationContext.GlobalRequestId);
+                        await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
                         break;
                     }
                 }
@@ -74,6 +147,47 @@ namespace WorkflowManager.Common.RabbitMq
             });
 
             return this;
+        }
+
+        public IBusSubscriber SubscribeEvent<TEvent, TRejectedEvent, TCompleteEvent>()
+            where TEvent : IEvent
+            where TRejectedEvent : IRejectedEvent, new()
+            where TCompleteEvent : ICompleteEvent, new()
+        {
+            _busClient.SubscribeAsync<TEvent>(async (@event, correlationContext) =>
+            {
+                System.Collections.Generic.IEnumerable<IEventHandler<TEvent>> eventHandlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
+                foreach (IEventHandler<TEvent> eventHandler in eventHandlers)
+                {
+                    try
+                    {
+                        await eventHandler.HandleAsync(@event);
+
+                        var completeEvent =new TCompleteEvent()
+                                                .Initialize(@event, correlationContext.GlobalRequestId);
+
+                        await _busClient.PublishAsync(completeEvent, correlationContext.GlobalRequestId);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogErrorOnHandlers(ex, correlationContext.GlobalRequestId);
+
+                        var rejectedEvent = new TRejectedEvent().Initialize(
+                                                @event, ex, correlationContext.GlobalRequestId);
+                        await _busClient.PublishAsync(rejectedEvent, correlationContext.GlobalRequestId);
+                        break;
+                    }
+                }
+
+            });
+
+            return this;
+        }
+
+
+        private void LogErrorOnHandlers(Exception ex, Guid correlationId)
+        {
+
         }
     }
 }

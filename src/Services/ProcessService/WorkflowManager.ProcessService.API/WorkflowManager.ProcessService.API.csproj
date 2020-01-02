@@ -22,6 +22,10 @@
     <ProjectReference Include="..\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties appsettings_1development_1json__JsonSchema="" />
