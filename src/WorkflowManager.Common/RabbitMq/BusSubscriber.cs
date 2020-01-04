@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using RawRabbit.vNext.Disposable;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace WorkflowManager.Common.RabbitMq
 {
@@ -13,6 +14,7 @@ namespace WorkflowManager.Common.RabbitMq
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IBusClient _busClient;
+        private readonly ILogger<BusSubscriber> _logger;
 
         public BusSubscriber(IApplicationBuilder app)
         {
@@ -20,6 +22,8 @@ namespace WorkflowManager.Common.RabbitMq
                 ?? throw new ArgumentNullException(nameof(_serviceProvider), "Cannot get service provider.");
             _busClient = _serviceProvider.GetService<IBusClient>() ??
                 throw new ArgumentException(nameof(_busClient), "Bus client was not registred in application.");
+            _logger = _serviceProvider.GetService<ILogger<BusSubscriber>>() ??
+                throw new ArgumentException(nameof(_logger), "Logger not specyfied");
         }
 
 
@@ -185,9 +189,7 @@ namespace WorkflowManager.Common.RabbitMq
         }
 
 
-        private void LogErrorOnHandlers(Exception ex, Guid correlationId)
-        {
-
-        }
+        private void LogErrorOnHandlers(Exception ex, Guid correlationId) => 
+            _logger.LogError(ex, "Error occured when subscrbed bus.", new { CorrelationId = correlationId });
     }
 }

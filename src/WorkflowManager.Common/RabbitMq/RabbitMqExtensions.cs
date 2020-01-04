@@ -27,13 +27,7 @@ namespace WorkflowManager.Common.RabbitMq
                 VirtualHost = options.VirtualHost,
                 Hostnames = new List<string>() { options.Hostname },
                 PublishConfirmTimeout = TimeSpan.FromSeconds(options.PublishConfirmTimeout),
-                RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout),
-                Exchange = new GeneralExchangeConfiguration()
-                {
-                    AutoDelete = false,
-                    Durable = true,
-                    Type = RawRabbit.Configuration.Exchange.ExchangeType.Direct
-                }
+                RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout)
             };
 
             IBusClient busClient = BusClientFactory.CreateDefault(config);
