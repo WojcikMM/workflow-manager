@@ -18,12 +18,12 @@ namespace WorkflowManager.ProductService.API.Controllers
     [Produces("application/json")]
     [ProducesResponseType(typeof(InternalServerErrorResponse), (int)HttpStatusCode.InternalServerError)]
     [ProducesResponseType(typeof(SimpleErrorResponse), (int)HttpStatusCode.Conflict)]
-    public class ProcessController : ControllerBase
+    public class ProcessesController : ControllerBase
     {
         private readonly IBusClient _busClient;
         private readonly IReadModelRepository<ProcessModel> _readModelRepository;
 
-        public ProcessController(IBusClient busClient, IReadModelRepository<ProcessModel> readModelRepository)
+        public ProcessesController(IBusClient busClient, IReadModelRepository<ProcessModel> readModelRepository)
         {
             _busClient = busClient ?? throw new ArgumentNullException(nameof(busClient));
             _readModelRepository = readModelRepository ?? throw new ArgumentNullException(nameof(readModelRepository));

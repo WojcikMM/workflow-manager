@@ -1,14 +1,29 @@
 version: '3.4'
 services:
+  workflowmanager.apigateway:
+    image: wojcikmm/workflow-manager-api-gateway
+    build:
+      context: .
+      dockerfile: src/WorkflowManager.APIGateway/Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Docker"
+    depends_on:
+      - workflowmanager.processservice.api
+      - workflowmanager.statusservice.api
+    links:
+      - workflowmanager.processservice.api
+      - workflowmanager.statusservice.api
+    restart: on-failure
+
   workflowmanager.processservice.api:
     image: wojcikmm/workflow-manager-process-service-api
     build:
       context: .
       dockerfile: src/Services/ProcessService/WorkflowManager.ProcessService.API/Dockerfile
-      args:
-        rabbit_port: 5672
     ports:
-      - "8000:80"
+      - "8001:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
@@ -36,7 +51,7 @@ services:
       args:
         rabbit_port: 5672
     ports:
-      - "9000:80"
+      - "8002:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "Docker"
     depends_on:
@@ -56,14 +71,12 @@ services:
       - "1463:1433"
       - "1464:1434"
 
-
-
   workflowmanager.rabbitmq:
     image: "rabbitmq:3-management"
     command: rabbitmq-server
     hostname: "rabbitmq"
     ports:
-      - "8001:15672"
+      - "15672:15672"
       - "5652:5672"
     labels:
       NAME: "rabbitmq"

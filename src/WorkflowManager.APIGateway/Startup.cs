@@ -4,8 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestEase;
+using WorkflowManager.APIGateway;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManagerGateway.Services;
+using WorkflowManager.Common.Configuration;
 
 namespace WorkflowManagerGateway
 {
@@ -20,7 +22,6 @@ namespace WorkflowManagerGateway
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -33,8 +34,17 @@ namespace WorkflowManagerGateway
                         Version = _appServiceVersion
                     });
             });
-            services.AddTransient<IProcessesService>(service =>
-                        RestClient.For<IProcessesService>("http://localhost:5001/api"));
+
+            // Gateway configuration
+            var gatewayServicesUrls = services.GetOptions<GatewayServicesConfigurationModel>("Services", failIfNotExists: true);
+
+
+            services.AddTransient(service =>
+                        RestClient.For<IProcessesService>(gatewayServicesUrls.ProcessServiceUrl));
+
+            services.AddTransient(service =>
+                        RestClient.For<IStatusesService>(gatewayServicesUrls.StatusServiceUrl));
+
             services.AddRabbitMq();
         }
 

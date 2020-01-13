@@ -18,12 +18,12 @@ namespace WorkflowManager.StatusService.API.Controllers
     [Produces("application/json")]
     [ProducesResponseType(typeof(InternalServerErrorResponse), (int)HttpStatusCode.InternalServerError)]
     [ProducesResponseType(typeof(SimpleErrorResponse), (int)HttpStatusCode.Conflict)]
-    public class StatusController : ControllerBase
+    public class StatusesController : ControllerBase
     {
         private readonly IBusClient _busClient;
         private readonly IReadModelRepository<StatusModel> _readModelRepository;
 
-        public StatusController(IBusClient busClient, IReadModelRepository<StatusModel> readModelRepository)
+        public StatusesController(IBusClient busClient, IReadModelRepository<StatusModel> readModelRepository)
         {
             _busClient = busClient ?? throw new ArgumentNullException(nameof(busClient));
             _readModelRepository = readModelRepository ?? throw new ArgumentNullException(nameof(readModelRepository));

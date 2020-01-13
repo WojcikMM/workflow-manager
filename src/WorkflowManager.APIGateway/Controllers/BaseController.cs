@@ -65,6 +65,7 @@ namespace WorkflowManagerGateway.Controllers
 
             return Accepted(new
             {
+                AggregateId = command.Id,
                 CorrelationId = correlationId
             });
         }
