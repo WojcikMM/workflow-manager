@@ -25,7 +25,7 @@ namespace WorkflowManager.Common.RabbitMq
                 Password = options.Password,
                 Port = options.Port,
                 VirtualHost = options.VirtualHost,
-                Hostnames = new List<string>() { options.Hostname } ,
+                Hostnames = new List<string>() { options.Hostname },
                 PublishConfirmTimeout = TimeSpan.FromSeconds(options.PublishConfirmTimeout),
                 RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout)
             };

@@ -1,10 +1,10 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System;
-using NLog.Web;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
-namespace WorkflowManager.ProductService.API
+namespace WorkflowManager.NotificationService.API
 {
     public class Program
     {
@@ -18,7 +18,7 @@ namespace WorkflowManager.ProductService.API
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Process service stopped by error.");
+                logger.Error(ex, "Notification service stopped by error.");
                 throw;
             }
             finally
@@ -32,7 +32,7 @@ namespace WorkflowManager.ProductService.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .ConfigureLogging((context, logging)=>
+                    .ConfigureLogging((context, logging) =>
                     {
                         logging.ClearProviders();
                         logging.SetMinimumLevel(LogLevel.Trace);
