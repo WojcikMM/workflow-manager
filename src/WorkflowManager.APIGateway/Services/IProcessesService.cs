@@ -11,7 +11,7 @@ namespace WorkflowManagerGateway.Services
     {
         [AllowAnyStatusCode]
         [Get("processes")]
-        Task<IEnumerable<ProcessDTO>> BrowseAsync([Query]string name = "");
+        Task<IEnumerable<ProcessDTO>> BrowseAsync([Query]string name);
 
         [AllowAnyStatusCode]
         [Get("processes/{id}")]

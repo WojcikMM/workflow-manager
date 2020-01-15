@@ -20,7 +20,7 @@ namespace WorkflowManagerGateway.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] string name = "")
+        public async Task<IActionResult> Get([FromQuery] string name = null)
             => Collection(await _processesService.BrowseAsync(name));
 
         [HttpGet("{id}")]

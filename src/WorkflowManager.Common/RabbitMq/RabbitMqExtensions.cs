@@ -30,8 +30,24 @@ namespace WorkflowManager.Common.RabbitMq
                 RequestTimeout = TimeSpan.FromSeconds(options.RequestTimeout)
             };
 
-            IBusClient busClient = BusClientFactory.CreateDefault(config);
-            services.AddSingleton<IBusClient>(busClient);
+            for (int retryNumber = 1; retryNumber <= options.RetryConnectCount; retryNumber++)
+            {
+                try
+                {
+                    IBusClient busClient = BusClientFactory.CreateDefault(config);
+                    services.AddSingleton<IBusClient>(busClient);
+                    break;
+                }
+                catch
+                {
+                    if(retryNumber == options.RetryConnectCount)
+                    {
+                        throw;
+                    }
+                    System.Threading.Thread.Sleep(options.RetryConnectInterval);
+                }
+            }
+            
 
             services.AddTransient<IBusPublisher, BusPublisher>();
         }

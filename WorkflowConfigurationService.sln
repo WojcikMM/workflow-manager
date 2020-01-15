@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Notificatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.API", "src\Services\StatusService\WorkflowManager.StatusService.API\WorkflowManager.StatusService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7F393D23-03C6-4CC6-877C-10E3BC22404D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
