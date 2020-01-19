@@ -13,7 +13,7 @@ namespace WorkflowManager.NotificationService.API.CommandHandlers
         IEventHandler<BaseRejectedEvent>
 
     {
-        private IHubContext<EventHub> _hubContext;
+        private readonly IHubContext<EventHub> _hubContext;
 
         public CompleteEventsHandler(IHubContext<EventHub> hubContext)
         {

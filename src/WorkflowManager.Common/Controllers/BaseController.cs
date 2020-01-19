@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using WorkflowManager.Common.RabbitMq;
-using WorkflowManager.Common.ErrorResponses;
 using System.Net;
 using WorkflowManager.Common.ApiResponses;
 using System.Collections.Generic;
