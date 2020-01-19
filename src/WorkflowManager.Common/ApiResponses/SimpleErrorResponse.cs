@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManager.Common.ErrorResponses
+namespace WorkflowManager.Common.ApiResponses
 {
     public class SimpleErrorResponse
     {

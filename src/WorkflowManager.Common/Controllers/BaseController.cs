@@ -3,12 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using WorkflowManager.Common.RabbitMq;
+using WorkflowManager.Common.ErrorResponses;
+using System.Net;
+using WorkflowManager.Common.ApiResponses;
+using System.Collections.Generic;
 
-namespace WorkflowManagerGateway.Controllers
+namespace WorkflowManager.Common.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [ProducesResponseType(typeof(SimpleErrorResponse), (int)HttpStatusCode.Conflict)]
     public class BaseController : ControllerBase
     {
         private readonly IBusPublisher _busPublisher;
@@ -22,7 +27,7 @@ namespace WorkflowManagerGateway.Controllers
         {
             if (model == null)
             {
-                return NotFound();
+                return NotFound(new NotFoundResponse());
             }
             bool isValid = criteria == null || criteria(model);
             if (isValid)
@@ -33,7 +38,12 @@ namespace WorkflowManagerGateway.Controllers
             return NotFound();
         }
 
-        protected IActionResult Collection<T>(T pagedResult, Func<T, bool> criteria = null)
+        protected IActionResult Collection<T>(IEnumerable<T> results)
+        {
+            return Ok(results ?? new List<T>());
+        }
+
+        protected IActionResult Collection<T>(T pagedResult, Func<T, bool> criteria)
         {
             if (pagedResult == null)
             {

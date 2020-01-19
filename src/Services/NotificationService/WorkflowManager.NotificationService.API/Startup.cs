@@ -47,8 +47,6 @@ namespace WorkflowManager.NotificationService.API
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
-
             app.UseAuthorization();
             app.UseRabbitMq()
                 .SubscribeEvent<ProcessCreatedEvent>()

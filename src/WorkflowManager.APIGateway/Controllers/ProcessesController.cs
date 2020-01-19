@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
+using WorkflowManager.Common.ApiResponses;
+using WorkflowManager.Common.Controllers;
 using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManagerGateway.Commands;
+using WorkflowManagerGateway.DTOs;
 using WorkflowManagerGateway.Services;
 
 namespace WorkflowManagerGateway.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class ProcessesController : BaseController
     {
         private readonly IProcessesService _processesService;
@@ -20,22 +23,28 @@ namespace WorkflowManagerGateway.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProcessDTO>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromQuery] string name = null)
             => Collection(await _processesService.BrowseAsync(name));
 
+
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ProcessDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(NotFoundResponse), (int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
          => Single(await _processesService.GetAsync(id));
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProcessCommandDTO createProcessCommandDTO) =>
-            await SendAsync(new CreateProcessCommand(Guid.NewGuid(), createProcessCommandDTO.Name));
+        [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Create([FromBody] CreateProcessCommandDTO dto) =>
+            await SendAsync(new CreateProcessCommand(Guid.NewGuid(), dto.Name));
 
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] UpdateProcessCommandDTO updateProcessCommandDTO) =>
-            await SendAsync(new UpdateProcessCommand(id, updateProcessCommandDTO.Name, updateProcessCommandDTO.Version));
+        [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] UpdateProcessCommandDTO dto) =>
+            await SendAsync(new UpdateProcessCommand(id, dto.Name, dto.Version));
 
         //HTTPDELETE
 

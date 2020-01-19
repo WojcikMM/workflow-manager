@@ -3,58 +3,43 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RawRabbit.vNext.Disposable;
 using WorkflowManager.Common.ApiResponses;
-using WorkflowManager.Common.ErrorResponses;
+using WorkflowManager.Common.Controllers;
 using WorkflowManager.Common.Messages.Commands.Statuses;
+using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.CQRS.ReadModel;
 using WorkflowManager.StatusService.API.DTO.Commands;
 using WorkflowManager.StatusService.ReadModel.ReadDatabase;
 
 namespace WorkflowManager.StatusService.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    [Produces("application/json")]
-    [ProducesResponseType(typeof(InternalServerErrorResponse), (int)HttpStatusCode.InternalServerError)]
-    [ProducesResponseType(typeof(SimpleErrorResponse), (int)HttpStatusCode.Conflict)]
-    public class StatusesController : ControllerBase
+    public class StatusesController : BaseController
     {
-        private readonly IBusClient _busClient;
         private readonly IReadModelRepository<StatusModel> _readModelRepository;
 
-        public StatusesController(IBusClient busClient, IReadModelRepository<StatusModel> readModelRepository)
+        public StatusesController(IBusPublisher busPublisher, IReadModelRepository<StatusModel> readModelRepository) : base(busPublisher)
         {
-            _busClient = busClient ?? throw new ArgumentNullException(nameof(busClient));
-            _readModelRepository = readModelRepository ?? throw new ArgumentNullException(nameof(readModelRepository));
+            _readModelRepository = readModelRepository ??
+                throw new ArgumentNullException(nameof(readModelRepository));
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StatusModel>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetStatuses([FromQuery]string name = "") => Ok(await _readModelRepository.SearchAsync(name));
+        public async Task<IActionResult> GetStatuses([FromQuery]string name = "") =>
+            Collection(await _readModelRepository.SearchAsync(name));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(StatusModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(NotFoundErrorResponse), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetStatus([FromRoute]Guid id) => Ok(await _readModelRepository.GetByIdAsync(id));
+        [ProducesResponseType(typeof(NotFoundResponse), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetStatus([FromRoute]Guid id) => 
+            Single(await _readModelRepository.GetByIdAsync(id));
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateStatus([FromBody] CreateStatusDTOCommand dTOCommand)
-        {
-            AcceptedResponseDTO responseDTO = new AcceptedResponseDTO();
-            CreateStatusCommand command = new CreateStatusCommand(responseDTO.ProductId, dTOCommand.Name,dTOCommand.ProcessId);
-            await _busClient.PublishAsync(command, responseDTO.CorrelationId);
-            return Accepted(responseDTO);
-        }
+        public async Task<IActionResult> CreateStatus([FromBody] CreateStatusDTOCommand command) =>
+            await SendAsync(new CreateStatusCommand(Guid.NewGuid(), command.Name, command.ProcessId));
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand dTOCommand)
-        {
-            AcceptedResponseDTO responseDTO = new AcceptedResponseDTO(id);
-            UpdateStatusCommand command = new UpdateStatusCommand(id, dTOCommand.Name, dTOCommand.ProcessId, dTOCommand.Version);
-            await _busClient.PublishAsync(command, responseDTO.CorrelationId);
-            return Accepted(responseDTO);
-        }
+        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand command) => await SendAsync(new UpdateStatusCommand(id, command.Name, command.ProcessId, command.Version));
     }
 }

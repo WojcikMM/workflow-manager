@@ -17,7 +17,7 @@
         /// <summary>
         /// Connection interval in miliseconds
         /// </summary>
-        public int RetryConnectInterval { get; set; } = 6000;
+        public int RetryConnectInterval { get; set; } = 60000;
 
     }
 }
