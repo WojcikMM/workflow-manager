@@ -37,22 +37,14 @@ namespace WorkflowManager.ProcessService.ReadModel
         public async Task<IEnumerable<ProcessModel>> GetAllAsync() =>
            await SearchAsync(null);
 
-        public async Task<ProcessModel> GetByIdAsync(Guid id)
-        {
-            ProcessModel process = await _context.Processes.FindAsync(id);
-            if (process is null)
-            {
-                throw new ReadModelNotFoundException($"Cannot find model with given id. ({id})");
-            }
-            return process;
-        }
+        public async Task<ProcessModel> GetByIdAsync(Guid id) => 
+            await _context.Processes.FindAsync(id);
 
         public async Task RemoveAsync(Guid id)
         {
             ProcessModel process = await GetByIdAsync(id);
             _context.Remove(process);
             await _context.SaveChangesAsync();
-
         }
 
         public async Task UpdateAsync(ProcessModel model)

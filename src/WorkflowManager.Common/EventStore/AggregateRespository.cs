@@ -8,7 +8,6 @@ using RawRabbit.vNext.Disposable;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WorkflowManager.ProcessService.Core;
 
 namespace WorkflowManager.Common.EventStore
 {

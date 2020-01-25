@@ -4,8 +4,6 @@ using NEventStore;
 using NEventStore.Logging;
 using System.Data.SqlClient;
 using NEventStore.Serialization.Json;
-using Microsoft.Extensions.Configuration;
-using System;
 
 namespace WorkflowManager.Common.EventStore
 {

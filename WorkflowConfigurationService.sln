@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusService", "StatusServ
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationService", "ApplicationService", "{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{6262B9BF-905D-44A0-BE22-113EFD28C169}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GatewayService", "GatewayService", "{6262B9BF-905D-44A0-BE22-113EFD28C169}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.APIGateway", "src\WorkflowManager.APIGateway\WorkflowManager.APIGateway.csproj", "{2BD2718B-44B0-4550-8847-21C45AEA467C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.GatewayService.API", "src\Services\GatewayService\WorkflowManager.GatewayService.API\WorkflowManager.GatewayService.API.csproj", "{2BD2718B-44B0-4550-8847-21C45AEA467C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Common", "src\WorkflowManager.Common\WorkflowManager.Common.csproj", "{CB579927-C753-43E2-A5EA-04D40199B556}"
 EndProject
@@ -36,6 +36,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.API", "src\Services\StatusService\WorkflowManager.StatusService.API\WorkflowManager.StatusService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7F393D23-03C6-4CC6-877C-10E3BC22404D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OperationsService", "OperationsService", "{DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.OperationsService.API", "src\Services\OperationsService\WorkflowManager.OperationsService.API\WorkflowManager.OperationsService.API.csproj", "{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{83304869-59D4-40C2-AB43-026B3CDCF515}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManager.IdentityService.API", "src\Services\IdentityService\WorkflowManager.IdentityService.API\WorkflowManager.IdentityService.API.csproj", "{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +95,14 @@ Global
 		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F393D23-03C6-4CC6-877C-10E3BC22404D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +121,10 @@ Global
 		{96F376EE-5CB5-4485-9256-FD56BDA6C47D} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{0984767F-5846-4CE9-A7C9-26B111ACA917} = {96F376EE-5CB5-4485-9256-FD56BDA6C47D}
 		{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835} = {25AD97C8-366A-43D1-97B0-1231D978EA4D}
+		{DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
+		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46} = {DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630}
+		{83304869-59D4-40C2-AB43-026B3CDCF515} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
+		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E} = {83304869-59D4-40C2-AB43-026B3CDCF515}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

@@ -14,7 +14,7 @@ namespace WorkflowManager.StatusService.ReadModel.EventHandlers
 
         public StatusCreatedEventHandler([NotNull]IReadModelRepository<StatusModel> repository) => _repository = repository;
 
-        public async Task HandleAsync(StatusCreatedEvent @event)
+        public async Task HandleAsync(StatusCreatedEvent @event, Guid correlationId)
         {
             StatusModel process = new StatusModel()
             {
@@ -27,52 +27,6 @@ namespace WorkflowManager.StatusService.ReadModel.EventHandlers
             };
 
             await _repository.AddAsync(process);
-        }
-    }
-
-    public class StatusNameUpdatedEventHandler : IEventHandler<StatusNameUpdatedEvent>
-    {
-        private readonly IReadModelRepository<StatusModel> _repository;
-
-        public StatusNameUpdatedEventHandler([NotNull]IReadModelRepository<StatusModel> repository) => _repository = repository;
-
-        public async Task HandleAsync(StatusNameUpdatedEvent @event)
-        {
-            var status = await _repository.GetByIdAsync(@event.AggregateId);
-            status.Name = @event.Name;
-            status.UpdatedAt = DateTime.UtcNow;
-
-            await _repository.UpdateAsync(status);
-        }
-    }
-
-
-    public class StatusProcessIdUpdatedEventHandler : IEventHandler<StatusProcessIdUpdatedEvent>
-    {
-        private readonly IReadModelRepository<StatusModel> _repository;
-
-        public StatusProcessIdUpdatedEventHandler([NotNull]IReadModelRepository<StatusModel> repository) => _repository = repository;
-
-        public async Task HandleAsync(StatusProcessIdUpdatedEvent @event)
-        {
-            var status = await _repository.GetByIdAsync(@event.AggregateId);
-            status.ProcessId = @event.ProcessId;
-            status.UpdatedAt = DateTime.UtcNow;
-
-            await _repository.UpdateAsync(status);
-        }
-    }
-
-
-    public class StatusRemovedEventHandler : IEventHandler<StatusRemovedEvent>
-    {
-        private readonly IReadModelRepository<StatusModel> _repository;
-
-        public StatusRemovedEventHandler([NotNull]IReadModelRepository<StatusModel> repository) => _repository = repository;
-
-        public async Task HandleAsync(StatusRemovedEvent @event)
-        {
-            await _repository.RemoveAsync(@event.AggregateId);
         }
     }
 }

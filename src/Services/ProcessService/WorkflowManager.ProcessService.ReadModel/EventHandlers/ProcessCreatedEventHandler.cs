@@ -14,7 +14,7 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
 
         public ProcessCreatedEventHandler([NotNull]IReadModelRepository<ProcessModel> repository) => _repository = repository;
 
-        public async Task HandleAsync(ProcessCreatedEvent @event)
+        public async Task HandleAsync(ProcessCreatedEvent @event, Guid correlationId)
         {
             ProcessModel process = new ProcessModel()
             {

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using WorkflowManager.CQRS.ReadModel;
-using WorkflowManager.Common.Exceptions;
 using WorkflowManager.StatusService.ReadModel.ReadDatabase;
 
 namespace WorkflowManager.StatusService.ReadModel
@@ -37,22 +36,14 @@ namespace WorkflowManager.StatusService.ReadModel
         public async Task<IEnumerable<StatusModel>> GetAllAsync() =>
            await SearchAsync(null);
 
-        public async Task<StatusModel> GetByIdAsync(Guid id)
-        {
-            StatusModel process = await _context.Statuses.FindAsync(id);
-            if (process is null)
-            {
-                throw new ReadModelNotFoundException($"Cannot find model with given id. ({id})");
-            }
-            return process;
-        }
+        public async Task<StatusModel> GetByIdAsync(Guid id) => 
+            await _context.Statuses.FindAsync(id);
 
         public async Task RemoveAsync(Guid id)
         {
             StatusModel process = await GetByIdAsync(id);
             _context.Remove(process);
             await _context.SaveChangesAsync();
-
         }
 
         public async Task UpdateAsync(StatusModel model)

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using System;
 
 namespace WorkflowManager.ProductService.Core.EventHandlers
 {
@@ -14,7 +15,7 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
         public ProcessNameUpdatedEventHandler([NotNull]IReadModelRepository<ProcessModel> repository) =>
             _repository = repository;
 
-        public async Task HandleAsync(ProcessNameUpdatedEvent @event)
+        public async Task HandleAsync(ProcessNameUpdatedEvent @event, Guid correlationId)
         {
 
             ProcessModel process = await _repository.GetByIdAsync(@event.AggregateId);

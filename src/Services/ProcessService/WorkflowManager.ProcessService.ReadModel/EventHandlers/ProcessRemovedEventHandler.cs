@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using WorkflowManager.Common.Messages.Events.Processes;
 using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using System;
 
 namespace WorkflowManager.ProductService.Core.EventHandlers
 {
@@ -13,7 +14,7 @@ namespace WorkflowManager.ProductService.Core.EventHandlers
 
         public ProcessRemovedEventHandler([NotNull]IReadModelRepository<ProcessModel> repository) => _repository = repository;
 
-        public async Task HandleAsync(ProcessRemovedEvent @event) =>
+        public async Task HandleAsync(ProcessRemovedEvent @event, Guid correlationId) =>
             await _repository.RemoveAsync(@event.AggregateId);
     }
 }

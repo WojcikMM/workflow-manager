@@ -1,4 +1,4 @@
-﻿namespace WorkflowManager.ProcessService.Core
+﻿namespace WorkflowManager.Common
 {
     public class DomainConstants
     {

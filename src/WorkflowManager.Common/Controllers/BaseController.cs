@@ -12,7 +12,6 @@ namespace WorkflowManager.Common.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    [ProducesResponseType(typeof(SimpleErrorResponse), (int)HttpStatusCode.Conflict)]
     public class BaseController : ControllerBase
     {
         private readonly IBusPublisher _busPublisher;
@@ -24,17 +23,13 @@ namespace WorkflowManager.Common.Controllers
 
         protected IActionResult Single<T>(T model, Func<T, bool> criteria = null)
         {
-            if (model == null)
-            {
-                return NotFound(new NotFoundResponse());
-            }
-            bool isValid = criteria == null || criteria(model);
+            bool isValid = model != null && (criteria == null || criteria(model));
             if (isValid)
             {
                 return Ok(model);
             }
 
-            return NotFound();
+            return NotFound(new NotFoundResponse());
         }
 
         protected IActionResult Collection<T>(IEnumerable<T> results)

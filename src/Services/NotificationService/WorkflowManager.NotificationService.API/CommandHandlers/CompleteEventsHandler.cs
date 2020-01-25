@@ -20,12 +20,12 @@ namespace WorkflowManager.NotificationService.API.CommandHandlers
             this._hubContext = hubContext;
         }
 
-        public async Task HandleAsync(BaseCompleteEvent @event)
+        public async Task HandleAsync(BaseCompleteEvent @event, Guid correlationId)
         {
-            await _hubContext.Clients.All.SendAsync("operation_complete",@event);
+            await _hubContext.Clients.All.SendAsync("operation_complete", @event);
         }
 
-        public async Task HandleAsync(BaseRejectedEvent @event)
+        public async Task HandleAsync(BaseRejectedEvent @event, Guid correlationId)
         {
             await _hubContext.Clients.All.SendAsync("operation_rejected", @event);
         }

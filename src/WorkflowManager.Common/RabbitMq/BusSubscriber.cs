@@ -111,7 +111,7 @@ namespace WorkflowManager.Common.RabbitMq
                 {
                     try
                     {
-                        await eventHandler.HandleAsync(@event);
+                        await eventHandler.HandleAsync(@event, correlationContext.GlobalRequestId);
                     }
                     catch (Exception ex)
                     {
@@ -136,7 +136,7 @@ namespace WorkflowManager.Common.RabbitMq
                 {
                     try
                     {
-                        await eventHandler.HandleAsync(@event);
+                        await eventHandler.HandleAsync(@event, correlationContext.GlobalRequestId);
                     }
                     catch (Exception ex)
                     {
@@ -165,7 +165,7 @@ namespace WorkflowManager.Common.RabbitMq
                 {
                     try
                     {
-                        await eventHandler.HandleAsync(@event);
+                        await eventHandler.HandleAsync(@event, correlationContext.GlobalRequestId);
 
                         var completeEvent =new TCompleteEvent()
                                                 .Initialize(@event, correlationContext.GlobalRequestId);

@@ -36,10 +36,12 @@ namespace WorkflowManager.StatusService.API.Controllers
 
 
         [HttpPost]
+        [ProducesResponseType(typeof(AcceptedResponse),(int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> CreateStatus([FromBody] CreateStatusDTOCommand command) =>
             await SendAsync(new CreateStatusCommand(Guid.NewGuid(), command.Name, command.ProcessId));
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand command) => await SendAsync(new UpdateStatusCommand(id, command.Name, command.ProcessId, command.Version));
     }
 }
