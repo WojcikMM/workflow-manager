@@ -1,45 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using WorkflowManager.IdentityService.API.DTO;
+using WorkflowManager.IdentityService.API.Services;
 
 namespace WorkflowManager.IdentityService.API.Controllers
 {
-    [Route("api/[controller]")]
+
     [ApiController]
+    [Route("api/[controller]")]
     public class IdentityController : ControllerBase
     {
+        private readonly IIdentityService _identityService;
+        public IdentityController(IIdentityService identityService) => _identityService = identityService;
 
         [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetToken()
+        [Authorize(Roles = "User")]
+        public IActionResult Check()
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mysupers3cr3tsharedkey!"));
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
-                {
-                   new Claim(ClaimTypes.Name, "SomeName"),
-                   new Claim(ClaimTypes.Role, "admin")
-                }),
-                Issuer = "issuer-name",
-                Audience = "audience-name",
-                Expires = DateTime.UtcNow.AddSeconds(30),
-                SigningCredentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var jwtTokenString = tokenHandler.WriteToken(token);
-
-            return Ok(jwtTokenString);
+            return Ok("User authorized");
         }
+
+
+        [AllowAnonymous]
+        [HttpPost("sign-up")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public IActionResult SignUp([FromBody] RegisterUserCommand command)
+        {
+            _identityService.RegisterUser(command.Name, command.Password);
+            return NoContent();
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost("sign-in")]
+        [ProducesResponseType(typeof(TokenDTO), (int)HttpStatusCode.OK)]
+        public IActionResult SignIn([FromBody] SignInCommand command)
+        {
+            try
+            {
+                var token = _identityService.SignIn(command.Name, command.Password);
+                return Ok(new TokenDTO(token));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Message = ex.Message
+                });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("token-renew")]
+        [ProducesResponseType(typeof(TokenDTO), (int)HttpStatusCode.OK)]
+        public IActionResult RenewToken()
+        {
+            Guid userId = new Guid(HttpContext.User.Identity.Name);
+            var token =  _identityService.RenewToken(userId);
+            return Ok(new TokenDTO(token));            
+        }
+
+
     }
 }

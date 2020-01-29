@@ -37,5 +37,4 @@
   <ItemGroup>
     <ProjectReference Include="..\WorkflowManager.CQRS\WorkflowManager.CQRS.csproj" />
   </ItemGroup>
-
 </Project>

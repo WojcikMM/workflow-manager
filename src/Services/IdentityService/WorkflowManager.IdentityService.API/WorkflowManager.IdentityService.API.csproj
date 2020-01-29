@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WorkflowManager.Common\WorkflowManager.Common.csproj" />
+    <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\WorkflowManager.IdentityService.Infrastructure\WorkflowManager.IdentityService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,9 +12,33 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using WorkflowManager.Common.Configuration;
+using WorkflowManager.Common.ReadModelStore;
+using WorkflowManager.Common.Swagger;
+using WorkflowManager.IdentityService.API.Services;
+using WorkflowManager.IdentityService.Infrastructure.Context;
+using WorkflowManager.IdentityService.Infrastructure.Repositories;
 
 namespace WorkflowManager.IdentityService.API
 {
+    public class JwtSettingsModel
+    {
+        public string Secret { get; set; } = "SuperSecret2000!";
+        public string Issuer { get; set; } = "http://localhost:5000";
+        public string Audience { get; set; } = "http://localhost:5000";
+        public int ExpireSeconds { get; set; } = 60;
+
+        public byte[] SecretBytes
+        {
+            get
+            {
+                return Encoding.UTF8.GetBytes(Secret);
+            }
+        }
+
+    }
+
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,7 +52,13 @@ namespace WorkflowManager.IdentityService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddServiceSwaggerUI();
+            var jwtSettings = Configuration.GetSection("Jwt");
+            services.Configure<JwtSettingsModel>(jwtSettings);
+            services.AddReadModelStore<IdentityDatabaseContext>("MsSqlDatabase");
+            services.AddTransient<IIdentityService, Services.IdentityService>();
+            services.AddTransient<ITokenService, Services.TokenService>();
+            services.AddTransient<IUserRepository, UserRepository>();
             AddJwtAuthentication(services);
         }
 
@@ -39,11 +69,12 @@ namespace WorkflowManager.IdentityService.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseServiceSwaggerUI();
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
@@ -53,7 +84,9 @@ namespace WorkflowManager.IdentityService.API
 
         private static void AddJwtAuthentication(IServiceCollection services)
         {
-            var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mysupers3cr3tsharedkey!"));
+            var jwtSettings = services.GetOptions<JwtSettingsModel>("jwt");
+
+            var secret = new SymmetricSecurityKey(jwtSettings.SecretBytes);
 
             services.AddAuthentication(options =>
             {
@@ -67,8 +100,10 @@ namespace WorkflowManager.IdentityService.API
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = secret,
-                    ValidateIssuer = false, // TODO: Change in future
-                    ValidateAudience = false, // TODO: Change in future
+                    ValidateIssuer = false,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidateAudience = false,
+                    ValidAudience = jwtSettings.Audience,
                     RequireExpirationTime = true,
                     ValidateLifetime = true
                 };

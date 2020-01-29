@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowManager.Common.Configuration;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace WorkflowManager.Common.Swagger
 {
@@ -37,6 +39,24 @@ namespace WorkflowManager.Common.Swagger
 
             services.AddSwaggerGen(cfg =>
             {
+                cfg.AddSecurityRequirement(new OpenApiSecurityRequirement{
+                        {
+                            new OpenApiSecurityScheme {
+                                Reference = new OpenApiReference()
+                                {
+                                    Id = "Bearer",
+                                    Type = ReferenceType.SecurityScheme
+                                }                               
+                            }, new[] { "readAccess" }
+                        }
+                });
+                cfg.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
                 cfg.SwaggerDoc(options.Version,
                     new Microsoft.OpenApi.Models.OpenApiInfo
                     {
