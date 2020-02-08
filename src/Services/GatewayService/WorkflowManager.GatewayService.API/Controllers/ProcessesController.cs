@@ -9,6 +9,7 @@ using WorkflowManager.Gateway.API.Commands;
 using WorkflowManager.Gateway.API.Services;
 using WorkflowManager.Common.ApiResponses;
 using WorkflowManager.Common.Messages.Commands.Processes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WorkflowManager.Gateway.API.Controllers
 {
@@ -19,6 +20,7 @@ namespace WorkflowManager.Gateway.API.Controllers
         public ProcessesController(IProcessesService processesService, IBusPublisher busPublisher) : base(busPublisher) => _processesService = processesService;
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<ProcessDTO>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Get([FromQuery] string name = null)
             => ReturnResponse(await _processesService.BrowseAsync(name));

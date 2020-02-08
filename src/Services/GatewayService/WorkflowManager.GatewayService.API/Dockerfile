@@ -4,11 +4,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY ["src/Services/GatewayService/WorkflowManager.GatewayService.API/", "WorkflowManager.GatewayService.API/"]
-COPY ["src/WorkflowManager.Common/", "WorkflowManager.Common/"]
-COPY ["src/WorkflowManager.CQRS/", "WorkflowManager.CQRS/"]
-RUN dotnet restore "WorkflowManager.GatewayService.API/WorkflowManager.GatewayService.API.csproj"
-WORKDIR "WorkflowManager.GatewayService.API"
+COPY ["src/Services/GatewayService/WorkflowManager.GatewayService.API/WorkflowManager.GatewayService.API.csproj", "src/Services/GatewayService/WorkflowManager.GatewayService.API/"]
+COPY ["src/WorkflowManager.Common/WorkflowManager.Common.csproj", "src/WorkflowManager.Common/"]
+COPY ["src/WorkflowManager.CQRS/WorkflowManager.CQRS.csproj", "src/WorkflowManager.CQRS/"]
+RUN dotnet restore "src/Services/GatewayService/WorkflowManager.GatewayService.API/WorkflowManager.GatewayService.API.csproj"
+COPY . .
+WORKDIR "/src/src/Services/GatewayService/WorkflowManager.GatewayService.API"
 RUN dotnet build "WorkflowManager.GatewayService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -43,9 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.OperationsS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{83304869-59D4-40C2-AB43-026B3CDCF515}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.IdentityService.API", "src\Services\IdentityService\WorkflowManager.IdentityService.API\WorkflowManager.IdentityService.API.csproj", "{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.IdentityService.API", "src\Services\IdentityService\WorkflowManager.IdentityService.API\WorkflowManager.IdentityService.API.csproj", "{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManager.IdentityService.Infrastructure", "src\Services\IdentityService\WorkflowManager.IdentityService.Infrastructure\WorkflowManager.IdentityService.Infrastructure.csproj", "{449B9066-EF5F-47ED-807F-7A5791F6FC3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.IdentityTest.API", "src\Services\IdentityService\WorkflowManager.IdentityTest.API\WorkflowManager.IdentityTest.API\WorkflowManager.IdentityTest.API.csproj", "{397F5EC5-B709-4F62-97A6-57199053A762}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotGatewayApi", "src\Services\GatewayService\WorkflowManager.OcelotGatewayService.API\OcelotGatewayApi.csproj", "{6F8451F5-235E-4A5A-9AC9-FA9F30B91605}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,14 +103,18 @@ Global
 		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{449B9066-EF5F-47ED-807F-7A5791F6FC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{449B9066-EF5F-47ED-807F-7A5791F6FC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{449B9066-EF5F-47ED-807F-7A5791F6FC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{449B9066-EF5F-47ED-807F-7A5791F6FC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397F5EC5-B709-4F62-97A6-57199053A762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397F5EC5-B709-4F62-97A6-57199053A762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397F5EC5-B709-4F62-97A6-57199053A762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397F5EC5-B709-4F62-97A6-57199053A762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F8451F5-235E-4A5A-9AC9-FA9F30B91605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F8451F5-235E-4A5A-9AC9-FA9F30B91605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F8451F5-235E-4A5A-9AC9-FA9F30B91605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F8451F5-235E-4A5A-9AC9-FA9F30B91605}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,8 +136,9 @@ Global
 		{DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46} = {DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630}
 		{83304869-59D4-40C2-AB43-026B3CDCF515} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
-		{60CCD539-0AD5-44D9-A27E-80ACD8F3123E} = {83304869-59D4-40C2-AB43-026B3CDCF515}
-		{449B9066-EF5F-47ED-807F-7A5791F6FC3E} = {83304869-59D4-40C2-AB43-026B3CDCF515}
+		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6} = {83304869-59D4-40C2-AB43-026B3CDCF515}
+		{397F5EC5-B709-4F62-97A6-57199053A762} = {83304869-59D4-40C2-AB43-026B3CDCF515}
+		{6F8451F5-235E-4A5A-9AC9-FA9F30B91605} = {6262B9BF-905D-44A0-BE22-113EFD28C169}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

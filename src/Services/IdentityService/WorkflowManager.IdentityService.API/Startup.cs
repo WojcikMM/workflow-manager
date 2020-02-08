@@ -1,112 +1,98 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+
+using IdentityServerAspNetIdentity.Data;
+using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using WorkflowManager.Common.Configuration;
-using WorkflowManager.Common.ReadModelStore;
-using WorkflowManager.Common.Swagger;
-using WorkflowManager.IdentityService.API.Services;
-using WorkflowManager.IdentityService.Infrastructure.Context;
-using WorkflowManager.IdentityService.Infrastructure.Repositories;
 
-namespace WorkflowManager.IdentityService.API
+namespace IdentityServerAspNetIdentity
 {
-    public class JwtSettingsModel
-    {
-        public string Secret { get; set; } = "SuperSecret2000!";
-        public string Issuer { get; set; } = "http://localhost:5000";
-        public string Audience { get; set; } = "http://localhost:5000";
-        public int ExpireSeconds { get; set; } = 60;
-
-        public byte[] SecretBytes
-        {
-            get
-            {
-                return Encoding.UTF8.GetBytes(Secret);
-            }
-        }
-
-    }
-
-
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IWebHostEnvironment Environment { get; }
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
+            Environment = environment;
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddServiceSwaggerUI();
-            var jwtSettings = Configuration.GetSection("Jwt");
-            services.Configure<JwtSettingsModel>(jwtSettings);
-            services.AddReadModelStore<IdentityDatabaseContext>("MsSqlDatabase");
-            services.AddTransient<IIdentityService, Services.IdentityService>();
-            services.AddTransient<ITokenService, Services.TokenService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            AddJwtAuthentication(services);
+            services.AddControllersWithViews();
+
+            // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
+            // configures IIS in-proc settings
+            services.Configure<IISServerOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            
+            var builder = services.AddIdentityServer(options =>
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+                })
+                .AddInMemoryIdentityResources(Config.Ids)
+                .AddInMemoryApiResources(Config.Apis)
+                .AddInMemoryClients(Config.Clients)
+                .AddTestUsers(Config.TestUsers)
+                .AddAspNetIdentity<ApplicationUser>();
+
+            // not recommended for production - you need to store your key material somewhere secure
+            builder.AddDeveloperSigningCredential();
+
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        // register your IdentityServer with Google at https://console.developers.google.com
+            //        // enable the Google+ API
+            //        // set the redirect URI to http://localhost:5000/signin-google
+            //        options.ClientId = "copy client ID from Google here";
+            //        options.ClientSecret = "copy client secret from Google here";
+            //    });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
+
+            app.UseStaticFiles();
+
             app.UseRouting();
-
-            app.UseServiceSwaggerUI();
-            app.UseAuthentication();
+            app.UseIdentityServer();
             app.UseAuthorization();
-            
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-            });
-        }
-
-        private static void AddJwtAuthentication(IServiceCollection services)
-        {
-            var jwtSettings = services.GetOptions<JwtSettingsModel>("jwt");
-
-            var secret = new SymmetricSecurityKey(jwtSettings.SecretBytes);
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false; // TODO: Change in future
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = secret,
-                    ValidateIssuer = false,
-                    ValidIssuer = jwtSettings.Issuer,
-                    ValidateAudience = false,
-                    ValidAudience = jwtSettings.Audience,
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true
-                };
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

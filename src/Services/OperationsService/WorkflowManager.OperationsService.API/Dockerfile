@@ -4,11 +4,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY ["src/Services/OperationsService/WorkflowManager.OperationsService.API/", "WorkflowManager.OperationsService.API/"]
-COPY ["src/WorkflowManager.Common/", "WorkflowManager.Common/"]
-COPY ["src/WorkflowManager.CQRS/", "WorkflowManager.CQRS/"]
-RUN dotnet restore "WorkflowManager.OperationsService.API/WorkflowManager.OperationsService.API.csproj"
-WORKDIR "WorkflowManager.OperationsService.API"
+COPY ["src/Services/OperationsService/WorkflowManager.OperationsService.API/WorkflowManager.OperationsService.API.csproj", "src/Services/OperationsService/WorkflowManager.OperationsService.API/"]
+COPY ["src/WorkflowManager.Common/WorkflowManager.Common.csproj", "src/WorkflowManager.Common/"]
+COPY ["src/WorkflowManager.CQRS/WorkflowManager.CQRS.csproj", "src/WorkflowManager.CQRS/"]
+RUN dotnet restore "src/Services/OperationsService/WorkflowManager.OperationsService.API/WorkflowManager.OperationsService.API.csproj"
+COPY . .
+WORKDIR "/src/src/Services/OperationsService/WorkflowManager.OperationsService.API"
 RUN dotnet build "WorkflowManager.OperationsService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
