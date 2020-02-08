@@ -2,19 +2,17 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowManager.Common.Configuration;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 
 namespace WorkflowManager.Common.Swagger
 {
     public static class SwaggerExtensions
     {
-        private static readonly string _swaggerOptionsName = "Swagger";
-        public static IApplicationBuilder UseServiceSwaggerUI(this IApplicationBuilder app)
+        public static IApplicationBuilder UseServiceSwaggerUI(this IApplicationBuilder app, string configurationSectionName = "Swagger")
         {
-            SwaggerOptions options = app.ApplicationServices
+            SwaggerConfigurationModel options = app.ApplicationServices
                                         .GetService<IConfiguration>()
-                                        .GetOptions<SwaggerOptions>(_swaggerOptionsName);
+                                        .GetOptions<SwaggerConfigurationModel>(configurationSectionName);
 
             app.UseSwagger();
             app.UseSwaggerUI(cfg =>
@@ -27,15 +25,10 @@ namespace WorkflowManager.Common.Swagger
         }
 
 
-        public static void AddServiceSwaggerUI(this IServiceCollection services)
+        public static void AddServiceSwaggerUI(this IServiceCollection services, string configurationSectionName = "Swagger")
         {
 
-            SwaggerOptions options;
-            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-            {
-                options = serviceProvider.GetService<IConfiguration>()
-                                         .GetOptions<SwaggerOptions>(_swaggerOptionsName);
-            }
+            SwaggerConfigurationModel options = services.GetOptions<SwaggerConfigurationModel>(configurationSectionName);
 
             services.AddSwaggerGen(cfg =>
             {
@@ -44,21 +37,29 @@ namespace WorkflowManager.Common.Swagger
                             new OpenApiSecurityScheme {
                                 Reference = new OpenApiReference()
                                 {
-                                    Id = "Bearer",
+                                    Id = "OpenId",
                                     Type = ReferenceType.SecurityScheme
                                 }                               
                             }, new[] { "readAccess" }
                         }
                 });
-                cfg.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                cfg.AddSecurityDefinition("OpenId", new OpenApiSecurityScheme
                 {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
+                    Name = "swagger",
+                    Type = SecuritySchemeType.OAuth2,
+                    OpenIdConnectUrl = new System.Uri($"{options.IdentityServiceUrl}/.well-known/openid-configuration"),
+                    Flows = new OpenApiOAuthFlows()
+                    {
+                        Implicit = new OpenApiOAuthFlow()
+                        {
+                            AuthorizationUrl = new System.Uri($"{options.IdentityServiceUrl}/connect/authorize"),
+                            TokenUrl = new System.Uri($"{options.IdentityServiceUrl}/connect/token"),
+                            Scopes = options.Scopes
+                        },
+                    }
                 });
                 cfg.SwaggerDoc(options.Version,
-                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    new OpenApiInfo
                     {
                         Title = options.ServiceName,
                         Version = options.Version

@@ -10,6 +10,7 @@ using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
 using WorkflowManager.Common.Controllers;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.Common.ApiResponses;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WorkflowManager.ProductService.API.Controllers
 {
@@ -24,6 +25,7 @@ namespace WorkflowManager.ProductService.API.Controllers
         }
 
         [HttpGet]
+       // [Authorize]
         [ProducesResponseType(typeof(IEnumerable<ProcessModel>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetProcesses([FromQuery]string name = null) => 
             Collection(await _readModelRepository.SearchAsync(name));

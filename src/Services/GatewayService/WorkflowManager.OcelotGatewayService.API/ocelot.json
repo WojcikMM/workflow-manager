@@ -1,32 +1,3 @@
 {
-  "ReRoutes": [
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 8001
-        }
-      ],
-      "UpstreamPathTemplate": "/api/{everything}",
-      "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "Processes"
-    }
-  ],
-  "SwaggerEndPoints": [
-    {
-      "Key": "Processes",
-      "Config": [
-        {
-          "Name": "Processes API",
-          "Version": "v1",
-          "Url": "http://localhost:8001/swagger/v1/swagger.json"
-        }
-      ]
-    }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:9999"
-  }
+  
 }

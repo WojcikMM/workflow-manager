@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
+using WorkflowManager.Common.Authentication;
 using WorkflowManager.Common.CQRSHandlers;
 using WorkflowManager.Common.EventStore;
 using WorkflowManager.Common.Messages.Commands.Processes;
@@ -30,9 +33,30 @@ namespace WorkflowManager.ProductService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //services.AddClientAuthentication();
             services.AddRabbitMq();
             services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();
+            IdentityModelEventSource.ShowPII = true;
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+          .AddJwtBearer(options =>
+          {
+              options.Audience = "api1";
+              options.Authority = "http://localhost:5000";
+              options.MetadataAddress = "http://localhost:5000/.well-known/openid-configuration";
+              options.RequireHttpsMetadata = false;
+              options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+              {
+                  ValidateAudience = true,
+                  ValidAudience = "api1"
+              };
+          }
+          );
+
             services.AddReadModelStore<ProcessesContext>("MsSqlDatabase");
             services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();
 
@@ -48,7 +72,7 @@ namespace WorkflowManager.ProductService.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+          //  if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -63,8 +87,10 @@ namespace WorkflowManager.ProductService.API
                 .SubscribeEvent<ProcessNameUpdatedEvent, ProcessUpdateRejectedEvent, ProcessUpdateCompleteEvent>()
                 .SubscribeEvent<ProcessRemovedEvent, ProcessRemoveRejectedEvent, ProcessRemoveCompleteEvent>();
 
-            app.UseAuthorization();
             app.UseServiceSwaggerUI();
+            app.UseAuthentication();
+            app.UseAuthorization();
+          
 
             app.UseEndpoints(endpoints =>
             {

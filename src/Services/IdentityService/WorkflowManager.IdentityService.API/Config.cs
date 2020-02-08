@@ -94,9 +94,8 @@ namespace IdentityServerAspNetIdentity
                     RequireClientSecret = false,
                     RedirectUris =
                     {
-                        "http://localhost:9000/index.html",
                         "http://localhost:9000/oauth2-redirect.html",
-                        "http://localhost:9000/signin-oidc"
+                        "http://localhost:8001/oauth2-redirect.html",
                     },
                     PostLogoutRedirectUris = { "http://localhost:9000/index.html" },
                     AllowedCorsOrigins = { "http://localhost:9000" },

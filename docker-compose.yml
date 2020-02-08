@@ -17,8 +17,8 @@ services:
   workflowmanager.gateway.api:
     image: wojcikmm/workflow-manager-gateway-api
     build:
-      context: .
-      dockerfile: src/Services/GatewayService/WorkflowManager.GatewayService.API/Dockerfile
+      context: src/Services/GatewayService/WorkflowManager.OcelotGatewayService.API
+      dockerfile: Dockerfile
     ports:
       - "8000:80"
     environment:
