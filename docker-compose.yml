@@ -1,6 +1,5 @@
 version: '3.4'
 services:
-
   # RABBIT MQ (PORT: 15672)
   workflowmanager.rabbitmq:
     image: "rabbitmq:3-management"
@@ -12,32 +11,48 @@ services:
     labels:
       NAME: "rabbitmq"
 
+  # IDENTITY SERVICE (PORT: 5000)
+  workflowmanager.identityservice.api:
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
+    build:
+      context: src/Services/IdentityService/WorkflowManager.IdentityService.API
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    restart: on-failure
+
 
   # API GATEWAY (PORT: 8000)
   workflowmanager.gateway.api:
-    image: wojcikmm/workflow-manager-gateway-api
+    image: ${DOCKER_HUB_LOGIN}/workflow-manager-gateway-api
     build:
       context: src/Services/GatewayService/WorkflowManager.OcelotGatewayService.API
       dockerfile: Dockerfile
     ports:
       - "8000:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Docker"
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
-      - workflowmanager.rabbitmq
+      - workflowmanager.processservice.api
+      - workflowmanager.statusservice.api
+      - workflowmanager.operationsservice.api
+      - workflowmanager.identityservice.api
+
     restart: on-failure
 
 
   # PROCESS SERVICE (PORT: 8001)
   workflowmanager.processservice.api:
-    image: wojcikmm/workflow-manager-process-service-api
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-process-service-api"
     build:
       context: .
       dockerfile: src/Services/ProcessService/WorkflowManager.ProcessService.API/Dockerfile
     ports:
       - "8001:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Docker"
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
       - workflowmanager.rabbitmq
       - workflowmanager.processservice.db
@@ -55,7 +70,7 @@ services:
 
   #STATUS SERVICE (PORT: 8002)
   workflowmanager.statusservice.api:
-    image: wojcikmm/workflow-manager-status-service-api
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-status-service-api"
     build:
       context: .
       dockerfile: src/Services/StatusService/WorkflowManager.StatusService.API/Dockerfile
@@ -64,7 +79,7 @@ services:
     ports:
       - "8002:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Docker"
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
       - workflowmanager.rabbitmq
       - workflowmanager.statusservice.db
@@ -82,14 +97,14 @@ services:
 
   # OPERATIONS SERVICE(PORT: 8003)
   workflowmanager.operationsservice.api:
-    image: wojcikmm/workflow-manager-operations-service-api
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-operations-service-api"
     build:
       context: .
       dockerfile: src/Services/OperationsService/WorkflowManager.OperationsService.API/Dockerfile
     ports:
       - "8003:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Docker"
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
       - workflowmanager.rabbitmq
     restart: on-failure

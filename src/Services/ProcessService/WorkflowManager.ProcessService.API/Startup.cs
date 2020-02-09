@@ -46,8 +46,8 @@ namespace WorkflowManager.ProductService.API
           .AddJwtBearer(options =>
           {
               options.Audience = "api1";
-              options.Authority = "http://localhost:5000";
-              options.MetadataAddress = "http://localhost:5000/.well-known/openid-configuration";
+              options.Authority = "http://workflowmanager.identityservice.api";
+              options.MetadataAddress = "http://workflowmanager.identityservice.api/.well-known/openid-configuration";
               options.RequireHttpsMetadata = false;
               options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
               {
