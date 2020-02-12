@@ -8,5 +8,6 @@ namespace WorkflowManager.Common.Authentication
     {
         public string Audience { get; internal set; }
         public string Authority { get; internal set; }
+        public string MetadataAddress { get; internal set; }
     }
 }

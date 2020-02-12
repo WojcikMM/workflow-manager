@@ -33,29 +33,29 @@ namespace WorkflowManager.ProductService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddClientAuthentication();
             services.AddRabbitMq();
             services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();
-            IdentityModelEventSource.ShowPII = true;
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-          .AddJwtBearer(options =>
-          {
-              options.Audience = "api1";
-              options.Authority = "http://workflowmanager.identityservice.api";
-              options.MetadataAddress = "http://workflowmanager.identityservice.api/.well-known/openid-configuration";
-              options.RequireHttpsMetadata = false;
-              options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-              {
-                  ValidateAudience = true,
-                  ValidAudience = "api1"
-              };
-          }
-          );
+            services.AddClientAuthentication();
+            // IdentityModelEventSource.ShowPII = true;
+            //  services.AddAuthentication(options =>
+            //  {
+            //      options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //      options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //  })
+            //.AddJwtBearer(options =>
+            //{
+            //    options.Audience = "api1";
+            //    options.Authority = "http://localhost:5000";
+            //    options.MetadataAddress = "http://workflowmanager.identityservice.api/.well-known/openid-configuration";
+            //    options.RequireHttpsMetadata = false;
+            //    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            //    {
+            //        ValidateAudience = true,
+            //        ValidAudience = "api1"
+            //    };
+            //}
+            //);
 
             services.AddReadModelStore<ProcessesContext>("MsSqlDatabase");
             services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();

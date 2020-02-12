@@ -19,7 +19,7 @@ namespace WorkflowManager.Common.Authentication
                {
                    configuration.Audience = options.Audience;
                    configuration.Authority = options.Authority;
-                   configuration.MetadataAddress = $"{options.Authority}/.well-known/openid-configuration";
+                   configuration.MetadataAddress = options.MetadataAddress;
                    configuration.RequireHttpsMetadata = false;
                    configuration.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                    {
