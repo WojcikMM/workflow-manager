@@ -43,8 +43,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "Identity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.IdentityService.API", "src\Services\IdentityService\WorkflowManager.IdentityService.API\WorkflowManager.IdentityService.API.csproj", "{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.IdentityTest.API", "src\Services\IdentityService\WorkflowManager.IdentityTest.API\WorkflowManager.IdentityTest.API\WorkflowManager.IdentityTest.API.csproj", "{397F5EC5-B709-4F62-97A6-57199053A762}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.OcelotGatewayService.API", "src\Services\GatewayService\WorkflowManager.OcelotGatewayService.API\WorkflowManager.OcelotGatewayService.API.csproj", "{35278334-7760-4849-A12B-3740FBF7768E}"
 EndProject
 Global
@@ -101,10 +99,6 @@ Global
 		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{397F5EC5-B709-4F62-97A6-57199053A762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{397F5EC5-B709-4F62-97A6-57199053A762}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{397F5EC5-B709-4F62-97A6-57199053A762}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{397F5EC5-B709-4F62-97A6-57199053A762}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35278334-7760-4849-A12B-3740FBF7768E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35278334-7760-4849-A12B-3740FBF7768E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35278334-7760-4849-A12B-3740FBF7768E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -130,7 +124,6 @@ Global
 		{E19CF8D3-BAB4-4AB8-82E9-00D6E34C6C46} = {DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630}
 		{83304869-59D4-40C2-AB43-026B3CDCF515} = {EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}
 		{D4EC7AAC-4A1D-412C-8428-A2973066A2B6} = {83304869-59D4-40C2-AB43-026B3CDCF515}
-		{397F5EC5-B709-4F62-97A6-57199053A762} = {83304869-59D4-40C2-AB43-026B3CDCF515}
 		{35278334-7760-4849-A12B-3740FBF7768E} = {6262B9BF-905D-44A0-BE22-113EFD28C169}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WorkflowManager.ProductService.API.Controllers
 {
+    [Authorize]
     public class ProcessesController : BaseController
     {
         private readonly IReadModelRepository<ProcessModel> _readModelRepository;
@@ -25,7 +26,6 @@ namespace WorkflowManager.ProductService.API.Controllers
         }
 
         [HttpGet]
-       // [Authorize]
         [ProducesResponseType(typeof(IEnumerable<ProcessModel>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetProcesses([FromQuery]string name = null) => 
             Collection(await _readModelRepository.SearchAsync(name));
@@ -38,10 +38,12 @@ namespace WorkflowManager.ProductService.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "processes_manager")]
         public async Task<IActionResult> CreateProcess([FromBody] CreateProcessDTOCommand command) =>
             await SendAsync(new CreateProcessCommand(Guid.NewGuid(), command.Name));
 
         [HttpPatch("{id}")]
+        [Authorize(Roles = "processes_manager")]
         public async Task<IActionResult> UpdateProcess([FromRoute]Guid id, UpdateProcessDTOCommand command) =>
            await SendAsync(new UpdateProcessCommand(id, command.Name, command.Version));
     }

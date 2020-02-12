@@ -35,23 +35,23 @@ namespace IdentityServerAspNetIdentity
         public static List<TestUser> TestUsers =>
             new List<TestUser>
             {
-                new TestUser()
-                {
-                    Username = "user1",
-                    Password = "pwd1",
-                    IsActive = true,
-                    Claims = new List<Claim>()
-                    {
-                        new Claim(JwtClaimTypes.Name, "Michael Test"),
-                        new Claim(JwtClaimTypes.GivenName, "Michael"),
-                        new Claim(JwtClaimTypes.FamilyName, "Test"),
-                        new Claim(JwtClaimTypes.Email, "michael.test@identity.com"),
-                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                        new Claim(JwtClaimTypes.WebSite, "http://great.developers.com/michael.test"),
-                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Developer Street', 'locality': 'Katowice', 'postal_code': '41-100', 'country': 'Poland' }",IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
-                    }
+                //new TestUser()
+                //{
+                //    Username = "user1",
+                //    Password = "pwd1",
+                //    IsActive = true,
+                //    Claims = new List<Claim>()
+                //    {
+                //        new Claim(JwtClaimTypes.Name, "Michael Test"),
+                //        new Claim(JwtClaimTypes.GivenName, "Michael"),
+                //        new Claim(JwtClaimTypes.FamilyName, "Test"),
+                //        new Claim(JwtClaimTypes.Email, "michael.test@identity.com"),
+                //        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                //        new Claim(JwtClaimTypes.WebSite, "http://great.developers.com/michael.test"),
+                //        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Developer Street', 'locality': 'Katowice', 'postal_code': '41-100', 'country': 'Poland' }",IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+                //    }
 
-                }
+                //}
             };
 
 
@@ -126,7 +126,7 @@ namespace IdentityServerAspNetIdentity
                          "Operations_Service",
                          "Notyfications_Service"
                      },
-                    RequireConsent = false
+                    //RequireConsent = false
 
                 }
             };
