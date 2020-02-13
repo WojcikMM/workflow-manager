@@ -8,7 +8,8 @@ namespace WorkflowManager.Common.Authentication
     {
         public static void AddClientAuthentication(this IServiceCollection services, string configurationSectionName = "Authentication")
         {
-            var options = services.GetOptions<AuthenticationConfigurationModel>(configurationSectionName);
+            // TODO: This is only for development mode
+            IdentityModelEventSource.ShowPII = true;
 
             services.AddAuthentication(options =>
             {
@@ -17,6 +18,7 @@ namespace WorkflowManager.Common.Authentication
             })
                .AddJwtBearer(configuration =>
                {
+                   var options = services.GetOptions<AuthenticationConfigurationModel>(configurationSectionName);
                    configuration.Audience = options.Audience;
                    configuration.Authority = options.Authority;
                    configuration.MetadataAddress = options.MetadataAddress;

@@ -29,20 +29,22 @@ namespace IdentityServerAspNetIdentity
         {
             services.AddControllersWithViews();
 
-            // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
-            //services.Configure<IISOptions>(iis =>
-            //{
-            //    iis.AuthenticationDisplayName = "Windows";
-            //    iis.AutomaticAuthentication = false;
-            //});
+            //configures IIS out-of - proc settings(see https://github.com/aspnet/AspNetCore/issues/14882)
+             //services.Configure<IISOptions>(iis =>
+             //{
+             //    iis.AuthenticationDisplayName = "Windows";
+             //    iis.AutomaticAuthentication = false;
+             //});
 
-            //// configures IIS in-proc settings
+            // configures IIS in-proc settings
             //services.Configure<IISServerOptions>(iis =>
             //{
             //    iis.AuthenticationDisplayName = "Windows";
             //    iis.AutomaticAuthentication = false;
             //});
 
+
+            //TODO: Change to common AddReadModelContext ( Sql Database + own seed data on start + replace AddInMemory* ) 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -52,15 +54,14 @@ namespace IdentityServerAspNetIdentity
             
             var builder = services.AddIdentityServer(options =>
                 {
-                    //options.Events.RaiseErrorEvents = true;
-                    //options.Events.RaiseInformationEvents = true;
-                    //options.Events.RaiseFailureEvents = true;
-                    //options.Events.RaiseSuccessEvents = true;
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
                 })
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(Config.TestUsers)
                 .AddAspNetIdentity<ApplicationUser>();
 
             // not recommended for production - you need to store your key material somewhere secure

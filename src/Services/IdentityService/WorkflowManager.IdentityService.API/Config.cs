@@ -113,12 +113,18 @@ namespace IdentityServerAspNetIdentity
                     RequireClientSecret = false,
                     RedirectUris =
                     {
-                        "http://localhost:9000/oauth2-redirect.html",
+                        "http://localhost:8000/oauth2-redirect.html",
                         "http://localhost:8001/oauth2-redirect.html",
                     },
-                    PostLogoutRedirectUris = { "http://localhost:9000/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:9000" },
-                    AllowedScopes = { 
+                    PostLogoutRedirectUris = {
+                         "http://localhost:8000/index.html",
+                         "http://localhost:8001/index.html"
+                     },
+                    AllowedCorsOrigins = {
+                         "http://localhost:8000",
+                         "http://localhost:8001"
+                     },
+                    AllowedScopes = {
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
                          "api1",
@@ -127,7 +133,7 @@ namespace IdentityServerAspNetIdentity
                          "Operations_Service",
                          "Notyfications_Service"
                      },
-                    //RequireConsent = false
+                    RequireConsent = false
 
                 }
             };

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WorkflowManager.Common.Authentication
+﻿namespace WorkflowManager.Common.Authentication
 {
     public class AuthenticationConfigurationModel
     {
-        public string Audience { get; internal set; }
-        public string Authority { get; internal set; }
-        public string MetadataAddress { get; internal set; }
+        public string Audience { get; set; }
+        public string Authority { get; set; }
+        public string MetadataAddress { get; set; }
     }
 }

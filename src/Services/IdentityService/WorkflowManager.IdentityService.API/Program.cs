@@ -18,6 +18,7 @@ namespace IdentityServerAspNetIdentity
     {
         public static int Main(string[] args)
         {
+            // TODO: SET LOGGER TO CONSISTENT WITH OTHER SERVICES
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
