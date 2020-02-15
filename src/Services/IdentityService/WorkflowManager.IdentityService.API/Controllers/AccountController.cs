@@ -8,7 +8,6 @@ using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
-using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WorkflowManager.IdentityService.API.Quickstart.Account;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -24,16 +24,16 @@ namespace IdentityServer4.Quickstart.UI
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
@@ -47,6 +47,44 @@ namespace IdentityServer4.Quickstart.UI
             _events = events;
         }
 
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegistationViewModel model)
+        {
+            // check if we are in the context of an authorization request
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _userManager.CreateAsync(new IdentityUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = model.UserName,
+                Email = model.Email
+            }, model.Password);
+
+            if (!result.Succeeded)
+            {
+                result.Errors.ToList().ForEach(err =>
+                {
+                    ModelState.AddModelError(nameof(model.Password), err.Description);
+                });
+                return View(model);
+            }
+
+            var s = await _userManager.FindByNameAsync(model.UserName);
+
+            return RedirectToAction("Login");
+        }
+
         /// <summary>
         /// Entry point into the login workflow
         /// </summary>
@@ -55,12 +93,6 @@ namespace IdentityServer4.Quickstart.UI
         {
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
-
-            if (vm.IsExternalLoginOnly)
-            {
-                // we only have one option for logging in and it's an external provider
-                return RedirectToAction("Challenge", "External", new { provider = vm.ExternalLoginScheme, returnUrl });
-            }
 
             return View(vm);
         }
@@ -139,7 +171,7 @@ namespace IdentityServer4.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
@@ -148,7 +180,7 @@ namespace IdentityServer4.Quickstart.UI
             return View(vm);
         }
 
-        
+
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -227,25 +259,8 @@ namespace IdentityServer4.Quickstart.UI
                     Username = context?.LoginHint,
                 };
 
-                if (!local)
-                {
-                    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
-                }
-
                 return vm;
             }
-
-            var schemes = await _schemeProvider.GetAllSchemesAsync();
-
-            var providers = schemes
-                .Where(x => x.DisplayName != null ||
-                            (x.Name.Equals(AccountOptions.WindowsAuthenticationSchemeName, StringComparison.OrdinalIgnoreCase))
-                )
-                .Select(x => new ExternalProvider
-                {
-                    DisplayName = x.DisplayName,
-                    AuthenticationScheme = x.Name
-                }).ToList();
 
             var allowLocal = true;
             if (context?.ClientId != null)
@@ -254,11 +269,6 @@ namespace IdentityServer4.Quickstart.UI
                 if (client != null)
                 {
                     allowLocal = client.EnableLocalLogin;
-
-                    if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
-                    {
-                        providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
-                    }
                 }
             }
 
@@ -267,8 +277,7 @@ namespace IdentityServer4.Quickstart.UI
                 AllowRememberLogin = AccountOptions.AllowRememberLogin,
                 EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin,
                 ReturnUrl = returnUrl,
-                Username = context?.LoginHint,
-                ExternalProviders = providers.ToArray()
+                Username = context?.LoginHint
             };
         }
 

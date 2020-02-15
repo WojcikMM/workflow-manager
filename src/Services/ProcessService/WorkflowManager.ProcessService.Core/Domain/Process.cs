@@ -3,9 +3,9 @@ using WorkflowManager.CQRS.Domain.Domain.Mementos;
 using WorkflowManager.CQRS.Domain.Events;
 using System;
 using WorkflowManager.Common.Messages.Events.Processes;
-using WorkflowManager.ProductService.Core.Domain.Mementos;
+using WorkflowManager.ProcessesService.Core.Domain.Mementos;
 
-namespace WorkflowManager.ProductService.Core.Domain
+namespace WorkflowManager.ProcessesService.Core.Domain
 {
     public class Process : AggregateRoot, IOriginator,
         IAggregateEventHandler<ProcessCreatedEvent>,

@@ -1,7 +1,7 @@
 ﻿using WorkflowManager.CQRS.Domain.Domain.Mementos;
 using System;
 
-namespace WorkflowManager.ProductService.Core.Domain.Mementos
+namespace WorkflowManager.ProcessesService.Core.Domain.Mementos
 {
     public class ProcessMemento : BaseMemento
     {

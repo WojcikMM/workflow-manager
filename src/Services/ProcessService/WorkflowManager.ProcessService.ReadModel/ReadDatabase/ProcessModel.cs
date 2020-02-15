@@ -1,7 +1,7 @@
 ﻿using WorkflowManager.CQRS.ReadModel;
 using System;
 
-namespace WorkflowManager.ProcessService.ReadModel.ReadDatabase
+namespace WorkflowManager.ProcessesService.ReadModel.ReadDatabase
 {
     public class ProcessModel : IReadModel
     {

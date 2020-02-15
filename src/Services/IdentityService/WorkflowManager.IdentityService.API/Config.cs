@@ -13,7 +13,7 @@ namespace IdentityServerAspNetIdentity
 {
     public static class Config
     {
-        public static IEnumerable<IdentityResource> Ids =>
+        public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
@@ -21,7 +21,7 @@ namespace IdentityServerAspNetIdentity
             };
 
 
-        public static IEnumerable<ApiResource> Apis =>
+        public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
                 new ApiResource("api1", "My API #1"),

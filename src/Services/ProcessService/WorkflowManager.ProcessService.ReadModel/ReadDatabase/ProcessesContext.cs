@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WorkflowManager.ProcessService.ReadModel.ReadDatabase
+namespace WorkflowManager.ProcessesService.ReadModel.ReadDatabase
 {
     public class ProcessesContext : DbContext
     {

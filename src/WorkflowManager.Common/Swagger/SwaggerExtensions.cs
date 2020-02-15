@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowManager.Common.Configuration;
 using Microsoft.OpenApi.Models;
+using WorkflowManager.Common.ApplicationInitializer;
 
 namespace WorkflowManager.Common.Swagger
 {
@@ -14,10 +15,13 @@ namespace WorkflowManager.Common.Swagger
                                         .GetService<IConfiguration>()
                                         .GetOptions<SwaggerConfigurationModel>(configurationSectionName);
 
+            var serviceInfomations = ServiceConfiguration.GetServiceInformations();
+
             app.UseSwagger();
             app.UseSwaggerUI(cfg =>
             {
-                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", $"{options.ServiceName} ({options.Version})");
+                cfg.SwaggerEndpoint("/swagger/v1/swagger.json",
+                    serviceInfomations.ServiceNameWithVersion);
                 cfg.RoutePrefix = string.Empty;
             });
 
@@ -29,6 +33,7 @@ namespace WorkflowManager.Common.Swagger
         {
 
             SwaggerConfigurationModel options = services.GetOptions<SwaggerConfigurationModel>(configurationSectionName);
+            var serviceInfomations = ServiceConfiguration.GetServiceInformations();
 
             services.AddSwaggerGen(cfg =>
             {
@@ -58,11 +63,11 @@ namespace WorkflowManager.Common.Swagger
                         },
                     }
                 });
-                cfg.SwaggerDoc(options.Version,
+                cfg.SwaggerDoc(serviceInfomations.ServiceNameWithVersion,
                     new OpenApiInfo
                     {
-                        Title = options.ServiceName,
-                        Version = options.Version
+                        Title = serviceInfomations.ServiceName,
+                        Version = serviceInfomations.ServiceVersion
                     });
             });
 

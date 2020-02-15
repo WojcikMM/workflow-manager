@@ -1,11 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.Configuration
 {
     public static class ConfigurationExtensions
     {
-        public static T GetOptions<T>(this IConfiguration configuration, string sectionName, bool failIfNotExists = false) where T : class, new()
+        public static T GetOptions<T>(this IConfiguration configuration,
+                                            string sectionName,
+                                            bool failIfNotExists = false)
+            where T : class, new()
         {
             T option = new T();
             IConfigurationSection section = configuration.GetSection(sectionName);
@@ -17,7 +21,10 @@ namespace WorkflowManager.Common.Configuration
             return option;
         }
 
-        public static T GetOptions<T>(this IServiceCollection services, string sectionName, bool failIfNotExists = false) where T : class, new()
+        public static T GetOptions<T>(this IServiceCollection services,
+                                           string sectionName,
+                                           bool failIfNotExists = false)
+            where T : class, new()
         {
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {

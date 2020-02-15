@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Logging;
 using WorkflowManager.Common.Authentication;
 using WorkflowManager.Common.CQRSHandlers;
 using WorkflowManager.Common.EventStore;
@@ -15,12 +12,14 @@ using WorkflowManager.Common.Messages.Events.Processes.Rejected;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.Common.ReadModelStore;
 using WorkflowManager.Common.Swagger;
-using WorkflowManager.ProcessService.ReadModel;
-using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
-using WorkflowManager.ProductService.Core.CommandHandlers;
-using WorkflowManager.ProductService.Core.EventHandlers;
+using WorkflowManager.ProcessesService.ReadModel;
+using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
+using WorkflowManager.ProcessesService.Core.CommandHandlers;
+using WorkflowManager.ProcessesService.Core.EventHandlers;
+using System;
+using Microsoft.Extensions.Hosting;
 
-namespace WorkflowManager.ProductService.API
+namespace WorkflowManager.ProcessesService.API
 {
     public class Startup
     {
@@ -53,7 +52,7 @@ namespace WorkflowManager.ProductService.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-          //  if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -71,7 +70,7 @@ namespace WorkflowManager.ProductService.API
             app.UseServiceSwaggerUI();
             app.UseAuthentication();
             app.UseAuthorization();
-          
+
 
             app.UseEndpoints(endpoints =>
             {

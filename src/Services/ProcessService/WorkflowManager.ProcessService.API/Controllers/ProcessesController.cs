@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WorkflowManager.CQRS.ReadModel;
 using WorkflowManager.Common.Messages.Commands.Processes;
-using WorkflowManager.ProcessService.API.DTO.Commands;
-using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using WorkflowManager.ProcessesService.API.DTO.Commands;
+using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 using WorkflowManager.Common.Controllers;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.Common.ApiResponses;
 using Microsoft.AspNetCore.Authorization;
 
-namespace WorkflowManager.ProductService.API.Controllers
+namespace WorkflowManager.ProcessesService.API.Controllers
 {
     [Authorize]
     public class ProcessesController : BaseController

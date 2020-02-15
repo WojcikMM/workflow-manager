@@ -1,9 +1,9 @@
 ﻿using WorkflowManager.CQRS.Domain.CommandHandlers;
 using WorkflowManager.CQRS.Domain.Storage;
 using WorkflowManager.Common.Messages.Commands.Processes;
-using WorkflowManager.ProductService.Core.Domain;
+using WorkflowManager.ProcessesService.Core.Domain;
 
-namespace WorkflowManager.ProductService.Core.CommandHandlers
+namespace WorkflowManager.ProcessesService.Core.CommandHandlers
 {
     public class CreateProcessCommandHandler : BaseCommandHandler<CreateProcessCommand, Process>
     {

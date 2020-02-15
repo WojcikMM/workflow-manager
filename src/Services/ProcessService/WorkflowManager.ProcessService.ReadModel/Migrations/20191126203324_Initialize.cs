@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace WorkflowManager.ProcessService.ReadModel.Migrations
+namespace WorkflowManager.ProcessesService.ReadModel.Migrations
 {
     public partial class Initialize : Migration
     {

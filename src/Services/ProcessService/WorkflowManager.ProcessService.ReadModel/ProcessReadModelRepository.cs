@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkflowManager.Common.Exceptions;
-using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 
-namespace WorkflowManager.ProcessService.ReadModel
+namespace WorkflowManager.ProcessesService.ReadModel
 {
     public class ProcessReadModelRepository : IReadModelRepository<ProcessModel>
     {

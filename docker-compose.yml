@@ -20,7 +20,7 @@ services:
     ports:
       - "5000:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+      ASPNETCORE_ENVIRONMENT: "Development"
     depends_on:
       - workflowmanager.identityservice.db
     restart: on-failure

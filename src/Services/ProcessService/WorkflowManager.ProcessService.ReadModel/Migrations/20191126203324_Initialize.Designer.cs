@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 
-namespace WorkflowManager.ProcessService.ReadModel.Migrations
+namespace WorkflowManager.ProcessesService.ReadModel.Migrations
 {
     [DbContext(typeof(ProcessesContext))]
     [Migration("20191126203324_Initialize")]

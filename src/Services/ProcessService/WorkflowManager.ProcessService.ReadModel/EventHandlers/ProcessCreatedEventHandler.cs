@@ -4,9 +4,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using WorkflowManager.Common.Messages.Events.Processes;
-using WorkflowManager.ProcessService.ReadModel.ReadDatabase;
+using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 
-namespace WorkflowManager.ProductService.Core.EventHandlers
+namespace WorkflowManager.ProcessesService.Core.EventHandlers
 {
     public class ProcessCreatedEventHandler : IEventHandler<ProcessCreatedEvent>
     {

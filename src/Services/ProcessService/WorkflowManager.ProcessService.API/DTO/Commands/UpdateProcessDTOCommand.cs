@@ -1,4 +1,4 @@
-﻿namespace WorkflowManager.ProcessService.API.DTO.Commands
+﻿namespace WorkflowManager.ProcessesService.API.DTO.Commands
 {
     public class UpdateProcessDTOCommand
     {
