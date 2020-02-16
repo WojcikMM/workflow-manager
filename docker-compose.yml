@@ -46,8 +46,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
-      - workflowmanager.processservice.api
-      - workflowmanager.statusservice.api
+      - workflowmanager.processesservice.api
+      - workflowmanager.statusesservice.api
       - workflowmanager.operationsservice.api
       - workflowmanager.identityservice.api
 
@@ -55,21 +55,21 @@ services:
 
 
   # PROCESS SERVICE (PORT: 8001)
-  workflowmanager.processservice.api:
+  workflowmanager.processesservice.api:
     image: "${DOCKER_HUB_LOGIN}/workflow-manager-process-service-api"
     build:
       context: .
-      dockerfile: src/Services/ProcessService/WorkflowManager.ProcessService.API/Dockerfile
+      dockerfile: src/Services/ProcessesService/WorkflowManager.ProcessesService.API/Dockerfile
     ports:
       - "8001:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
       - workflowmanager.rabbitmq
-      - workflowmanager.processservice.db
+      - workflowmanager.processesservice.db
     restart: on-failure
 
-  workflowmanager.processservice.db:
+  workflowmanager.processesservice.db:
     image: "microsoft/mssql-server-linux"
     environment:
       SA_PASSWORD: "Your_password123"
@@ -80,11 +80,11 @@ services:
 
 
   #STATUS SERVICE (PORT: 8002)
-  workflowmanager.statusservice.api:
+  workflowmanager.statusesservice.api:
     image: "${DOCKER_HUB_LOGIN}/workflow-manager-status-service-api"
     build:
       context: .
-      dockerfile: src/Services/StatusService/WorkflowManager.StatusService.API/Dockerfile
+      dockerfile: src/Services/StatusesService/WorkflowManager.StatusesService.API/Dockerfile
       args:
         rabbit_port: 5672
     ports:
@@ -93,10 +93,10 @@ services:
       ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
     depends_on:
       - workflowmanager.rabbitmq
-      - workflowmanager.statusservice.db
+      - workflowmanager.statusesservice.db
     restart: on-failure
 
-  workflowmanager.statusservice.db:
+  workflowmanager.statusesservice.db:
     image: "microsoft/mssql-server-linux"
     environment:
       SA_PASSWORD: "Your_password123"

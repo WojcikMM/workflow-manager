@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using WorkflowManager.Common.ApplicationInitializer;
 using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.Common.Swagger;
 using WorkflowManager.CQRS.Domain.EventHandlers;
@@ -39,21 +39,8 @@ namespace WorkflowManager.OperationsStorage.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
+            ServiceConfiguration.InjectCommonMiddlewares(app, env);
             app.UseRabbitMq().SubscribeAllMessages();
-            app.UseServiceSwaggerUI();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
         }
     }
 }

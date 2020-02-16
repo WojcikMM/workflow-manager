@@ -1,0 +1,22 @@
+version: '3.4'
+services:
+  process-service:
+    image: wojcikmm/process-service-api
+    build:
+      context: ../../../
+      dockerfile: src/Services/ProcessesService/WorkflowManager.ProcessesService.API/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Azure"
+    depends_on:
+      - mssql-database
+    links:
+      - mssql-database
+    restart: on-failure
+
+  mssql-database:
+    image: "microsoft/mssql-server-linux"
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"

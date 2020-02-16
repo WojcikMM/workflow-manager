@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EF836DFE-7768-44C8-B4EC-4FF7B4F7D7B0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProcessService", "ProcessService", "{D4921CF0-8411-4F2E-AACD-F1F412BF7646}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProcessesService", "ProcessesService", "{D4921CF0-8411-4F2E-AACD-F1F412BF7646}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusService", "StatusService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StatusesService", "StatusesService", "{25AD97C8-366A-43D1-97B0-1231D978EA4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationService", "ApplicationService", "{C81D7CF6-322C-4F7B-9DAD-07F35EA250B1}"
 EndProject
@@ -17,21 +17,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Common", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.CQRS", "src\WorkflowManager.CQRS\WorkflowManager.CQRS.csproj", "{DA8264B0-E8E6-4108-BB26-2C345B916533}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.Core", "src\Services\ProcessService\WorkflowManager.ProcessService.Core\WorkflowManager.ProcessService.Core.csproj", "{58F8766B-92A9-4A6A-84FB-329912213C76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessesService.Core", "src\Services\ProcessesService\WorkflowManager.ProcessesService.Core\WorkflowManager.ProcessesService.Core.csproj", "{58F8766B-92A9-4A6A-84FB-329912213C76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.API", "src\Services\ProcessService\WorkflowManager.ProcessService.API\WorkflowManager.ProcessService.API.csproj", "{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessesService.API", "src\Services\ProcessesService\WorkflowManager.ProcessesService.API\WorkflowManager.ProcessesService.API.csproj", "{E66BCE37-148B-40EE-9321-0A17DA3BE8BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessService.ReadModel", "src\Services\ProcessService\WorkflowManager.ProcessService.ReadModel\WorkflowManager.ProcessService.ReadModel.csproj", "{AF189BA9-C91C-42F9-805C-26042547C74A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.ProcessesService.ReadModel", "src\Services\ProcessesService\WorkflowManager.ProcessesService.ReadModel\WorkflowManager.ProcessesService.ReadModel.csproj", "{AF189BA9-C91C-42F9-805C-26042547C74A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.Core", "src\Services\StatusService\WorkflowManager.StatusService.Core\WorkflowManager.StatusService.Core.csproj", "{38C262B9-76FD-48F7-A1FD-A06309556663}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusesService.Core", "src\Services\StatusesService\WorkflowManager.StatusesService.Core\WorkflowManager.StatusesService.Core.csproj", "{38C262B9-76FD-48F7-A1FD-A06309556663}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.ReadModel", "src\Services\StatusService\WorkflowManager.StatusService.ReadModel\WorkflowManager.StatusService.ReadModel.csproj", "{7DDFCED1-29A0-4AEB-A809-11FB87B39202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusesService.ReadModel", "src\Services\StatusesService\WorkflowManager.StatusesService.ReadModel\WorkflowManager.StatusesService.ReadModel.csproj", "{7DDFCED1-29A0-4AEB-A809-11FB87B39202}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationService", "NotificationService", "{96F376EE-5CB5-4485-9256-FD56BDA6C47D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotificationsService", "NotificationsService", "{96F376EE-5CB5-4485-9256-FD56BDA6C47D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.NotificationService.API", "src\Services\NotificationService\WorkflowManager.NotificationService.API\WorkflowManager.NotificationService.API.csproj", "{0984767F-5846-4CE9-A7C9-26B111ACA917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.NotificationsService.API", "src\Services\NotificationsService\WorkflowManager.NotificationsService.API\WorkflowManager.NotificationsService.API.csproj", "{0984767F-5846-4CE9-A7C9-26B111ACA917}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusService.API", "src\Services\StatusService\WorkflowManager.StatusService.API\WorkflowManager.StatusService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusesService.API", "src\Services\StatusesService\WorkflowManager.StatusesService.API\WorkflowManager.StatusesService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7F393D23-03C6-4CC6-877C-10E3BC22404D}"
 EndProject

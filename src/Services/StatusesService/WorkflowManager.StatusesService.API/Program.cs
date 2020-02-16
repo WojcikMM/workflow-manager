@@ -1,10 +1,10 @@
 using WorkflowManager.Common.ApplicationInitializer;
 
-namespace WorkflowManager.OperationsStorage.Api
+namespace WorkflowManager.StatusesService.API
 {
     public class Program
     {
         public static void Main(string[] args) =>
-             ServiceConfiguration.Initialize<Startup>(args);
+            ServiceConfiguration.Initialize<Startup>(args);
     }
 }
