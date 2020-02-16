@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Notificatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.StatusesService.API", "src\Services\StatusesService\WorkflowManager.StatusesService.API\WorkflowManager.StatusesService.API.csproj", "{EB7F7E43-E23B-40D3-87D3-A1D85B1DC835}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7F393D23-03C6-4CC6-877C-10E3BC22404D}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "WorkflowManager.DockerCompose", "WorkflowManager.DockerCompose.dcproj", "{7F393D23-03C6-4CC6-877C-10E3BC22404D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OperationsService", "OperationsService", "{DFAADDA6-B45D-4F5D-8049-7E7F3D3F7630}"
 EndProject
