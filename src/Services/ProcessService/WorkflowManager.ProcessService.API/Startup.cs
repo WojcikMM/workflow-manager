@@ -18,6 +18,7 @@ using WorkflowManager.ProcessesService.Core.CommandHandlers;
 using WorkflowManager.ProcessesService.Core.EventHandlers;
 using System;
 using Microsoft.Extensions.Hosting;
+using WorkflowManager.Common.ApplicationInitializer;
 
 namespace WorkflowManager.ProcessesService.API
 {
@@ -52,12 +53,15 @@ namespace WorkflowManager.ProcessesService.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment() || env.IsEnvironment("Docker"))
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
-            app.UseRouting();
+            //app.UseRouting();
+
+            ServiceConfiguration.InjectCommonMiddlewares(app, env);
+
             app.UseRabbitMq()
                 .SubscribeCommand<CreateProcessCommand, ProcessCreateRejectedEvent>()
                 .SubscribeCommand<UpdateProcessCommand, ProcessUpdateRejectedEvent>()
@@ -67,15 +71,15 @@ namespace WorkflowManager.ProcessesService.API
                 .SubscribeEvent<ProcessNameUpdatedEvent, ProcessUpdateRejectedEvent, ProcessUpdateCompleteEvent>()
                 .SubscribeEvent<ProcessRemovedEvent, ProcessRemoveRejectedEvent, ProcessRemoveCompleteEvent>();
 
-            app.UseServiceSwaggerUI();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseServiceSwaggerUI();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
         }
     }
 }

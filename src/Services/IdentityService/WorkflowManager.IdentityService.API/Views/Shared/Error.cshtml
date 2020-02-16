@@ -1,10 +1,4 @@
-﻿@model ErrorViewModel
-
-@{
-    var error = Model?.Error?.Error;
-    var errorDescription = Model?.Error?.ErrorDescription;
-    var request_id = Model?.Error?.RequestId;
-}
+﻿@model ErrorMessage
 
 <div class="error-page">
     <div class="page-header">
@@ -16,24 +10,24 @@
             <div class="alert alert-danger">
                 Sorry, there was an error
 
-                @if (error != null)
+                @if (Model?.Error != null)
                 {
                     <strong>
                         <em>
-                            : @error
+                            : @Model?.Error
                         </em>
                     </strong>
 
-                    if (errorDescription != null)
+                    if (Model?.ErrorDescription != null)
                     {
-                        <div>@errorDescription</div>
+                        <div>@Model?.ErrorDescription</div>
                     }
                 }
             </div>
 
-            @if (request_id != null)
+            @if (Model?.RequestId != null)
             {
-                <div class="request-id">Request Id: @request_id</div>
+                <div class="request-id">Request Id: @Model?.RequestId</div>
             }
         </div>
     </div>

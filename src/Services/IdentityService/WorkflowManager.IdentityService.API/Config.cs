@@ -29,6 +29,7 @@ namespace IdentityServerAspNetIdentity
                 new ApiResource("Statuses_Service", "Access to Statuses Service API"),
                 new ApiResource("Operations_Service", "Access to Operations Service API"),
                 new ApiResource("Notyfications_Service", "Access to Notyfications Service API"),
+                new ApiResource("Identity_Service", "Access to Identity Service API"),
             };
 
 
@@ -59,68 +60,27 @@ namespace IdentityServerAspNetIdentity
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
-                // SPA client using code flow + pkce
-                new Client
-                {
-                    ClientId = "spa",
-                    ClientName = "SPA Client",
-                    ClientUri = "http://identityserver.io",
-
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    RequirePkce = true,
-                    RequireClientSecret = false,
-
-                    RedirectUris =
-                    {
-                        "http://localhost:5002/index.html",
-                        "http://localhost:5002/callback.html",
-                        "http://localhost:5002/silent.html",
-                        "http://localhost:5002/popup.html",
-                    },
-                    PostLogoutRedirectUris = { "http://localhost:5002/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:5002" },
-
-                    AllowedScopes = { "openid", "profile", "api1" }
-                },
-                new Client
-                {
-                    ClientId = "swagger",
-                    ClientName = "swagger",
-                    ClientUri = "http://identityserver.io",
-                    Enabled = true,
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowAccessTokensViaBrowser = true,
-                    RequireClientSecret = false,
-                    RedirectUris =
-                    {
-                        "http://localhost:8000/index.html",
-                        "http://localhost:8000/oauth2-redirect.html"
-                    },
-                    PostLogoutRedirectUris = { "http://localhost:8000/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:8000" },
-
-                    AllowedScopes = { "openid", "profile", "api1" }
-
-                },
                  new Client
                 {
                     ClientId = "swagger2",
-                    ClientName = "swagger2",
-                    ClientUri = "http://identityserver.io",
+                    ClientName = "Swagger Client",
                     Enabled = true,
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
                     RequireClientSecret = false,
                     RedirectUris =
                     {
+                        "http://localhost:5000/oauth2-redirect.html",
                         "http://localhost:8000/oauth2-redirect.html",
-                        "http://localhost:8001/oauth2-redirect.html",
+                        "http://localhost:8001/oauth2-redirect.html"
                     },
                     PostLogoutRedirectUris = {
+                         "http://localhost:5000/index.html",
                          "http://localhost:8000/index.html",
                          "http://localhost:8001/index.html"
                      },
                     AllowedCorsOrigins = {
+                         "http://localhost:5000",
                          "http://localhost:8000",
                          "http://localhost:8001"
                      },
@@ -131,10 +91,10 @@ namespace IdentityServerAspNetIdentity
                          "Processes_Service",
                          "Statuses_Service",
                          "Operations_Service",
-                         "Notyfications_Service"
+                         "Notyfications_Service",
+                         "Identity_Service"
                      },
                     RequireConsent = false
-
                 }
             };
     }

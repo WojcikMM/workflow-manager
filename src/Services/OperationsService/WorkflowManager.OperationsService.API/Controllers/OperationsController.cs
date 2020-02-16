@@ -10,7 +10,7 @@ using WorkflowManager.OperationsStorage.Api.Services;
 
 namespace WorkflowManager.OperationsStorage.Controllers
 {
-    public class OperationsController : BaseController
+    public class OperationsController : BaseWithPublisherController
     {
         private readonly IOperationsStorage _operationsStorage;
         public OperationsController(IOperationsStorage operationsStorage, IBusPublisher busPublisher) :

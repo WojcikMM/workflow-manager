@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model LoginInputModel
 
 <div class="login-page">
     <div class="page-header">
@@ -8,13 +8,10 @@
     <partial name="_ValidationSummary" />
 
     <div class="row">
-
-        @if (Model.EnableLocalLogin)
-        {
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
+                        <h3 class="panel-title">Sign in to Workflow Manager</h3>
                     </div>
                     <div class="panel-body">
 
@@ -30,16 +27,12 @@
                                     <label asp-for="Password"></label>
                                     <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
                                 </div>
-                                @if (Model.AllowRememberLogin)
-                                {
                                     <div class="form-group login-remember">
                                         <label asp-for="RememberLogin">
                                             <input asp-for="RememberLogin">
                                             <strong>Remember My Login</strong>
                                         </label>
                                     </div>
-                                }
-
                                 <div>
                                     <p>The default users are alice/bob, password: Pass123$</p>
                                 </div>
@@ -47,21 +40,11 @@
                                 <div class="form-group">
                                     <button class="btn btn-primary" name="button" value="login">Login</button>
                                     <button class="btn btn-default" name="button" value="cancel">Cancel</button>
-                                    <a class="btn btn-primary" href="/Account/Register">Registration</a>
                                 </div>
                             </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
-        }
-
-        @if (!Model.EnableLocalLogin)
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this client.
-            </div>
-        }
     </div>
 </div>

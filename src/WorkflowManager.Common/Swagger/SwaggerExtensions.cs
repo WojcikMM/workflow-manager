@@ -63,7 +63,7 @@ namespace WorkflowManager.Common.Swagger
                         },
                     }
                 });
-                cfg.SwaggerDoc(serviceInfomations.ServiceNameWithVersion,
+                cfg.SwaggerDoc(serviceInfomations.ServiceVersion,
                     new OpenApiInfo
                     {
                         Title = serviceInfomations.ServiceName,

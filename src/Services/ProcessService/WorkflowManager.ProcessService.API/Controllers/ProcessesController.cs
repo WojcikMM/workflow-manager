@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WorkflowManager.ProcessesService.API.Controllers
 {
     [Authorize]
-    public class ProcessesController : BaseController
+    public class ProcessesController : BaseWithPublisherController
     {
         private readonly IReadModelRepository<ProcessModel> _readModelRepository;
 

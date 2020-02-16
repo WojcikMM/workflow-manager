@@ -13,7 +13,7 @@ using WorkflowManager.StatusService.ReadModel.ReadDatabase;
 
 namespace WorkflowManager.StatusService.API.Controllers
 {
-    public class StatusesController : BaseController
+    public class StatusesController : BaseWithPublisherController
     {
         private readonly IReadModelRepository<StatusModel> _readModelRepository;
 

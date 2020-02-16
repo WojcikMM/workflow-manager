@@ -85,10 +85,10 @@ namespace WorkflowManager.Common.ApplicationInitializer
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseServiceSwaggerUI();
 
             if (isApi)
             {
-                app.UseServiceSwaggerUI();
                 app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();

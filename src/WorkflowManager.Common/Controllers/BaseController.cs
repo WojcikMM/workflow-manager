@@ -1,11 +1,9 @@
-﻿using WorkflowManager.CQRS.Domain.Commands;
+﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
-using WorkflowManager.Common.RabbitMq;
-using System.Net;
-using WorkflowManager.Common.ApiResponses;
 using System.Collections.Generic;
+using WorkflowManager.Common.ApiResponses;
+using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace WorkflowManager.Common.Controllers
 {
@@ -13,13 +11,7 @@ namespace WorkflowManager.Common.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class BaseController : ControllerBase
-    {
-        private readonly IBusPublisher _busPublisher;
-
-        protected BaseController(IBusPublisher busPublisher)
-        {
-            _busPublisher = busPublisher;
-        }
+    {    
 
         protected IActionResult Single<T>(T model, Func<T, bool> criteria = null)
         {
@@ -60,19 +52,6 @@ namespace WorkflowManager.Common.Controllers
             return Ok(pagedResult);
         }
 
-
-        protected async Task<IActionResult> SendAsync<T>(T command) where T : ICommand
-        {
-            //var context = GetContext<T>(resourceId, resource);
-            Guid correlationId = Guid.NewGuid();
-            await _busPublisher.SendAsync(command, correlationId);
-
-            return Accepted(new
-            {
-                AggregateId = command.Id,
-                CorrelationId = correlationId
-            });
-        }
         protected bool IsAdmin
             => User.IsInRole("admin");
 

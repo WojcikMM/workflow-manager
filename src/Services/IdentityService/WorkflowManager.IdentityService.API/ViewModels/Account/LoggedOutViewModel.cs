@@ -13,7 +13,6 @@ namespace IdentityServer4.Quickstart.UI
         public bool AutomaticRedirectAfterSignOut { get; set; }
 
         public string LogoutId { get; set; }
-        public bool TriggerExternalSignout => ExternalAuthenticationScheme != null;
         public string ExternalAuthenticationScheme { get; set; }
     }
 }
