@@ -16,8 +16,6 @@ using WorkflowManager.ProcessesService.ReadModel;
 using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 using WorkflowManager.ProcessesService.Core.CommandHandlers;
 using WorkflowManager.ProcessesService.Core.EventHandlers;
-using System;
-using Microsoft.Extensions.Hosting;
 using WorkflowManager.Common.ApplicationInitializer;
 
 namespace WorkflowManager.ProcessesService.API

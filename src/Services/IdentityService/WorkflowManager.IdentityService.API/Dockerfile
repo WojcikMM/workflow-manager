@@ -4,7 +4,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
-COPY . .
+COPY ./WorkflowManager.CQRS ./WorkflowManager.CQRS
+COPY ./WorkflowManager.Common/ ./WorkflowManager.Common
+COPY ./Services/IdentityService/WorkflowManager.IdentityService.API ./Services/IdentityService/WorkflowManager.IdentityService.API
+WORKDIR ./Services/IdentityService/WorkflowManager.IdentityService.API
 RUN dotnet build "WorkflowManager.IdentityService.API.csproj" -c Release
 
 FROM build AS publish

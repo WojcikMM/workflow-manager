@@ -12,27 +12,27 @@ services:
       NAME: "rabbitmq"
 
   # IDENTITY SERVICE (PORT: 5000)
-  workflowmanager.identityservice.api:
-    image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
-    build:
-      context: src/Services/IdentityService/WorkflowManager.IdentityService.API
-      dockerfile: Dockerfile
-    ports:
-      - "5000:80"
-    environment:
-      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
-    depends_on:
-      - workflowmanager.identityservice.db
-    restart: on-failure
+  #workflowmanager.identityservice.api:
+  #  image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
+  #  build:
+  #    context: src
+  #    dockerfile: Services/IdentityService/WorkflowManager.IdentityService.API/Dockerfile
+  #  ports:
+  #    - "80:80"
+  #  environment:
+  #    ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+  #  depends_on:
+  #    - workflowmanager.identityservice.db
+  #  restart: on-failure
 
-  workflowmanager.identityservice.db:
-    image: "microsoft/mssql-server-linux"
-    environment:
-      SA_PASSWORD: "Your_password123"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1443:1433"
-      - "1444:1434"
+  #workflowmanager.identityservice.db:
+  #  image: "microsoft/mssql-server-linux"
+  #  environment:
+  #    SA_PASSWORD: "Your_password123"
+  #    ACCEPT_EULA: "Y"
+  #  ports:
+  #    - "1443:1433"
+  #    - "1444:1434"
 
 
   # API GATEWAY (PORT: 8000)

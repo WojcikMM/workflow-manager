@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using WorkflowManager.Common.Configuration;
 using Microsoft.AspNetCore.Builder;
 using WorkflowManager.Common.Swagger;
+using NLog.Common;
+using System.IO;
 
 namespace WorkflowManager.Common.ApplicationInitializer
 {
@@ -16,6 +18,8 @@ namespace WorkflowManager.Common.ApplicationInitializer
             where TStartup : class
         {
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            InternalLogger.LogFile =
+               Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "nlog-internals.txt");
 
 
             ServiceConfigurationModel serviceInformations = GetServiceInformations();
@@ -87,21 +91,18 @@ namespace WorkflowManager.Common.ApplicationInitializer
             app.UseAuthorization();
             app.UseServiceSwaggerUI();
 
-            if (isApi)
+            app.UseEndpoints(endpoints =>
             {
-                app.UseEndpoints(endpoints =>
+                if (isApi)
                 {
                     endpoints.MapControllers();
-                });
-            }
-            else
-            {
-                app.UseEndpoints(endpoints =>
+                }
+                else
                 {
                     endpoints.MapDefaultControllerRoute();
-                });
-            }
-            
+                }
+            });
+
         }
     }
 }

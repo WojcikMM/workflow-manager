@@ -14,6 +14,15 @@ namespace IdentityServerAspNetIdentity
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
+
             services.AddMvc();
             services.AddClientAuthentication();
             services.AddReadModelStore<ApplicationDbContext>("MsSqlDatabase");
@@ -28,7 +37,7 @@ namespace IdentityServerAspNetIdentity
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryClients(Config.Clients)
-                .AddTestUsers(Config.TestUsers)
+                // .AddTestUsers(Config.TestUsers)
                 .AddAspNetIdentity<IdentityUser>();
 
             services.AddServiceSwaggerUI();
@@ -36,8 +45,8 @@ namespace IdentityServerAspNetIdentity
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
             ServiceConfiguration.InjectCommonMiddlewares(app, env, false);
-
             app.UseStaticFiles();
             app.UseIdentityServer();
         }

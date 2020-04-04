@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkflowManager.Common.ApiResponses;
 using WorkflowManager.Common.Controllers;
@@ -13,6 +14,7 @@ using WorkflowManager.StatusesService.ReadModel.ReadDatabase;
 
 namespace WorkflowManager.StatusesService.API.Controllers
 {
+    [Authorize]
     public class StatusesController : BaseWithPublisherController
     {
         private readonly IReadModelRepository<StatusModel> _readModelRepository;
@@ -36,11 +38,13 @@ namespace WorkflowManager.StatusesService.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "statuses_manager")]
         [ProducesResponseType(typeof(AcceptedResponse),(int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> CreateStatus([FromBody] CreateStatusDTOCommand command) =>
             await SendAsync(new CreateStatusCommand(Guid.NewGuid(), command.Name, command.ProcessId));
 
         [HttpPatch("{id}")]
+        [Authorize(Roles = "statuses_manager")]
         [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand command) => await SendAsync(new UpdateStatusCommand(id, command.Name, command.ProcessId, command.Version));
     }

@@ -28,41 +28,57 @@ namespace IdentityServerAspNetIdentity
                 new ApiResource("Processes_Service", "Access to Processes Service API"),
                 new ApiResource("Statuses_Service", "Access to Statuses Service API"),
                 new ApiResource("Operations_Service", "Access to Operations Service API"),
-                new ApiResource("Notyfications_Service", "Access to Notyfications Service API"),
+                new ApiResource("Notifications_Service", "Access to Notifications Service API"),
                 new ApiResource("Identity_Service", "Access to Identity Service API"),
-            };
-
-
-        public static List<TestUser> TestUsers =>
-            new List<TestUser>
-            {
-                new TestUser()
-                {
-                    Username = "user1",
-                    Password = "pwd1",
-                    IsActive = true,
-                    Claims = new List<Claim>()
-                    {
-                        new Claim(JwtClaimTypes.Name, "Michael Test"),
-                        new Claim(JwtClaimTypes.GivenName, "Michael"),
-                        new Claim(JwtClaimTypes.FamilyName, "Test"),
-                        new Claim(JwtClaimTypes.Role, "processes_manager"),
-                        new Claim(JwtClaimTypes.Email, "michael.test@identity.com"),
-                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                        new Claim(JwtClaimTypes.WebSite, "http://great.developers.com/michael.test"),
-                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Developer Street', 'locality': 'Katowice', 'postal_code': '41-100', 'country': 'Poland' }",IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
-                    }
-
-                }
             };
 
 
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
+                new Client
+                {
+                    ClientId = "spa",
+                    ClientName = "SPA Code Client",
+                    Enabled = true,
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AccessTokenLifetime = 330,
+                    IdentityTokenLifetime = 60,
+
+                    RequireClientSecret = false,
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = new List<string>
+                    {
+                        "http://localhost:4200"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                         "http://localhost:4200"
+                    },
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        "https://localhost:4200"
+                    },
+                    AllowedScopes = new List<string>
+                    {
+                         IdentityServerConstants.StandardScopes.OpenId,
+                         IdentityServerConstants.StandardScopes.Profile,
+                         "api1",
+                         "Processes_Service",
+                         "Statuses_Service",
+                         "Operations_Service",
+                         "Notifications_Service",
+                         "Identity_Service"
+                    },
+                    RequireConsent = false
+
+                },
                  new Client
                 {
-                    ClientId = "swagger2",
+                    ClientId = "swagger",
                     ClientName = "Swagger Client",
                     Enabled = true,
                     AllowedGrantTypes = GrantTypes.Implicit,
@@ -70,19 +86,29 @@ namespace IdentityServerAspNetIdentity
                     RequireClientSecret = false,
                     RedirectUris =
                     {
+                        "https://workflow-manager-identity-service-api-dev.azurewebsites.net/oauth2-redirect.html",
                         "http://localhost:5000/oauth2-redirect.html",
                         "http://localhost:8000/oauth2-redirect.html",
-                        "http://localhost:8001/oauth2-redirect.html"
+                        "http://localhost:8000/swagger/oauth2-redirect.html",
+                        "http://localhost:8001/oauth2-redirect.html",
+                        "http://localhost:8002/oauth2-redirect.html",
+                        "http://localhost:8003/oauth2-redirect.html"
                     },
                     PostLogoutRedirectUris = {
+                        "https://workflow-manager-identity-service-api-dev.azurewebsites.net/index.html",
                          "http://localhost:5000/index.html",
                          "http://localhost:8000/index.html",
-                         "http://localhost:8001/index.html"
+                         "http://localhost:8001/index.html",
+                         "http://localhost:8002/index.html",
+                         "http://localhost:8003/index.html"
                      },
                     AllowedCorsOrigins = {
+                         "https://workflow-manager-identity-service-api-dev.azurewebsites.net",
                          "http://localhost:5000",
                          "http://localhost:8000",
-                         "http://localhost:8001"
+                         "http://localhost:8001",
+                         "http://localhost:8002",
+                         "http://localhost:8003",
                      },
                     AllowedScopes = {
                          IdentityServerConstants.StandardScopes.OpenId,
@@ -91,7 +117,7 @@ namespace IdentityServerAspNetIdentity
                          "Processes_Service",
                          "Statuses_Service",
                          "Operations_Service",
-                         "Notyfications_Service",
+                         "Notifications_Service",
                          "Identity_Service"
                      },
                     RequireConsent = false
