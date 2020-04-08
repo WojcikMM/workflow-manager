@@ -4,14 +4,15 @@ using NEventStore;
 using NEventStore.Logging;
 using System.Data.SqlClient;
 using NEventStore.Serialization.Json;
+using WorkflowManager.Common.Configuration;
 
 namespace WorkflowManager.Common.EventStore
 {
     public static class NEventStoreExtensions
     {
-        public static void AddEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info, string configurationSectionName = "EventStoreDatabase")
+        public static void AddEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info, string connectionStringName = "EventStoreDatabase")
         {
-            var connectionString = MsSQL.MsSqlExtensions.GetConnectionString(serviceCollection, configurationSectionName);
+            var connectionString = serviceCollection.GetConnectionString(connectionStringName);
 
             serviceCollection.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
 

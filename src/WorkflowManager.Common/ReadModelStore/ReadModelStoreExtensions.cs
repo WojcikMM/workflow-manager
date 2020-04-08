@@ -1,14 +1,15 @@
 ﻿using WorkflowManager.CQRS.ReadModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WorkflowManager.Common.Configuration;
 
 namespace WorkflowManager.Common.ReadModelStore
 {
     public static class ReadModelStoreExtensions
     {
-        public static void AddReadModelStore<TContext>(this IServiceCollection services, string configurationSectionName = "ReadDatabase") where TContext : DbContext
+        public static void AddReadModelStore<TContext>(this IServiceCollection services, string connectionStringName = "ReadDatabase") where TContext : DbContext
         {
-            var connectionString = MsSQL.MsSqlExtensions.GetConnectionString(services, configurationSectionName);
+            var connectionString = services.GetConnectionString(connectionStringName);
 
             services.AddDbContext<TContext>(options => options.UseSqlServer(connectionString),
                 optionsLifetime: ServiceLifetime.Transient, contextLifetime: ServiceLifetime.Transient);

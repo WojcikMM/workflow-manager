@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.Configuration
@@ -26,10 +25,19 @@ namespace WorkflowManager.Common.Configuration
                                            bool failIfNotExists = false)
             where T : class, new()
         {
+            return services.GetConfiguration().GetOptions<T>(sectionName, failIfNotExists);
+        }
+
+        public static string GetConnectionString(this IServiceCollection services, string connectionStringName)
+        {
+            return services.GetConfiguration().GetConnectionString(connectionStringName);
+        }
+
+        private static IConfiguration GetConfiguration(this IServiceCollection services)
+        {
             using (ServiceProvider serviceProvider = services.BuildServiceProvider())
             {
-                IConfiguration configuration = serviceProvider.GetService<IConfiguration>();
-                return configuration.GetOptions<T>(sectionName, failIfNotExists);
+                return serviceProvider.GetService<IConfiguration>();
             }
         }
     }
