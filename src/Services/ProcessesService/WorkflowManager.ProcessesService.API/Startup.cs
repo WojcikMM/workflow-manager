@@ -17,6 +17,7 @@ using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 using WorkflowManager.ProcessesService.Core.CommandHandlers;
 using WorkflowManager.ProcessesService.Core.EventHandlers;
 using WorkflowManager.Common.ApplicationInitializer;
+using WorkflowManager.Common.Cors;
 
 namespace WorkflowManager.ProcessesService.API
 {
@@ -31,6 +32,14 @@ namespace WorkflowManager.ProcessesService.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy", builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
             services.AddRabbitMq();
             services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();
@@ -52,7 +61,8 @@ namespace WorkflowManager.ProcessesService.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             ServiceConfiguration.InjectCommonMiddlewares(app, env);
-
+            //  app.RegisterCorsMiddleware();
+            app.UseCors("CORSPolicy");
             app.UseRabbitMq()
                 .SubscribeCommand<CreateProcessCommand, ProcessCreateRejectedEvent>()
                 .SubscribeCommand<UpdateProcessCommand, ProcessUpdateRejectedEvent>()

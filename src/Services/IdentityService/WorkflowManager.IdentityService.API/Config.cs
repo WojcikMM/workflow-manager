@@ -17,19 +17,42 @@ namespace IdentityServerAspNetIdentity
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
             };
 
 
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new ApiResource("api1", "My API #1"),
-                new ApiResource("Processes_Service", "Access to Processes Service API"),
-                new ApiResource("Statuses_Service", "Access to Statuses Service API"),
-                new ApiResource("Operations_Service", "Access to Operations Service API"),
-                new ApiResource("Notifications_Service", "Access to Notifications Service API"),
-                new ApiResource("Identity_Service", "Access to Identity Service API"),
+                new ApiResource("Processes_Service",
+                    "Access to Processes Service API",
+                    new List<string>{
+                        ClaimTypes.Role
+                    }),
+
+                new ApiResource("Statuses_Service",
+                    "Access to Statuses Service API",
+                    new List<string>{
+                        ClaimTypes.Role
+                    }),
+
+                new ApiResource("Operations_Service",
+                    "Access to Operations Service API",
+                    new List<string>{
+                        ClaimTypes.Role
+                    }),
+
+                new ApiResource("Notifications_Service",
+                    "Access to Notifications Service API",
+                    new List<string>{
+                        ClaimTypes.Role
+                    }),
+
+                new ApiResource("Identity_Service",
+                    "Access to Identity Service API",
+                    new List<string>{
+                        ClaimTypes.Role
+                    }),
             };
 
 
@@ -66,7 +89,7 @@ namespace IdentityServerAspNetIdentity
                     {
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
-                         "api1",
+                         "role",
                          "Processes_Service",
                          "Statuses_Service",
                          "Operations_Service",

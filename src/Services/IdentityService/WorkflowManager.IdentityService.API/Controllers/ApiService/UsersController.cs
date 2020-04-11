@@ -111,6 +111,63 @@ namespace WorkflowManager.IdentityService.API.Controllers.ApiService
             return NotFound();
         }
 
+        [HttpGet("{id}/roles")]
+        [ProducesResponseType(typeof(IEnumerable<string>),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetUserRoles([FromRoute]Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if(user == null)
+            {
+                return NotFound();
+            }
+            var roles = await _userManager.GetRolesAsync(user);
+            
+            return Ok(roles);
+        }
+
+        [HttpPatch("{id}/roles/add")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddRolesToUser([FromRoute]Guid id, [FromBody]AppendUserRoleCommand roleDto)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, roleDto.RoleName);
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+
+            return ValidationProblem();
+        }
+
+        [HttpPatch("{id}/roles/remove")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoveRolesToUser([FromRoute]Guid id, [FromBody]RemoveUserRoleCommand roleDto)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.RemoveFromRoleAsync(user, roleDto.RoleName);
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+
+            return ValidationProblem();
+        }
+
 
         private void AddErrorsToModelState(IdentityResult result)
         {
