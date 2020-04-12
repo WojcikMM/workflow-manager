@@ -2,12 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
-using IdentityServer4.Test;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace IdentityServerAspNetIdentity
 {
@@ -24,35 +21,15 @@ namespace IdentityServerAspNetIdentity
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new ApiResource("Processes_Service",
-                    "Access to Processes Service API",
-                    new List<string>{
-                        ClaimTypes.Role
-                    }),
+                new ApiResource("Processes_Service", "Access to Processes Service API"),
 
-                new ApiResource("Statuses_Service",
-                    "Access to Statuses Service API",
-                    new List<string>{
-                        ClaimTypes.Role
-                    }),
+                new ApiResource("Statuses_Service", "Access to Statuses Service API"),
 
-                new ApiResource("Operations_Service",
-                    "Access to Operations Service API",
-                    new List<string>{
-                        ClaimTypes.Role
-                    }),
+                new ApiResource("Operations_Service", "Access to Operations Service API"),
 
-                new ApiResource("Notifications_Service",
-                    "Access to Notifications Service API",
-                    new List<string>{
-                        ClaimTypes.Role
-                    }),
+                new ApiResource("Notifications_Service", "Access to Notifications Service API"),
 
-                new ApiResource("Identity_Service",
-                    "Access to Identity Service API",
-                    new List<string>{
-                        ClaimTypes.Role
-                    }),
+                new ApiResource("Identity_Service", "Access to Identity Service API"),
             };
 
 
@@ -89,7 +66,6 @@ namespace IdentityServerAspNetIdentity
                     {
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
-                         "role",
                          "Processes_Service",
                          "Statuses_Service",
                          "Operations_Service",

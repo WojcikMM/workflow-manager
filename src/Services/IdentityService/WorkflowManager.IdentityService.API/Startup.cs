@@ -7,6 +7,7 @@ using WorkflowManager.Common.ApplicationInitializer;
 using WorkflowManager.Common.Authentication;
 using WorkflowManager.Common.ReadModelStore;
 using WorkflowManager.Common.Swagger;
+using WorkflowManager.IdentityService.API.Services;
 using WorkflowManager.IdentityService.API.Validators;
 
 namespace IdentityServerAspNetIdentity
@@ -40,6 +41,7 @@ namespace IdentityServerAspNetIdentity
                 .AddInMemoryClients(Config.Clients)
                 // .AddTestUsers(Config.TestUsers)
                 .AddAspNetIdentity<IdentityUser>()
+                .AddProfileService<IdentityProfileService>()
                 .AddRedirectUriValidator<CustomRedirectUriValidator>();
 
             services.AddServiceSwaggerUI();
