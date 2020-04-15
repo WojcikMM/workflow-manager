@@ -1,47 +1,41 @@
 ﻿@model LoginInputModel
+@{
+    Layout = "";
+}
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
-
-    <partial name="_ValidationSummary" />
-
-    <div class="row">
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Sign in to Workflow Manager</h3>
-                    </div>
-                    <div class="panel-body">
-
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
-
-                            <fieldset>
-                                <div class="form-group">
-                                    <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                                </div>
-                                    <div class="form-group login-remember">
-                                        <label asp-for="RememberLogin">
-                                            <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
-                                        </label>
-                                    </div>
-
-                                <div class="form-group">
-                                    <button class="btn btn-primary" name="button" value="login">Login</button>
-                                    <button class="btn btn-default" name="button" value="cancel">Cancel</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workflow Manager - Identity Service</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+<body>
+    <div class="login">
+        <form class="login__panel" asp-route="Login">
+            <img src="~/white-logo.png" alt="Workflow Manager Logo">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="login__panel__row">
+                <input class="login__panel__row__input" type="text" asp-for="Username" autofocus autocomplete="off" required />
+                <span class="login__panel__row__bar"></span>
+                <label class="login__panel__row__label">Username</label>
             </div>
+            <div class="login__panel__row">
+                <input class="login__panel__row__input" type="password" asp-for="Password" autocomplete="off" required />
+                <span class="login__panel__row__bar"></span>
+                <label class="login__panel__row__label">Password</label>
+            </div>
+            <div class="login__panel__row">
+                <a href="/account/login">Forgot your password?</a>
+            </div>
+            <div class="login__panel__row">
+                <button value="login">Login</button>
+            </div>
+        </form>
     </div>
-</div>
+</body>
+</html>
