@@ -3,6 +3,7 @@
 @{ 
     // set this so the layout rendering sees an anonymous user
     ViewData["signed-out"] = true;
+    Layout = "_AccountLayout";
 }
 
 <div class="page-header logged-out">
@@ -20,11 +21,3 @@
     }
 
 </div>
-
-@section scripts
-{
-    @if (Model.AutomaticRedirectAfterSignOut)
-    {
-        <script src="~/js/signout-redirect.js"></script>
-    }
-}
