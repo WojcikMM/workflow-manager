@@ -40,16 +40,12 @@ namespace IdentityServerAspNetIdentity
                 {
                     ClientId = "spa",
                     ClientName = "SPA Code Client",
-                    Enabled = true,
-                    AccessTokenType = AccessTokenType.Jwt,
                     AccessTokenLifetime = 330,
                     IdentityTokenLifetime = 60,
 
                     RequireClientSecret = false,
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
-
-                    AllowAccessTokensViaBrowser = true,
                     RedirectUris = new List<string>
                     {
                         "http://localhost:4200"

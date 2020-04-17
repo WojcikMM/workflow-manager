@@ -9,6 +9,10 @@
     background: linear-gradient(344deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
 }
 
+h1 {
+    color: #c6c6c6;
+}
+
 img {
     width: 100%;
     height: auto;
@@ -18,6 +22,10 @@ img {
     position: relative;
     width: 20em;
     margin: 1.5em auto;
+}
+
+.error-message {
+    color: red;
 }
 
 /*BUTTON STYLES*/
@@ -30,14 +38,14 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    box-shadow: 1px 3px 1em 1px #c6c6c6;
-}
+    button:hover {
+        box-shadow: 1px 3px 1em 1px #c6c6c6;
+    }
 
-button:active {
-    box-shadow: 1px 2px 0.5em 0px #00c9f8;
-    transform: translateY(2px);
-}
+    button:active {
+        box-shadow: 1px 2px 0.5em 0px #00c9f8;
+        transform: translateY(2px);
+    }
 
 /*BAR STYLES*/
 
@@ -48,22 +56,22 @@ span {
     /*margin:auto;*/
 }
 
-span:before {
-    content: "";
-    height: 2px;
-    width: 0;
-    bottom: 0px;
-    position: absolute;
-    background: #2196f3;
-    transition: 300ms ease all;
-    left: 0%;
-}
+    span:before {
+        content: "";
+        height: 2px;
+        width: 0;
+        bottom: 0px;
+        position: absolute;
+        background: #2196f3;
+        transition: 300ms ease all;
+        left: 0%;
+    }
 
 input:focus ~ span:before {
     width: 100%;
 }
 
- /*FORGOT PASSWORD LINK*/
+/*FORGOT PASSWORD LINK*/
 a {
     color: white;
     opacity: 0.8;
@@ -105,16 +113,42 @@ input {
     /*margin:auto;*/
 }
 
-input:focus {
-    outline: none;
+    input:focus {
+        outline: none;
+    }
+
+    input[type="password"] {
+        letter-spacing: 0.3em;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+
+/*LOGOUT*/
+
+.logout a {
+    display: block;
+    font-size: 1.5em;
+    border: 1px solid white;
+    width: 10em;
+    border-radius: 4em;
+    text-decoration: none;
+    background-color: white;
+    padding: 0.5em;
+    color: black;
+    margin: auto;
+    opacity: 1;
 }
 
-input[type="password"] {
-    letter-spacing: 0.3em;
-}
+    .logout a:hover {
+        box-shadow: 1px 3px 1em 1px #c6c6c6;
+    }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-    transition: background-color 5000s ease-in-out 0s;
-}
+    .logout a:active {
+        box-shadow: 1px 2px 0.5em 0px #00c9f8;
+        transform: translateY(2px);
+    }

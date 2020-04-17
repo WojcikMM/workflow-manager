@@ -1,23 +1,16 @@
 ﻿@model LoggedOutViewModel
 
-@{ 
+@{
     // set this so the layout rendering sees an anonymous user
     ViewData["signed-out"] = true;
     Layout = "_AccountLayout";
 }
 
-<div class="page-header logged-out">
-    <h1>
-        Logout
-        <small>You are now logged out</small>
-    </h1>
+<div class="logout">
+    <h1>You are now logged out</h1>
 
     @if (Model.PostLogoutRedirectUri != null)
     {
-        <div>
-            Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the
-            <span>@Model.ClientName</span> application.
-        </div>
+        <a href="@Model.PostLogoutRedirectUri" draggable="false">Return to application</a>
     }
-
 </div>

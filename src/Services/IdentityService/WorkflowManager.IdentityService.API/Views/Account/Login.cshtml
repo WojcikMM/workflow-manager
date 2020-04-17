@@ -15,8 +15,14 @@
         <span class="login__panel__row__bar"></span>
         <label class="login__panel__row__label">Password</label>
     </div>
+    @if (!ViewContext.ModelState.IsValid)
+    {
+        <div class="form-group error-message">
+            Invalid username or password
+        </div>
+    }
     <div class="form-group">
-        <button value="login">Login</button>
+        <button type="submit">Login</button>
     </div>
     <div class="form-group">
         <a href="/account/login">Forgot your password?</a>
