@@ -1,0 +1,25 @@
+﻿@model ErrorMessage
+
+<div class="error-container">
+    <h1>Sorry, there was an error</h1>
+    @if (Model.ErrorDescription != null)
+    {
+        <h2>@Model.ErrorDescription</h2>
+    }
+    <div class="error-row">
+        <div>Error id:</div>
+        <div>@(Model.Error ?? "-")</div>
+    </div>
+    <div class="error-row">
+        <div>Client id:</div>
+        <div>@(Model.ClientId ?? "-")</div>
+    </div>
+    <div class="error-row">
+        <div>Redirect uri:</div>
+        <div>@(Model.RedirectUri ?? "-")</div>
+    </div>
+    <div class="error-row">
+        <div>Request id:</div>
+        <div>@(Model.RequestId ?? "-")</div>
+    </div>
+</div>

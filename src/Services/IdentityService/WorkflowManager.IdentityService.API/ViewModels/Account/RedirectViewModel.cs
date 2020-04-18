@@ -3,7 +3,7 @@
 
 
 
-namespace IdentityServer4.Quickstart.UI
+namespace WorkflowManager.IdentityService.API.ViewModels.Account
 {
     public class RedirectViewModel
     {

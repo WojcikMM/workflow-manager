@@ -5,7 +5,6 @@
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,8 +12,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WorkflowManager.IdentityService.API.ViewModels.Account;
 
-namespace IdentityServer4.Quickstart.UI
+namespace WorkflowManager.IdentityService.API.Controllers
 {
     [SecurityHeaders]
     [AllowAnonymous]
@@ -24,12 +24,9 @@ namespace IdentityServer4.Quickstart.UI
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
 
-        public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            IIdentityServerInteractionService interaction,
-            IClientStore clientStore,
-            IAuthenticationSchemeProvider schemeProvider)
+        public AccountController(SignInManager<IdentityUser> signInManager,
+                                IIdentityServerInteractionService interaction,
+                                IAuthenticationSchemeProvider schemeProvider)
         {
             _signInManager = signInManager;
             _interaction = interaction;
@@ -117,6 +114,14 @@ namespace IdentityServer4.Quickstart.UI
         }
 
 
+        [HttpGet("error")]
+        public async Task<IActionResult> Error(string errorId)
+        {
+            var message = await _interaction.GetErrorContextAsync(errorId);
+
+            return View(message);
+        }
+
         /*****************************************/
         /* helper APIs for the AccountController */
         /*****************************************/
@@ -147,30 +152,6 @@ namespace IdentityServer4.Quickstart.UI
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
             vm.Username = model.Username;
             vm.RememberLogin = model.RememberLogin;
-            return vm;
-        }
-
-        private async Task<LogoutViewModel> BuildLogoutViewModelAsync(string logoutId)
-        {
-            var vm = new LogoutViewModel { LogoutId = logoutId, ShowLogoutPrompt = true };
-
-            if (User?.Identity.IsAuthenticated != true)
-            {
-                // if the user is not authenticated, then just show logged out page
-                vm.ShowLogoutPrompt = false;
-                return vm;
-            }
-
-            var context = await _interaction.GetLogoutContextAsync(logoutId);
-            if (context?.ShowSignoutPrompt == false)
-            {
-                // it's safe to automatically sign-out
-                vm.ShowLogoutPrompt = false;
-                return vm;
-            }
-
-            // show the logout prompt. this prevents attacks where the user
-            // is automatically signed out by another malicious web page.
             return vm;
         }
 

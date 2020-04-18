@@ -33,7 +33,10 @@ namespace IdentityServerAspNetIdentity
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(setup =>
+            {
+                setup.UserInteraction.ErrorUrl = "/error";
+            })
                 //  .AddSigningCredential("tempkey")
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
