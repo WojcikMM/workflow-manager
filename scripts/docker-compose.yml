@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   workflowmanager.identityservice.api:
-    image: "wojcikmm/workflow-manager-identity-service-api"
+    image: "workflowmanager.azurecr.io/workflow-manager-identity-service-api"
     build:
       context: ../src
       dockerfile: Services/IdentityService/WorkflowManager.IdentityService.API/Dockerfile
