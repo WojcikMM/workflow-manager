@@ -102,7 +102,10 @@ spec:
         - name: identity-service-api
           image: workflowmanager.azurecr.io/workflow-manager-identity-service-api
           env:
-            - name: ASPNETCORE_ConnectionStrings__MsSqlDatabase
-              value: "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=identity_service_db;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
-
+            - name: ASPNETCORE__ConnectionStrings__MsSqlDatabase
+              value: "Data Source=51.124.72.160;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+            - name: ConnectionStrings__MsSqlDatabase
+              value: "Data Source=51.124.72.160;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
 
