@@ -115,6 +115,7 @@ namespace WorkflowManager.IdentityService.API.Controllers
 
 
         [HttpGet("error")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> Error(string errorId)
         {
             var message = await _interaction.GetErrorContextAsync(errorId);

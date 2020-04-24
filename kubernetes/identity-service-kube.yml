@@ -72,6 +72,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: identity-service-api-service-spec
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: workflow-manager-identity-service-api
 spec:
   type: LoadBalancer
   ports:
@@ -79,6 +81,7 @@ spec:
       port: 80
   selector:
     app: identity-service-api
+  loadBalancerIP: 51.124.75.161
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -100,12 +103,11 @@ spec:
     spec:
       containers:
         - name: identity-service-api
-          image: workflowmanager.azurecr.io/workflow-manager-identity-service-api
+          image: workflowmanager.azurecr.io/workflow-manager-identity-service-api:latest
+          imagePullPolicy: "Always"
           env:
-            - name: ASPNETCORE__ConnectionStrings__MsSqlDatabase
-              value: "Data Source=51.124.72.160;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
             - name: ConnectionStrings__MsSqlDatabase
-              value: "Data Source=51.124.72.160;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+              value: "Data Source=identity-service-mssql-service-spec;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
 
