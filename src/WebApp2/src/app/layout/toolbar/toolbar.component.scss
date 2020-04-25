@@ -1,0 +1,32 @@
+$max-mobile-width: 64em;
+
+.toolbar {
+  display: flex;
+
+  &-group {
+    flex: 1;
+
+    &__sidebar-button {
+      @media screen and (min-width: $max-mobile-width){
+        display: none;
+      }
+    }
+
+    &--left {
+      text-align: left;
+    }
+
+    &--center {
+      text-align: center;
+      margin: auto;
+      flex: 2;
+      img {
+        height: 3em;
+      }
+    }
+
+    &--right {
+      text-align: right;
+    }
+  }
+}

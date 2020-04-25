@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{model.title}}</h1>
+<mat-dialog-content>
+  <p *ngFor="let bodyRow of model.bodyRows">{{bodyRow}}</p>
+</mat-dialog-content>
+<mat-dialog-actions [style.float]="'right'">
+  <button mat-button *ngIf="model.isConfirm" [mat-dialog-close]="false">Cancel</button>
+  <button mat-button [mat-dialog-close]="model.isConfirm">Ok</button>
+</mat-dialog-actions>

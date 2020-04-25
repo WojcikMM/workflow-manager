@@ -1,0 +1,10 @@
+node_modules
+dist
+functions
+.firebase
+.firebaserc
+# IntelliJ project files
+.idea
+*.iml
+out
+gen

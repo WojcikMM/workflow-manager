@@ -1,0 +1,45 @@
+//noinspection CssUnusedSymbol,CssUnusedSymbol
+@mixin shared-management-list {
+  &__add-button {
+    bottom: 1em;
+    left: auto;
+    position: fixed;
+    right: 2em;
+    z-index: 99;
+  }
+
+  .mat-display-2 {
+    text-align: center;
+  }
+
+  &__header {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &__header-text {
+      flex: 3;
+      text-align: center;
+    }
+  }
+
+  &__container {
+    display: flex;
+
+    &--mobile {
+      flex-direction: column;
+    }
+
+    &__list {
+      flex: 1;
+    }
+
+    &__edit-form {
+      flex: 1;
+    }
+  }
+
+  mat-card {
+    margin-bottom: 2em;
+  }
+}

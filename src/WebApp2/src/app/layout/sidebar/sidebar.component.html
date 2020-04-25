@@ -1,0 +1,17 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let sidebarGroup of sidebarItems">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{sidebarGroup.label}}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+      <a *ngFor="let sidebarItem of sidebarGroup.items"
+         mat-list-item
+         [routerLink]="sidebarItem.path"
+         (click)="linkClicked.emit()">
+        {{sidebarItem.label}}
+      </a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>
+
+

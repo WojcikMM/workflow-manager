@@ -1,0 +1,20 @@
+<div class="registration-wizard">
+  <div class="mat-display-2">Application Registration</div>
+  <mat-vertical-stepper [linear]="true">
+    <mat-step [stepControl]="firstStepForm">
+      <ng-template matStepLabel>Process information</ng-template>
+      <app-process-info-step [processControl]="firstStepForm">
+      </app-process-info-step>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Application Information</ng-template>
+      <app-application-info-step>
+      </app-application-info-step>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Summary</ng-template>
+      <app-summary-step>
+      </app-summary-step>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

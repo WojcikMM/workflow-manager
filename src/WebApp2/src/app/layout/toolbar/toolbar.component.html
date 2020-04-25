@@ -1,0 +1,18 @@
+<mat-toolbar class="toolbar" color="primary">
+  <div class="toolbar-group toolbar-group--left">
+    <button *ngIf="(isAuthorized$ | async) && (isHandset$ | async)"
+            class="sidenav-container__toolbar__menu-button"
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            (click)="toggleSidebarEvent.emit()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+  </div>
+  <div class="toolbar-group toolbar-group--center" routerLink="welcome">
+    <img src="../../../assets/name_logo.png" alt="Workflow Manager Logo">
+  </div>
+  <div class="toolbar-group toolbar-group--right">
+      <button mat-button (click)="signOut()">SignOut</button>
+  </div>
+</mat-toolbar>

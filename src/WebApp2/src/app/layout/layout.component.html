@@ -1,0 +1,22 @@
+<app-toolbar [isHandset$]="isHandset$"
+             (toggleSidebarEvent)="drawer.toggle()">
+</app-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #drawer fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isAuthorized$ | async) && (isHandset$ | async) === false"
+               [style.top]="(isHandset$ | async) ?  '4em' : '4.5em'"
+               [style.width]="'20em'">
+    <mat-toolbar>
+      <span class="sidenav-title">Menu</span>
+    </mat-toolbar>
+
+    <app-sidebar *ngIf="isHandset$ | async" (linkClicked)="drawer.toggle(false)"></app-sidebar>
+    <app-sidebar *ngIf="!(isHandset$ | async)"></app-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,35 @@
+<div class="processes-list">
+  <div class="mat-display-2">Processes List</div>
+
+  <button class="processes-list__add-button"
+          mat-fab
+          color="accent"
+          matTooltip="Add Process"
+          (click)="onAddProcessClicked()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <div class="processes-list__container"
+       [class.processes-list__container--mobile]="isHandset$ | async">
+    <div class="processes-list__container__list">
+      <mat-card *ngFor="let process of processes$ | async">
+        <mat-card-header>
+          <mat-card-title>{{process.name}}</mat-card-title>
+          <mat-card-subtitle>Created at: {{process.createdAt | date}}</mat-card-subtitle>
+          <mat-card-subtitle>Updated at: {{process.updatedAt | date}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-button (click)="onEditClicked(process)">Edit</button>
+<!--          <button mat-button (click)="onRemoveButtonClicked(process)">Remove</button>-->
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="processes-list__container__edit-form">
+      <app-process-edit-form *ngIf="!!processToEdit"
+                             [model]="processToEdit"
+                             (submitFormEvent)="onFormSubmitted($event)"
+                             (closeFormEvent)="onFormClosed()">
+      </app-process-edit-form>
+    </div>
+  </div>
+</div>
