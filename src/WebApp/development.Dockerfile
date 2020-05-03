@@ -8,5 +8,4 @@ COPY package.json ./
 RUN npm install
 COPY . .
 EXPOSE 4200
-#RUN npm test:dev
-RUN npm run start
+ENTRYPOINT npm run start -- --host 0.0.0.0

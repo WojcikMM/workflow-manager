@@ -34,6 +34,7 @@ namespace WorkflowManager.Common.Swagger
 
             SwaggerConfigurationModel options = services.GetOptions<SwaggerConfigurationModel>(configurationSectionName);
             var serviceInfomations = ServiceConfiguration.GetServiceInformations();
+            var identityUrl = services.GetIdentityUrl();
 
             services.AddSwaggerGen(cfg =>
             {
@@ -52,15 +53,16 @@ namespace WorkflowManager.Common.Swagger
                 {
                     Name = "swagger",
                     Type = SecuritySchemeType.OAuth2,
-                    OpenIdConnectUrl = new System.Uri($"{options.IdentityServiceUrl}/.well-known/openid-configuration"),
+                    OpenIdConnectUrl = new System.Uri($"{identityUrl}/.well-known/openid-configuration"),
                     Flows = new OpenApiOAuthFlows()
                     {
                         Implicit = new OpenApiOAuthFlow()
                         {
-                            AuthorizationUrl = new System.Uri($"{options.IdentityServiceUrl}/connect/authorize"),
-                            TokenUrl = new System.Uri($"{options.IdentityServiceUrl}/connect/token"),
-                            Scopes = options.Scopes
-                        },
+                            AuthorizationUrl = new System.Uri($"{identityUrl}/connect/authorize"),
+                            TokenUrl = new System.Uri($"{identityUrl}/connect/token"),
+                            Scopes = options.Scopes,
+
+                        }
                     }
                 });
                 cfg.SwaggerDoc(serviceInfomations.ServiceVersion,

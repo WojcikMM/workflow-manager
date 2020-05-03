@@ -19,17 +19,20 @@ namespace WorkflowManager.Common.Authentication
             })
                .AddJwtBearer(configuration =>
                {
-                   var options = services.GetOptions<AuthenticationConfigurationModel>(configurationSectionName);
-                   configuration.Audience = options.Audience;
-                   configuration.Authority = options.Authority;
-                   configuration.MetadataAddress = options.MetadataAddress;
+                   var IssuerUrl = services.GetIdentityUrl();
+                   var identityAudience = services.GetValue<string>("IdentityAudience");
+                   var identityInternalUrl = services.GetValue<string>("IdentityInternalUrl") ?? IssuerUrl;
+
+                   configuration.Audience = identityAudience;
+                   configuration.Authority = IssuerUrl;
+                   configuration.MetadataAddress = $"{IssuerUrl}/.well-known/openid-configuration";
                    configuration.RequireHttpsMetadata = false;
                    configuration.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                    {
                        ValidateAudience = true,
-                       ValidAudience = options.Audience,
+                       ValidAudience = identityAudience,
                        ValidateIssuer = true,
-                       ValidIssuer = options.Authority
+                       ValidIssuer = IssuerUrl
                    };
                }
                );

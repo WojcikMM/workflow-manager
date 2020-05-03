@@ -42,7 +42,6 @@ namespace IdentityServerAspNetIdentity
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryClients(Config.Clients)
-                // .AddTestUsers(Config.TestUsers)
                 .AddAspNetIdentity<IdentityUser>()
                 .AddProfileService<IdentityProfileService>()
                 .AddRedirectUriValidator<CustomRedirectUriValidator>();

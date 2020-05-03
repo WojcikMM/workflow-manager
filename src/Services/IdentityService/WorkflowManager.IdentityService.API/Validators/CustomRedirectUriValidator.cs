@@ -22,7 +22,7 @@ namespace WorkflowManager.IdentityService.API.Validators
         private bool ValidateUri(string requestedUri)
         {
             var isFromAzure = Regex.IsMatch(requestedUri, @"workflow-manager.*\.azurewebsites.net");
-            var isLocalhost = requestedUri.Contains("localhost:");
+            var isLocalhost = requestedUri.Contains("localhost");
 
             return isFromAzure || isLocalhost;
         }

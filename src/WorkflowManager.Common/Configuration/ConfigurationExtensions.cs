@@ -1,10 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.Configuration
 {
     public static class ConfigurationExtensions
     {
+
+        public static T GetValue<T>(this IServiceCollection services, string ConfigPath)
+        {
+            return services.GetConfiguration().GetValue<T>(ConfigPath);
+        }
+
         public static T GetOptions<T>(this IConfiguration configuration,
                                             string sectionName,
                                             bool failIfNotExists = false)
@@ -31,6 +38,11 @@ namespace WorkflowManager.Common.Configuration
         public static string GetConnectionString(this IServiceCollection services, string connectionStringName)
         {
             return services.GetConfiguration().GetConnectionString(connectionStringName);
+        }
+
+        public static string GetIdentityUrl(this IServiceCollection services)
+        {
+            return services.GetValue<string>("IdentityUrl");
         }
 
         private static IConfiguration GetConfiguration(this IServiceCollection services)
