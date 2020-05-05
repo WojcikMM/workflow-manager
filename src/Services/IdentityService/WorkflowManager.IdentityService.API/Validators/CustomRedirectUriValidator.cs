@@ -22,9 +22,10 @@ namespace WorkflowManager.IdentityService.API.Validators
         private bool ValidateUri(string requestedUri)
         {
             var isFromAzure = Regex.IsMatch(requestedUri, @"workflow-manager.*\.azurewebsites.net");
+            var isFromAKS = Regex.IsMatch(requestedUri, @"workflow-manager.*\.cloudapp.azure.com");
             var isLocalhost = requestedUri.Contains("localhost");
 
-            return isFromAzure || isLocalhost;
+            return isFromAzure || isFromAKS || isLocalhost;
         }
     }
 }

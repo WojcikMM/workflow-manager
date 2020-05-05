@@ -44,7 +44,6 @@ spec:
       labels:
         app: identity-service-mssql
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
         - name: identity-service-mssql
           image: microsoft/mssql-server-linux
@@ -78,8 +77,6 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-    - protocol: TCP
-      port: 443
   selector:
     app: identity-service-api
   loadBalancerIP: 51.137.20.160
@@ -105,7 +102,7 @@ spec:
       containers:
         - name: identity-service-api
           image: workflowmanager.azurecr.io/workflow-manager-identity-service-api:latest
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           env:
             - name: ConnectionStrings__MsSqlDatabase
               value: "Data Source=identity-service-mssql-service-spec;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
