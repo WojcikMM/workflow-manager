@@ -1,0 +1,7 @@
+resources:
+  - api/deployment.yaml
+  - api/service-ext.yaml
+  - mssql/secret.yaml
+  - mssql/volume.yaml
+  - mssql/service.yaml
+  - mssql/deployment.yaml

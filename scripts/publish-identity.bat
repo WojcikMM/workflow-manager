@@ -1,1 +1,0 @@
-docker push workflowmanager.azurecr.io/workflow-manager-identity-service-api

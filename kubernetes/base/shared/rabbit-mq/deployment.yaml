@@ -1,19 +1,7 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: rabbitmq-service-spec
-spec:
-  selector:
-    app:  rabbitmq
-  type:  LoadBalancer
-  ports:
-  - port: 5672
-  - port: 15672
----
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: rabbitmq-deployment-spec
+  name: rabbitmq-deployment
 spec:
   replicas: 1
   template:
@@ -24,6 +12,10 @@ spec:
       containers:
         - name: rabbitmq
           image: rabbitmq:3-management
+          resources:
+              limits:
+                cpu: 1Gi
+                memory: 2Gi
           ports:
             - containerPort: 5672
             - containerPort: 15672

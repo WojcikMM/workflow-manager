@@ -1,0 +1,4 @@
+resources:
+  - rabbit-mq/deployment.yaml
+  - rabbit-mq/service.yaml
+  - rabbit-mq/service-ext.yaml

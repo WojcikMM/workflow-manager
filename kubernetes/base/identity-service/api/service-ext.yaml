@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-service-api-service-ext
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: workflow-manager-identity-service
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+  selector:
+    app: identity-service-api
+    loadBalancerIP: 51.124.86.253

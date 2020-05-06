@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: identity-service-mssql-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: identity-service-mssql
+    spec:
+      containers:
+        - name: identity-service-mssql
+          image: microsoft/mssql-server-linux
+          resources:
+              limits:
+                cpu: 1Gi
+                memory: 2Gi
+          ports:
+            - containerPort: 1433
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: identity-service-mssql-secret
+                  key: SA_PASSWORD
+          volumeMounts:
+            - name: identity-service-mssql-persistent-storage
+              mountPath: /var/opt/mssql
+      volumes:
+        - name: identity-service-mssql-persistent-storage
+          persistentVolumeClaim:
+            claimName: identity-service-mssql-volume
