@@ -11,4 +11,4 @@ spec:
       port: 80
   selector:
     app: identity-service-api
-    loadBalancerIP: 51.124.86.253
+  loadBalancerIP: 51.124.86.253

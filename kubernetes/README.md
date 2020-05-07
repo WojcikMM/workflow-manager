@@ -49,3 +49,17 @@ kubernetes
         * kustomization.yaml (transform base configuration)
 
 _On every level on __base__ configuration there is __kustomization.yaml__ for grouping purpose_
+
+### TODO
+1. Add limit and --requests-- for configurations
+2. Check [_kustomize_](https://github.com/kubernetes-sigs/kustomize/tree/master/examples) mechanism for features:
+    * resources
+    * configmapGenerator
+    * secretGenerator
+    * generatorOptions
+    * patchesStrategicMerge
+    * patchesJson6902
+    * vars
+    * images
+    * configurations
+    * crds

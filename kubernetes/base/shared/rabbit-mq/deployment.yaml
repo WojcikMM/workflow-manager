@@ -1,21 +1,23 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: rabbitmq-deployment
+  name: rabbit-mq-deployment
+  namespace: default
+  labels:
+    app: rabbitmq
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit-mq
   template:
     metadata:
+      name: rabbit-mq
       labels:
-        app: rabbitmq
+        app: rabbit-mq
     spec:
       containers:
-        - name: rabbitmq
+        - name: rabbit-mq
           image: rabbitmq:3-management
-          resources:
-              limits:
-                cpu: 1Gi
-                memory: 2Gi
-          ports:
-            - containerPort: 5672
-            - containerPort: 15672
+          command:
+            - rabbitmq-server

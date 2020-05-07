@@ -2,20 +2,23 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: identity-service-mssql-deployment
+  namespace: default
+  labels:
+    app: identity-service-mssql
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: identity-service-mssql
   template:
     metadata:
+      name: identity-service-mssql
       labels:
         app: identity-service-mssql
     spec:
       containers:
         - name: identity-service-mssql
           image: microsoft/mssql-server-linux
-          resources:
-              limits:
-                cpu: 1Gi
-                memory: 2Gi
           ports:
             - containerPort: 1433
           env:
