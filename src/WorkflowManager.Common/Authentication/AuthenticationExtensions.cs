@@ -7,7 +7,7 @@ namespace WorkflowManager.Common.Authentication
 {
     public static class AuthenticationExtensions
     {
-        public static void AddClientAuthentication(this IServiceCollection services, string configurationSectionName = "Authentication")
+        public static void AddClientAuthentication(this IServiceCollection services)
         {
             // TODO: This is only for development mode
             IdentityModelEventSource.ShowPII = true;

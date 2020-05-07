@@ -1,0 +1,1 @@
+call build-base.bat identity %1

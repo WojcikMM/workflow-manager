@@ -1,0 +1,1 @@
+call build-base.bat processes %1
