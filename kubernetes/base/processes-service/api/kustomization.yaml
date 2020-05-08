@@ -1,0 +1,4 @@
+bases:
+  - ../../templates/api
+commonLabels:
+  app: processes-service-api

@@ -1,0 +1,37 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: -api-deployment
+  namespace: default
+  labels:
+    app: -api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: -api
+  template:
+    metadata:
+      name: api
+      labels:
+        app: -api
+    spec:
+      containers:
+        - name: api
+          image: api_image_name
+          imagePullPolicy: "Always"
+
+          env:
+            - name: ConnectionStrings__MsSqlDatabase
+              value: "Data Source=$(MSSQL_SERVICE_NAME);User ID=sa;Password=$(MSSQL_SERVICE_SECRET);Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Docker
+            - name: ASPNETCORE_BASE_LOG_DIR
+              value: ../var/log/api
+          volumeMounts:
+            - name: api-logs
+              mountPath: /var/log/api
+      volumes:
+        - name: api-logs
+          hostPath:
+            path: /var/log/containers
