@@ -25,10 +25,10 @@ spec:
                 memory: 100m
               limits:
                 cpu: 200m
-                memory: 500M
+                memory: 200M
           env:
             - name: ConnectionStrings__MsSqlDatabase
-              value: "Data Source=$(MSSQL_SERVICE_NAME);User ID=sa;Password=$(MSSQL_SERVICE_SECRET);Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+              value: "Data Source=workflow-manager.database.windows.net;Initial Catalog=workflow-manager-db;User ID=workflowmanager;Password=Your_password123;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
             - name: ASPNETCORE_ENVIRONMENT
               value: Docker
             - name: ASPNETCORE_BASE_LOG_DIR

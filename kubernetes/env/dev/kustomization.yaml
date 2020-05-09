@@ -6,4 +6,4 @@ images:
   - name: workflowmanager.azurecr.io/workflow-manager-identity-service-api
     newTag: latest
   - name: workflowmanager.azurecr.io/workflow-manager-processes-service-api
-    newName: latest
+    newTag: latest

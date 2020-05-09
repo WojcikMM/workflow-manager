@@ -63,3 +63,12 @@ _On every level on __base__ configuration there is __kustomization.yaml__ for gr
     * images
     * configurations
     * crds
+
+API
+ limits:
+    cpu: 200m
+    memory: 500M
+DB
+limits:
+    cpu: 300m
+    memory: 3G

@@ -1,0 +1,121 @@
+version: '3.4'
+services:
+  # RABBIT MQ (PORT: 15672)
+  workflowmanager.rabbitmq:
+    image: "rabbitmq:3-management"
+    command: rabbitmq-server
+    hostname: "rabbitmq"
+    ports:
+      - "15672:15672"
+      - "5652:5672"
+    labels:
+      NAME: "rabbitmq"
+
+  # IDENTITY SERVICE (PORT: 5000)
+  workflowmanager.identityservice.api:
+   image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
+   build:
+     context: src
+     dockerfile: Services/IdentityService/WorkflowManager.IdentityService.API/Dockerfile
+   ports:
+     - "5000:80"
+   environment:
+     ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+   depends_on:
+     - workflowmanager.identityservice.db
+   restart: on-failure
+
+  workflowmanager.identityservice.db:
+   image: "microsoft/mssql-server-linux"
+   environment:
+     SA_PASSWORD: "${DB_PASSWORD}"
+     ACCEPT_EULA: "Y"
+   ports:
+     - "1443:1433"
+     - "1444:1434"
+
+
+  # API GATEWAY (PORT: 8000)
+  workflowmanager.gateway.api:
+    image: ${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api
+    build:
+      context: src/Services/GatewayService/WorkflowManager.OcelotGatewayService.API
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    depends_on:
+      - workflowmanager.processesservice.api
+      - workflowmanager.statusesservice.api
+      - workflowmanager.operationsservice.api
+      - workflowmanager.identityservice.api
+
+    restart: on-failure
+
+
+  # PROCESS SERVICE (PORT: 8001)
+  workflowmanager.processesservice.api:
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-process-service-api"
+    build:
+      context: src
+      dockerfile: Services/ProcessesService/WorkflowManager.ProcessesService.API/Dockerfile
+    ports:
+      - "8001:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    depends_on:
+      - workflowmanager.rabbitmq
+      - workflowmanager.processesservice.db
+    restart: on-failure
+
+  workflowmanager.processesservice.db:
+    image: "microsoft/mssql-server-linux"
+    environment:
+      SA_PASSWORD: "${DB_PASSWORD}"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1453:1433"
+      - "1454:1434"
+
+
+  #STATUS SERVICE (PORT: 8002)
+  workflowmanager.statusesservice.api:
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-status-service-api"
+    build:
+      context: .
+      dockerfile: src/Services/StatusesService/WorkflowManager.StatusesService.API/Dockerfile
+      args:
+        rabbit_port: 5672
+    ports:
+      - "8002:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    depends_on:
+      - workflowmanager.rabbitmq
+      - workflowmanager.statusesservice.db
+    restart: on-failure
+
+  workflowmanager.statusesservice.db:
+    image: "microsoft/mssql-server-linux"
+    environment:
+      SA_PASSWORD: "${DB_PASSWORD}"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1463:1433"
+      - "1464:1434"
+
+
+  # OPERATIONS SERVICE(PORT: 8003)
+  workflowmanager.operationsservice.api:
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-operations-service-api"
+    build:
+      context: .
+      dockerfile: src/Services/OperationsService/WorkflowManager.OperationsService.API/Dockerfile
+    ports:
+      - "8003:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+    depends_on:
+      - workflowmanager.rabbitmq
+    restart: on-failure

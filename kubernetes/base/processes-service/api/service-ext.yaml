@@ -10,4 +10,4 @@ spec:
     - port: 80
   selector:
     app: processes-service-api
-  loadBalancerIP: 51.124.86.254
+  # loadBalancerIP: 51.124.86.254

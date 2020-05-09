@@ -81,7 +81,7 @@ namespace WorkflowManager.Common.ApplicationInitializer
                                                    IWebHostEnvironment env,
                                                    bool isApi = true)
         {
-            if (env.IsEnvironment("Docker") || env.IsDevelopment())
+            if (env.IsEnvironment("Docker") || env.IsEnvironment("Compose") || env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
