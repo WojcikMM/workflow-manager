@@ -2,11 +2,5 @@ version: '3.4'
 
 services:
   workflowmanager.rabbitmq:
-    image: "rabbitmq:3-management"
-    command: rabbitmq-server
-    hostname: "rabbitmq"
-    ports:
-      - "15672:15672"
-      - "5652:5672"
     labels:
       NAME: "rabbitmq"
