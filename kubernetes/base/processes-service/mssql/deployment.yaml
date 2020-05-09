@@ -1,23 +1,23 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: -mssql-deployment
+  name: processes-service-mssql-deployment
   namespace: default
   labels:
-    app: -mssql
+    app: processes-service-mssql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: -mssql
+      app: processes-service-mssql
   template:
     metadata:
-      name: mssql
+      name: processes-service-mssql
       labels:
-        app: -mssql
+        app: processes-service-mssql
     spec:
       containers:
-        - name: mssql
+        - name: processes-service-mssql
           image: microsoft/mssql-server-linux
           resources:
               requests:
@@ -34,5 +34,12 @@ spec:
             - name: SA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: -mssql-secret
+                  name: processes-service-mssql-secret
                   key: SA_PASSWORD
+          volumeMounts:
+            - name: processes-service-mssql-persistent-storage
+              mountPath: /var/opt/mssql
+      volumes:
+        - name: processes-service-mssql-persistent-storage
+          persistentVolumeClaim:
+            claimName: processes-service-mssql-volume

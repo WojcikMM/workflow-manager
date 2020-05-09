@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: processes-service-api-service-ext
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: workflow-manager-processes-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+  selector:
+    app: processes-service-api
+  loadBalancerIP: 51.124.86.254

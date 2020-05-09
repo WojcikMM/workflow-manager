@@ -19,6 +19,13 @@ spec:
       containers:
         - name: identity-service-mssql
           image: microsoft/mssql-server-linux
+          resources:
+              requests:
+                cpu: 100m
+                memory: 100m
+              limits:
+                cpu: 300m
+                memory: 3G
           ports:
             - containerPort: 1433
           env:

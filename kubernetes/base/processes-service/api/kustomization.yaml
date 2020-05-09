@@ -1,4 +1,0 @@
-bases:
-  - ../../temps/api
-commonLabels:
-  app: processes-service-api

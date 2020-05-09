@@ -1,24 +1,24 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: identity-service-api-deployment
+  name: processes-service-api-deployment
   namespace: default
   labels:
-    app: identity-service-api
+    app: processes-service-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: identity-service-api
+      app: processes-service-api
   template:
     metadata:
-      name: identity-service-api
+      name: processes-service-api
       labels:
-        app: identity-service-api
+        app: processes-service-api
     spec:
       containers:
-        - name: identity-service-api
-          image: workflowmanager.azurecr.io/workflow-manager-identity-service-api:v0.1.0
+        - name: processes-service-api
+          image: workflowmanager.azurecr.io/workflow-manager-processes-service-api:v0.1.0
           imagePullPolicy: IfNotPresent
           resources:
               requests:
@@ -33,11 +33,13 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               value: Docker
             - name: ASPNETCORE_BASE_LOG_DIR
-              value: ../var/log/identity-service-api
+              value: ../var/log/processes-service-api
+            - name: RabbitMq__Hostname
+              value: $(RABBITMQ_SERVICE_NAME)
           volumeMounts:
-            - name: identity-service-api-logs
-              mountPath: /var/log/identity-service-api
+            - name: processes-service-api-logs
+              mountPath: /var/log/processes-service-api
       volumes:
-        - name: identity-service-api-logs
+        - name: processes-service-api-logs
           hostPath:
             path: /var/log/containers

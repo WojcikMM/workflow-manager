@@ -1,22 +1,7 @@
-bases:
-  - api
-  - mssql
-namePrefix: processes-service
-images:
-  - name: api_image_name
-    newName: workflowmanager.azurecr.io/workflow-manager-processes-service-api
-vars:
-  - name: MSSQL_SERVICE_NAME
-    objref:
-      kind: Service
-      name: -mssql-service
-      apiVersion: v1
-    fieldref:
-      fieldpath: metadata.name
-  - name: RABBITMQ_SERVICE_NAME
-    objref:
-      kind: Service
-      name: rabbitmq-service
-      apiVersion: v1
-    fieldref:
-      fieldpath: metadata.name
+resources:
+  - api/deployment.yaml
+  - api/service-ext.yaml
+  - mssql/secret.yaml
+  - mssql/volume.yaml
+  - mssql/service.yaml
+  - mssql/deployment.yaml
