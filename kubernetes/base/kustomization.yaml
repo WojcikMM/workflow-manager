@@ -1,7 +1,7 @@
 bases:
   - identity-service
   - processes-service
-  - shared
+  - rabbit-mq
 vars:
   - name: RABBITMQ_SERVICE_NAME
     objref:
