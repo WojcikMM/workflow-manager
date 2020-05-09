@@ -24,8 +24,8 @@ spec:
                 cpu: 100m
                 memory: 100m
               limits:
-                cpu: 100m
-                memory: 200m
+                cpu: 300m
+                memory: 3G
           ports:
             - containerPort: 1433
           env:

@@ -19,7 +19,7 @@ spec:
       containers:
         - name: identity-service-api
           image: workflowmanager.azurecr.io/workflow-manager-identity-service-api:v0.1.0
-          imagePullPolicy: "IfNotExists"
+          imagePullPolicy: "IfNotPresent"
           env:
             - name: ConnectionStrings__MsSqlDatabase
               value: "Data Source=identity-service-mssql-service;User ID=sa;Password=Your_password123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"

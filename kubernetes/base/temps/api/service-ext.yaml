@@ -6,5 +6,6 @@ spec:
   type: LoadBalancer
   ports:
     - port: 801
+      targetPort: 80
   selector:
     app: -api

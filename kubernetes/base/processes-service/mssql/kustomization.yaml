@@ -1,4 +1,4 @@
 bases:
-  - ../../templates/mssql
+  - ../../temps/mssql
 commonLabels:
   app: processes-service-mssql

@@ -1,4 +1,4 @@
 bases:
-  - ../../templates/api
+  - ../../temps/api
 commonLabels:
   app: processes-service-api
