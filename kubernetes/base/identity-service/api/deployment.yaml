@@ -18,8 +18,7 @@ spec:
     spec:
       containers:
         - name: identity-service-api
-          image: workflowmanager.azurecr.io/workflow-manager-identity-service-api:v0.1.0
-          imagePullPolicy: IfNotPresent
+          image: workflowmanager.azurecr.io/workflow-manager-identity-service-api
           resources:
               requests:
                 cpu: 100m
