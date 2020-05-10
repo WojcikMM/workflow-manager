@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RawRabbit.Configuration;
 using RawRabbit.vNext;
 using RawRabbit.vNext.Disposable;
@@ -38,9 +40,12 @@ namespace WorkflowManager.Common.RabbitMq
                     services.AddSingleton<IBusClient>(busClient);
                     break;
                 }
-                catch
+                catch(Exception ex)
                 {
-                    if(retryNumber == options.RetryConnectCount)
+                    NLog.LogManager.GetCurrentClassLogger().Error(ex, $"Cannot connect to rabbitmq, {config.Hostnames.Join(",")} | {config.Username}:{config.Password}");
+
+
+                    if (retryNumber == options.RetryConnectCount)
                     {
                         throw;
                     }

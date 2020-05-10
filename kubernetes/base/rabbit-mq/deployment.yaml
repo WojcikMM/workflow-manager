@@ -4,7 +4,7 @@ metadata:
   name: rabbit-mq-deployment
   namespace: default
   labels:
-    app: rabbitmq
+    app: rabbit-mq
 spec:
   replicas: 1
   selector:
@@ -21,10 +21,23 @@ spec:
           image: rabbitmq:3-management
           command:
             - rabbitmq-server
+            - "ls /etc/rabbitmq"
           ports:
             - containerPort: 5672
-          env:
-            - name: RABBITMQ_DEFAULT_USER
-              value: user
-            - name: RABBITMQ_DEFAULT_PASS
-              value: user
+          volumeMounts:
+            - mountPath: /etc/rabbitmq/rabbitmq.conf
+              name: rabbitmq-config
+              subPath: rabbitmq.conf
+          # env:
+            # - name: RABBITMQ_DEFAULT_USER
+            #   value: user
+            # - name: RABBITMQ_DEFAULT_PASS
+            #   value: user
+            # - name: RABBITMQ_NODENAME
+            #   value: rabbitmq-service
+            # - name: K8S_SERVICE_NAME
+            #   value: rabbitmq-service
+      volumes:
+        - name:  rabbitmq-config
+          configMap:
+            name: rabbitmq-config-map
