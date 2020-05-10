@@ -25,7 +25,7 @@ namespace WorkflowManager.Common.Authentication
 
                    configuration.Audience = identityAudience;
                    configuration.Authority = IssuerUrl;
-                   configuration.MetadataAddress = $"{IssuerUrl}/.well-known/openid-configuration";
+                   configuration.MetadataAddress = $"{identityInternalUrl}/.well-known/openid-configuration";
                    configuration.RequireHttpsMetadata = false;
                    configuration.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                    {
