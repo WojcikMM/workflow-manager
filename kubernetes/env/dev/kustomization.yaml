@@ -4,6 +4,6 @@ bases:
   - ../../base
 images:
   - name: workflowmanager.azurecr.io/workflow-manager-identity-service-api
-    newTag: dev
+    newTag: latest
   - name: workflowmanager.azurecr.io/workflow-manager-processes-service-api
     newTag: latest
