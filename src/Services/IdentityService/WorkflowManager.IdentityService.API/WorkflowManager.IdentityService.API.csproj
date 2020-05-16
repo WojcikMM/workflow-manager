@@ -5,6 +5,12 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerfileTag>workflowmanager.azurecr.io/workflow-manager-identity-service-api</DockerfileTag>
+    <DockerfileBuildArguments>--build-arg BUILD_CONFIGURATION=$(Configuration)</DockerfileBuildArguments>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DockerfileTag>workflowmanager.azurecr.io/workflow-manager-identity-service-api:dev</DockerfileTag>
   </PropertyGroup>
 
   <ItemGroup>

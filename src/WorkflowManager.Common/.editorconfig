@@ -1,4 +1,0 @@
-﻿[*.cs]
-
-# IDE0063: Użyj prostej instrukcji „using”
-csharp_prefer_simple_using_statement = false:suggestion

@@ -12,7 +12,7 @@ COPY ["src/Services/StatusesService/WorkflowManager.StatusesService.ReadModel/Wo
 RUN dotnet restore "src/Services/StatusesService/WorkflowManager.StatusesService.API/WorkflowManager.StatusesService.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/StatusesService/WorkflowManager.StatusesService.API"
-RUN dotnet build "WorkflowManager.StatusesService.API.csproj" -c Release -o /app/build
+RUN dotnet build --no-restore "WorkflowManager.StatusesService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "WorkflowManager.StatusesService.API.csproj" -c Release -o /app/publish

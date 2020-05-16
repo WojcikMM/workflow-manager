@@ -5,10 +5,12 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerfileTag>workflowmanager.azurecr.io/workflow-manager-processes-service-api</DockerfileTag>
+    <DockerfileBuildArguments>--build-arg BUILD_CONFIGURATION=$(Configuration)</DockerfileBuildArguments>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath></OutputPath>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DockerfileTag>workflowmanager.azurecr.io/workflow-manager-processes-service-api:dev</DockerfileTag>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,11 +32,5 @@
   <ItemGroup>
     <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="Always" />
   </ItemGroup>
-
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties appsettings_1development_1json__JsonSchema="" />
-    </VisualStudio>
-  </ProjectExtensions>
 
 </Project>

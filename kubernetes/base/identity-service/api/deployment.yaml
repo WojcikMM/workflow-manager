@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: identity-service-api-deployment
@@ -29,7 +29,10 @@ spec:
                 memory: 200M
           env:
             - name: ConnectionStrings__MsSqlDatabase
-              value: "Data Source=workflow-manager.database.windows.net;Initial Catalog=workflow-manager-db;User ID=workflowmanager;Password=Your_password123;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+              valueFrom:
+                secretKeyRef:
+                  name: connection-strings-secrets
+                  key: identity-mssql
             - name: ASPNETCORE_ENVIRONMENT
               value: Docker
             - name: ASPNETCORE_BASE_LOG_DIR

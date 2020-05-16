@@ -2,8 +2,10 @@ commonLabels:
   env: dev
 bases:
   - ../../base
+resources:
+  - connection-strings-secrets.yaml
 images:
   - name: workflowmanager.azurecr.io/workflow-manager-identity-service-api
-    newTag: latest
+    newTag: dev
   - name: workflowmanager.azurecr.io/workflow-manager-processes-service-api
-    newTag: latest
+    newTag: dev
