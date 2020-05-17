@@ -37,7 +37,7 @@ services:
 
   # API GATEWAY (PORT: 8000)
   workflowmanager.gateway.api:
-    image: ${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
     build:
       context: src/Services/GatewayService/WorkflowManager.OcelotGatewayService.API
       dockerfile: Dockerfile
@@ -50,7 +50,6 @@ services:
       - workflowmanager.statusesservice.api
       - workflowmanager.operationsservice.api
       - workflowmanager.identityservice.api
-
     restart: on-failure
 
 

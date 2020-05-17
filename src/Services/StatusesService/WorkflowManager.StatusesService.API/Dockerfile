@@ -1,7 +1,3 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim AS base
-WORKDIR /app
-EXPOSE 80
-
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
 COPY ["src/Services/StatusesService/WorkflowManager.StatusesService.API/WorkflowManager.StatusesService.API.csproj", "src/Services/StatusesService/WorkflowManager.StatusesService.API/"]
@@ -17,7 +13,8 @@ RUN dotnet build --no-restore "WorkflowManager.StatusesService.API.csproj" -c Re
 FROM build AS publish
 RUN dotnet publish "WorkflowManager.StatusesService.API.csproj" -c Release -o /app/publish
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim
 WORKDIR /app
 COPY --from=publish /app/publish .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "WorkflowManager.StatusesService.API.dll"]
