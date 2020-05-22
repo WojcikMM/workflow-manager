@@ -9,11 +9,6 @@ import {LayoutComponent} from './layout/layout.component';
 import {ToolbarComponent} from './layout/toolbar/toolbar.component';
 import {SidebarComponent} from './layout/sidebar/sidebar.component';
 import {environment} from '../environments/environment';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {AngularFireAnalyticsModule} from '@angular/fire/analytics';
-import {AngularFireAuthModule} from '@angular/fire/auth';
-import {AngularFireAuthGuardModule} from '@angular/fire/auth-guard';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -23,13 +18,15 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {SharedModule} from '@workflow-manager/shared';
 import {HttpClientModule} from '@angular/common/http';
 import {OAuthModule} from 'angular-oauth2-oidc';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
     ToolbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    UnauthorizedComponent
   ],
   imports: [
     HttpClientModule,
@@ -39,11 +36,6 @@ import {OAuthModule} from 'angular-oauth2-oidc';
     BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAnalyticsModule,
-    AngularFireAuthModule,
-    AngularFireAuthGuardModule,
-    AngularFirestoreModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

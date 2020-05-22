@@ -4,9 +4,6 @@ import {ProcessesListComponent} from './processes-list/processes-list.component'
 import {RouterModule, Routes} from '@angular/router';
 import {ProcessEditFormComponent} from './process-edit-form/process-edit-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {AngularFireModule} from '@angular/fire';
-import {environment} from '../../../../environments/environment';
 import {ProcessesService} from './processes.service';
 import {SharedModule} from '../../shared';
 import {MatCardModule} from '@angular/material/card';
@@ -33,8 +30,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
     SharedModule,
     MatCardModule,
     MatButtonModule,

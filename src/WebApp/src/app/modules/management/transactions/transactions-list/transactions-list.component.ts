@@ -1,10 +1,17 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {AbilitiesService, SimpleDialogComponent, SimpleDialogData, StatusViewModel, TransactionViewModel} from '../../../shared';
+import {AbilitiesService, SimpleDialogComponent, SimpleDialogData} from '../../../shared';
 import {TransactionsService} from '../transactions.service';
 import {StatusesService} from '../../statuses/statuses.service';
 import {ProcessDto, ProcessesClientService} from '@workflow-manager/shared';
+
+class TransactionViewModel {
+  $key: string;
+}
+
+class StatusViewModel {
+}
 
 @Component({
   selector: 'app-transactions-list',
@@ -25,7 +32,7 @@ export class TransactionsListComponent {
               private readonly _dialog: MatDialog,
               abilitiesService: AbilitiesService) {
     this.isHandset$ = abilitiesService.isHandset$;
-    this.transactions$ = _transactionsService.transactions$;
+   // this.transactions$ = _transactionsService.transactions$;
     this.statuses$ = _statusesService.statuses$;
     this.processes$ = _processesService.getProcesses();
   }

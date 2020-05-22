@@ -1,10 +1,14 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {StatusesService} from '../statuses.service';
-import {AbilitiesService, SimpleDialogComponent, SimpleDialogData, StatusViewModel} from '../../../shared';
+import {AbilitiesService, SimpleDialogComponent, SimpleDialogData} from '../../../shared';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
 import {ProcessDto, ProcessesClientService} from '@workflow-manager/shared';
+
+class StatusViewModel {
+  $key: string;
+}
 
 @Component({
   selector: 'app-statuses-list',
@@ -60,10 +64,10 @@ export class StatusesListComponent {
 
 
   onFormSubmitted(status: StatusViewModel) {
-    this._statusesService.addOrUpdate(status)
-      .then(() => {
-        this.statusToEdit = null;
-      });
+    // this._statusesService.addOrUpdate(status)
+    //   .then(() => {
+    //     this.statusToEdit = null;
+    //   });
   }
 
   onFormClosed() {

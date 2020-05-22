@@ -1,11 +1,16 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {StatusViewModel, TransactionViewModel} from '../../../shared';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {ProcessesService} from '../../processes/processes.service';
 import {switchMap} from 'rxjs/operators';
 import {ProcessDto} from '@workflow-manager/shared';
+
+class TransactionViewModel {
+  $key: string;
+}
+
+class StatusViewModel {
+}
 
 @Component({
   selector: 'app-transaction-edit-form',
@@ -29,52 +34,51 @@ export class TransactionEditFormComponent {
   @Output() closeFormEvent: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private _fb: FormBuilder,
-              processesService: ProcessesService,
-              _firestore: AngularFirestore) {
+              processesService: ProcessesService) {
     this.processes$ = processesService.processes$;
-    this.statuses$ = this.processSubject$.pipe(switchMap(processKey =>
-      _firestore.collection<StatusViewModel>('statuses', query =>
-        query.where('processKey', '==', processKey))
-        .valueChanges({idField: '$key'})
-    ));
+    // this.statuses$ = this.processSubject$.pipe(switchMap(processKey =>
+    //   _firestore.collection<StatusViewModel>('statuses', query =>
+    //     query.where('processKey', '==', processKey))
+    //     .valueChanges({idField: '$key'})
+    // ));
   }
 
 
   private _setupForm(model: TransactionViewModel): void {
-    this.formTitle = model.$key ? 'Update Transaction' : 'Add Transaction';
-    this.reactForm = this._fb.group({
-      $key: this._fb.control(model.$key),
-      isInitial: this._fb.control(model.isInitial || false),
-      name: this._fb.control(model.name, Validators.required),
-      processKey: this._fb.control(model.name, Validators.required),
-      incomingStatusKey: this._fb.control(model.incomingStatusKey, Validators.required),
-      outgoingStatusKey: this._fb.control(model.outgoingStatusKey, Validators.required),
-    });
-
-    const incomingStatusKey = this.reactForm.get('incomingStatusKey');
-    if (model.isInitial) {
-      incomingStatusKey.disable();
-    } else {
-      incomingStatusKey.enable();
-    }
+    // this.formTitle = model.$key ? 'Update Transaction' : 'Add Transaction';
+    // this.reactForm = this._fb.group({
+    //   $key: this._fb.control(model.$key),
+    //   isInitial: this._fb.control(model.isInitial || false),
+    //   name: this._fb.control(model.name, Validators.required),
+    //   processKey: this._fb.control(model.name, Validators.required),
+    //   incomingStatusKey: this._fb.control(model.incomingStatusKey, Validators.required),
+    //   outgoingStatusKey: this._fb.control(model.outgoingStatusKey, Validators.required),
+    // });
+    //
+    // const incomingStatusKey = this.reactForm.get('incomingStatusKey');
+    // if (model.isInitial) {
+    //   incomingStatusKey.disable();
+    // } else {
+    //   incomingStatusKey.enable();
+    // }
   }
 
   onSubmit() {
-    this.statuses$.subscribe(statuses => {
-      const {$key, name, isInitial, processKey, incomingStatusKey, outgoingStatusKey} = this.reactForm.value;
-      const incomingStatusName = statuses.find(status => status.$key === incomingStatusKey)?.name;
-      const outgoingStatusName = statuses.find(status => status.$key === outgoingStatusKey)?.name;
-      this.submitFormEvent.emit({
-        $key,
-        name,
-        isInitial,
-        processKey,
-        incomingStatusKey: isInitial ? null : incomingStatusKey,
-        incomingStatusName: isInitial ? '-' : incomingStatusName,
-        outgoingStatusKey,
-        outgoingStatusName
-      });
-    });
+    // this.statuses$.subscribe(statuses => {
+    //   const {$key, name, isInitial, processKey, incomingStatusKey, outgoingStatusKey} = this.reactForm.value;
+    //   const incomingStatusName = statuses.find(status => status.$key === incomingStatusKey)?.name;
+    //   const outgoingStatusName = statuses.find(status => status.$key === outgoingStatusKey)?.name;
+    //   this.submitFormEvent.emit({
+    //     $key,
+    //     name,
+    //     isInitial,
+    //     processKey,
+    //     incomingStatusKey: isInitial ? null : incomingStatusKey,
+    //     incomingStatusName: isInitial ? '-' : incomingStatusName,
+    //     outgoingStatusKey,
+    //     outgoingStatusName
+    //   });
+    // });
   }
 
   onCheckboxChange(checked: boolean) {

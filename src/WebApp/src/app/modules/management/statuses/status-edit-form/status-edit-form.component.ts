@@ -1,7 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {StatusViewModel} from '../../../shared';
 import {ProcessDto} from '@workflow-manager/shared';
+
+class StatusViewModel {
+  $key: string;
+  name: string;
+  description: string;
+  processKey: string;
+  processName: string;
+}
 
 @Component({
   selector: 'app-status-edit-form',
