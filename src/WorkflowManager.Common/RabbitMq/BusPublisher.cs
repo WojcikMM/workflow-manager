@@ -21,4 +21,17 @@ namespace WorkflowManager.Common.RabbitMq
         public async Task SendAsync<TCommand>(TCommand command, Guid correlationId) where TCommand : ICommand =>
             await _busClient.PublishAsync(command, correlationId);
     }
+
+    public class BusPublisherDummy : IBusPublisher
+    {
+        public Task PublishAsync<TEvent>(TEvent @event, Guid correlationId) where TEvent : IEvent
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SendAsync<TCommand>(TCommand command, Guid correlationId) where TCommand : ICommand
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

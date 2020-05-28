@@ -3,10 +3,13 @@ using WorkflowManager.CQRS.Domain.Domain;
 using WorkflowManager.CQRS.Domain.Storage;
 using System;
 using System.Threading.Tasks;
+using MassTransit;
 
 namespace WorkflowManager.CQRS.Domain.CommandHandlers
 {
-    public abstract class BaseCommandHandler<TCommand, TAggregate> : ICommandHandler<TCommand> where TCommand : BaseCommand where TAggregate : AggregateRoot, new()
+    public abstract class BaseCommandHandler<TCommand, TAggregate> : IConsumer<TCommand>
+        where TCommand : BaseCommand
+        where TAggregate : AggregateRoot, new()
     {
         protected readonly IRepository<TAggregate> _repository;
         protected TAggregate aggregate;
@@ -16,21 +19,21 @@ namespace WorkflowManager.CQRS.Domain.CommandHandlers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task HandleAsync(TCommand command, Guid correlationId)
+        public async Task Consume(ConsumeContext<TCommand> context)
         {
-            if (command is null)
+            if (context.Message is null)
             {
-                throw new ArgumentNullException(nameof(command), "Passed command value is null.");
+                throw new ArgumentNullException(nameof(context.Message), "Passed command value is null.");
             }
 
-            HandleCommand(command);
+            HandleCommand(context.Message);
 
             if (aggregate is null)
             {
                 throw new ArgumentNullException(nameof(aggregate), "Cannot save null valued aggregate.");
             }
 
-            await _repository.SaveAsync(aggregate, command.Version, correlationId);
+            await _repository.SaveAsync(aggregate, context.Message.Version, context.CorrelationId.GetValueOrDefault());
 
             await Task.CompletedTask;
         }

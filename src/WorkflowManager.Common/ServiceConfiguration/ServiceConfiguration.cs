@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using WorkflowManager.Common.Swagger;
 using NLog.Common;
 using System.IO;
+using WorkflowManager.Common.Cors;
 
 namespace WorkflowManager.Common.ApplicationInitializer
 {
@@ -90,6 +91,7 @@ namespace WorkflowManager.Common.ApplicationInitializer
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseServiceSwaggerUI();
+            app.RegisterCorsMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
