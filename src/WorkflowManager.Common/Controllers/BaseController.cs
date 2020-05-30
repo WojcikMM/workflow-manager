@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WorkflowManager.Common.ApiResponses;
-using Microsoft.AspNetCore.Identity;
-using System.Linq;
 
 namespace WorkflowManager.Common.Controllers
 {

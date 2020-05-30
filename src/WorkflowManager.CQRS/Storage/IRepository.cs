@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace WorkflowManager.CQRS.Domain.Storage
+namespace WorkflowManager.CQRS.Storage
 {
     public interface IRepository<TAggregateRoot> where TAggregateRoot : AggregateRoot, new() // ??
     {

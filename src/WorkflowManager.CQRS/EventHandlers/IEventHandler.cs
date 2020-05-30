@@ -1,6 +1,6 @@
-﻿using WorkflowManager.CQRS.Domain.Events;
+﻿using System;
 using System.Threading.Tasks;
-using System;
+using WorkflowManager.CQRS.Domain.Events;
 
 namespace WorkflowManager.CQRS.Domain.EventHandlers
 {

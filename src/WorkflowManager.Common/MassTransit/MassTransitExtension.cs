@@ -29,7 +29,7 @@ namespace WorkflowManager.Common.MassTransit
                 {
                     config.AddConsumer(assembly.ConsumerType);
                 });
-                // add consumers
+
                 config.AddBus(provider => Bus.Factory.CreateUsingAzureServiceBus(busFactoryConfig =>
                     {
                         var connectionString = services.GetValue<string>("AzureServiceBusConnectionString");

@@ -1,15 +1,20 @@
-﻿using WorkflowManager.CQRS.Domain.Commands;
-using System;
+﻿using System;
+using WorkflowManager.CQRS.Domain;
+using WorkflowManager.CQRS.Domain.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Processes
 {
-    public class CreateProcessCommand : BaseCommand
+    public class CreateProcessCommand : ICommand
     {
+        public Guid Id { get; }
         public string Name { get; }
+        public int Version { get; }
 
-        public CreateProcessCommand(Guid Id, string Name) : base(Id, -1)
+        public CreateProcessCommand(Guid Id, string Name)
         {
+            this.Id = Id;
             this.Name = Name;
+            Version = DomainConstants.NewAggregateVersion;
         }
     }
 }

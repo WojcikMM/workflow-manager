@@ -1,4 +1,4 @@
-﻿namespace WorkflowManager.Common
+﻿namespace WorkflowManager.CQRS.Domain
 {
     public class DomainConstants
     {

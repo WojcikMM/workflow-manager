@@ -6,14 +6,12 @@ namespace WorkflowManager.Common.Messages.Events.Saga
 {
     public class BaseCompleteEvent : BaseEvent, ICompleteEvent
     {
-        public BaseCompleteEvent(string BusinessResponse)
+        public string BusinessResponse { get; }
+
+        public BaseCompleteEvent(Guid AggregateId, string BusinessResponse) : base(AggregateId)
         {
             this.BusinessResponse = BusinessResponse;
         }
-
-
-        public Guid CorrelationId { get; private set; }
-        public string BusinessResponse { get; }
 
         public ICompleteEvent Initialize(IEvent @event, Guid correlationId)
         {

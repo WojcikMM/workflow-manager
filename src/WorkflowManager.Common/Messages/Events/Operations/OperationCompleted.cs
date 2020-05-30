@@ -10,5 +10,6 @@ namespace WorkflowManager.Common.Messages.Events.Operations
         public int Version { get; set; }
 
         public Guid AggregateId { get; set; }
+        public Guid CorrelationId { get; set; }
     }
 }

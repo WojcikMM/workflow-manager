@@ -1,14 +1,14 @@
-﻿using WorkflowManager.CQRS.Domain.Commands;
-using WorkflowManager.CQRS.Domain.Domain;
-using WorkflowManager.CQRS.Domain.Storage;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using MassTransit;
+using WorkflowManager.CQRS.Domain.Commands;
+using WorkflowManager.CQRS.Domain.Domain;
+using WorkflowManager.CQRS.Storage;
 
-namespace WorkflowManager.CQRS.Domain.CommandHandlers
+namespace WorkflowManager.Common.CommandHandlers
 {
     public abstract class BaseCommandHandler<TCommand, TAggregate> : IConsumer<TCommand>
-        where TCommand : BaseCommand
+        where TCommand : class, ICommand
         where TAggregate : AggregateRoot, new()
     {
         protected readonly IRepository<TAggregate> _repository;

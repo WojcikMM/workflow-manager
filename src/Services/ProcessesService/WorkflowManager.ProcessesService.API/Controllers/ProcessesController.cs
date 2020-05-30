@@ -8,7 +8,6 @@ using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.ProcessesService.API.DTO.Commands;
 using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
 using WorkflowManager.Common.Controllers;
-using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.Common.ApiResponses;
 using Microsoft.AspNetCore.Authorization;
 using MassTransit;
@@ -21,7 +20,7 @@ namespace WorkflowManager.ProcessesService.API.Controllers
         private readonly IReadModelRepository<ProcessModel> _readModelRepository;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public ProcessesController(IBusPublisher busPublisher, IReadModelRepository<ProcessModel> readModelRepository, IPublishEndpoint publishEndpoint) : base(busPublisher)
+        public ProcessesController(IReadModelRepository<ProcessModel> readModelRepository, IPublishEndpoint publishEndpoint) : base(publishEndpoint)
         {
             _readModelRepository = readModelRepository ??
                 throw new ArgumentNullException(nameof(readModelRepository));

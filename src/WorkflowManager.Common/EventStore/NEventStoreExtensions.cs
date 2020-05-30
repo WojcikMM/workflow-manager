@@ -1,10 +1,10 @@
-﻿using WorkflowManager.CQRS.Domain.Storage;
+﻿using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using NEventStore;
 using NEventStore.Logging;
-using System.Data.SqlClient;
 using NEventStore.Serialization.Json;
 using WorkflowManager.Common.Configuration;
+using WorkflowManager.CQRS.Storage;
 
 namespace WorkflowManager.Common.EventStore
 {
@@ -30,7 +30,7 @@ namespace WorkflowManager.Common.EventStore
         public static void AddInMemoryEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info)
         {
             serviceCollection.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
-            serviceCollection.AddTransient<IStoreEvents>(service => Wireup
+            serviceCollection.AddTransient(service => Wireup
                 .Init()
                 .LogToConsoleWindow(logLevel)
                 .UsingInMemoryPersistence()

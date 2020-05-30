@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.Configuration
@@ -47,10 +46,8 @@ namespace WorkflowManager.Common.Configuration
 
         private static IConfiguration GetConfiguration(this IServiceCollection services)
         {
-            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-            {
-                return serviceProvider.GetService<IConfiguration>();
-            }
+            using ServiceProvider serviceProvider = services.BuildServiceProvider();
+            return serviceProvider.GetService<IConfiguration>();
         }
     }
 }

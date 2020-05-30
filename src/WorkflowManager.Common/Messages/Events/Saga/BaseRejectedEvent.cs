@@ -12,9 +12,7 @@ namespace WorkflowManager.Common.Messages.Events.Saga
 
         public string BusinessResponse { get; private set; }
 
-        public Guid CorrelationId { get; private set; }
-
-        public BaseRejectedEvent(string businessResponse)
+        public BaseRejectedEvent(Guid AggregateId, string businessResponse): base(AggregateId)
         {
             this.BusinessResponse = businessResponse;
         }

@@ -3,10 +3,15 @@ using WorkflowManager.CQRS.Domain.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Statuses
 {
-    public class RemoveStatusCommand : BaseCommand
+    public class RemoveStatusCommand : ICommand
     {
-        public RemoveStatusCommand(Guid Id, int Version) : base(Id, Version)
+        public Guid Id { get; }
+        public int Version { get; }
+
+        public RemoveStatusCommand(Guid Id, int Version)
         {
+            this.Id = Id;
+            this.Version = Version;
         }
     }
 }

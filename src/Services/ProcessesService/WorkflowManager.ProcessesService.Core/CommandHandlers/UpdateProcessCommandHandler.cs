@@ -1,6 +1,6 @@
-﻿using WorkflowManager.CQRS.Domain.CommandHandlers;
-using WorkflowManager.CQRS.Domain.Storage;
+﻿using WorkflowManager.Common.CommandHandlers;
 using WorkflowManager.Common.Messages.Commands.Processes;
+using WorkflowManager.CQRS.Storage;
 using WorkflowManager.ProcessesService.Core.Domain;
 
 namespace WorkflowManager.ProcessesService.Core.CommandHandlers

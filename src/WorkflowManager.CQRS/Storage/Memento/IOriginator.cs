@@ -1,4 +1,6 @@
-﻿namespace WorkflowManager.CQRS.Domain.Domain.Mementos
+﻿using WorkflowManager.CQRS.Domain.Domain.Mementos;
+
+namespace WorkflowManager.CQRS.Storage.Mementos
 {
     public interface IOriginator
     {

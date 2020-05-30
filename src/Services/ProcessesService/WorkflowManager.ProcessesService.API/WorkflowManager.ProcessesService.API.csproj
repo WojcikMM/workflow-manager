@@ -31,8 +31,4 @@
     <ProjectReference Include="..\WorkflowManager.ProcessesService.ReadModel\WorkflowManager.ProcessesService.ReadModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-
 </Project>

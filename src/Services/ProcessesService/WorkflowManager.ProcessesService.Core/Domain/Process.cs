@@ -1,8 +1,9 @@
-﻿using WorkflowManager.CQRS.Domain.Domain;
+﻿using System;
+using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.CQRS.Domain.Domain;
 using WorkflowManager.CQRS.Domain.Domain.Mementos;
 using WorkflowManager.CQRS.Domain.Events;
-using System;
-using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.CQRS.Storage.Mementos;
 using WorkflowManager.ProcessesService.Core.Domain.Mementos;
 
 namespace WorkflowManager.ProcessesService.Core.Domain
