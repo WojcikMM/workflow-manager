@@ -1,4 +1,4 @@
-﻿using WorkflowManager.Common.CommandHandlers;
+﻿using WorkflowManager.Common.Messages;
 using WorkflowManager.Common.Messages.Commands.Processes;
 using WorkflowManager.CQRS.Storage;
 using WorkflowManager.ProcessesService.Core.Domain;

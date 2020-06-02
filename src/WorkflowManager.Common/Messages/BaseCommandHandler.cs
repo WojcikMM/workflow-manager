@@ -5,7 +5,7 @@ using WorkflowManager.CQRS.Domain.Commands;
 using WorkflowManager.CQRS.Domain.Domain;
 using WorkflowManager.CQRS.Storage;
 
-namespace WorkflowManager.Common.CommandHandlers
+namespace WorkflowManager.Common.Messages
 {
     public abstract class BaseCommandHandler<TCommand, TAggregate> : IConsumer<TCommand>
         where TCommand : class, ICommand

@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using WorkflowManager.CQRS.Domain.Events;
 using WorkflowManager.OperationsStorage.Api.Dto;
 
 namespace WorkflowManager.OperationsStorage.Api.Services
@@ -18,10 +19,15 @@ namespace WorkflowManager.OperationsStorage.Api.Services
             return string.IsNullOrWhiteSpace(operation) ? null : JsonConvert.DeserializeObject<OperationDto>(operation);
         }
 
-        public async Task SetAsync(Guid id, OperationDto @event)
+        public async Task SetAsync(IEvent @event)
         {
-            await _cache.SetStringAsync(id.ToString(),
-                JsonConvert.SerializeObject(@event),
+            var status = @event is IRejectedEvent ? "Rejected" : @event is ICompleteEvent ? "Complete" : "Pending";
+            await _cache.SetStringAsync(@event.CorrelationId.ToString(),
+                JsonConvert.SerializeObject(new OperationDto
+                {
+                    AggregateId = @event.AggregateId,
+                    Status = status
+                }),
                 new DistributedCacheEntryOptions()
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),

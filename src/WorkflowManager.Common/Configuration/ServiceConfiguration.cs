@@ -37,38 +37,6 @@ namespace WorkflowManager.Common.ApplicationInitializer
                           {
                               logConfig.AddAzureWebAppDiagnostics();
                           }
-                      })
-                      .CaptureStartupErrors(true)
-                      .Configure((context, app) =>
-                      {
-
-                          var env = context.HostingEnvironment;
-                          logger.LogInformation($"{serviceInformations.ServiceNameWithVersion} starting ...");
-
-                          if (env.IsEnvironment("Docker") || env.IsEnvironment("Compose") || env.IsDevelopment())
-                          {
-                              app.UseDeveloperExceptionPage();
-                              //  app.UseDatabaseErrorPage();
-                          }
-                          app.UseRouting();
-                          app.UseAuthentication();
-                          app.UseAuthorization();
-                          app.UseServiceSwaggerUI();
-                          app.RegisterCorsMiddleware();
-
-                          app.UseEndpoints(endpoints =>
-                          {
-                              if (serviceInfo.IsApi)
-                              {
-                                  endpoints.MapControllers();
-                              }
-                              else
-                              {
-                                  endpoints.MapDefaultControllerRoute();
-                              }
-                          });
-
-
                       });
                   })
                   .Build()
@@ -106,6 +74,35 @@ namespace WorkflowManager.Common.ApplicationInitializer
             }
 
             return serviceConfiguration;
+        }
+
+        public static void InjectCommonMiddlewares(IApplicationBuilder applicationBuilder, IHostEnvironment environment)
+        {
+            ServiceConfigurationModel serviceInformations = GetServiceInformations();
+           // logger.LogInformation($"{serviceInformations.ServiceNameWithVersion} starting ...");
+
+            if (environment.IsEnvironment("Docker") || environment.IsEnvironment("Compose") || environment.IsDevelopment())
+            {
+                applicationBuilder.UseDeveloperExceptionPage();
+                //  app.UseDatabaseErrorPage();
+            }
+            applicationBuilder.UseRouting();
+            applicationBuilder.UseAuthentication();
+            applicationBuilder.UseAuthorization();
+            applicationBuilder.UseServiceSwaggerUI();
+            applicationBuilder.RegisterCorsMiddleware();
+
+            applicationBuilder.UseEndpoints(endpoints =>
+            {
+                if (serviceInformations.IsApi)
+                {
+                    endpoints.MapControllers();
+                }
+                else
+                {
+                    endpoints.MapDefaultControllerRoute();
+                }
+            });
         }
     }
 }

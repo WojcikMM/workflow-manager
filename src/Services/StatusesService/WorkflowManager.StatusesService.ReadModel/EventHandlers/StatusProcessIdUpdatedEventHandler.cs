@@ -1,23 +1,24 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
-using WorkflowManager.CQRS.ReadModel;
-using WorkflowManager.CQRS.Domain.EventHandlers;
+using System.Threading.Tasks;
+using MassTransit;
+using WorkflowManager.Common.Messages;
 using WorkflowManager.Common.Messages.Events.Statuses;
+using WorkflowManager.CQRS.ReadModel;
 using WorkflowManager.StatusesService.ReadModel.ReadDatabase;
 
 namespace WorkflowManager.StatusesService.ReadModel.EventHandlers
 {
-    public class StatusProcessIdUpdatedEventHandler : IEventHandler<StatusProcessIdUpdatedEvent>
+    public class StatusProcessIdUpdatedEventHandler : BaseEventHandler<StatusProcessIdUpdatedEvent>
     {
         private readonly IReadModelRepository<StatusModel> _repository;
 
         public StatusProcessIdUpdatedEventHandler([NotNull]IReadModelRepository<StatusModel> repository) => _repository = repository;
 
-        public async Task HandleAsync(StatusProcessIdUpdatedEvent @event, Guid correlationId)
+        public override async Task Consume(ConsumeContext<StatusProcessIdUpdatedEvent> context)
         {
-            var status = await _repository.GetByIdAsync(@event.AggregateId);
-            status.ProcessId = @event.ProcessId;
+            var status = await _repository.GetByIdAsync(context.Message.AggregateId);
+            status.ProcessId = context.Message.ProcessId;
             status.UpdatedAt = DateTime.UtcNow;
 
             await _repository.UpdateAsync(status);

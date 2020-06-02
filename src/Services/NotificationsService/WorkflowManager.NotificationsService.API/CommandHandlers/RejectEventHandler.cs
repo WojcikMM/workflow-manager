@@ -7,16 +7,17 @@ using WorkflowManager.NotificationsService.API.HubConfig;
 
 namespace WorkflowManager.NotificationsService.API.CommandHandlers
 {
-    public class CompleteEventsHandler : BaseEventHandler<BaseCompleteEvent>
-
+    public class RejectEventHandler : BaseEventHandler<BaseRejectedEvent>
     {
         private readonly IHubContext<EventHub> _hubContext;
 
-        public CompleteEventsHandler(IHubContext<EventHub> hubContext) => _hubContext = hubContext;
-
-        public override async Task Consume(ConsumeContext<BaseCompleteEvent> context)
+        public RejectEventHandler(IHubContext<EventHub> hubContext)
         {
-            await _hubContext.Clients.All.SendAsync("operation_complete", context.Message);
+            this._hubContext = hubContext;
+        }
+        public override async Task Consume(ConsumeContext<BaseRejectedEvent> context)
+        {
+            await _hubContext.Clients.All.SendAsync("operation_rejected", context.Message);
         }
     }
 }

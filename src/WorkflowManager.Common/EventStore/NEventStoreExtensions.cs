@@ -14,7 +14,7 @@ namespace WorkflowManager.Common.EventStore
         {
             var connectionString = serviceCollection.GetConnectionString(connectionStringName);
 
-            serviceCollection.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
+            serviceCollection.AddTransient(typeof(IRepository<>), typeof(AggregateRespository<>));
 
             serviceCollection.AddTransient<IStoreEvents>(service => Wireup
                 .Init()

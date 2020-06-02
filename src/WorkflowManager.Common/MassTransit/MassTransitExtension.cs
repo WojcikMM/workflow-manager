@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using MassTransit;
 using MassTransit.Azure.ServiceBus.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,19 +10,21 @@ namespace WorkflowManager.Common.MassTransit
 {
     public static class MassTransitExtension
     {
-        public static void AddMasstransit(this IServiceCollection services)
+        public static void AddMasstransitWithReflection(this IServiceCollection services)
         {
             services.AddMassTransit(config =>
             {
-
-                var consumerAssemblyTypes = Assembly.GetEntryAssembly().GetTypes()
-                .Where(t => t.IsClass && typeof(IConsumer).IsAssignableFrom(t))
-                .Select(t => new
-                {
-                    ConsumerType = t,
-                    MessageType = t.GetInterfaces().First().GetGenericArguments().First()
-                })
-                .ToList();
+                var consumerAssemblyTypes = AppDomain.CurrentDomain
+              .GetAssemblies()
+              .Where(assembly => assembly.GetName().Name.Contains("WorkflowManager"))
+              .SelectMany(assembly => assembly.GetTypes())
+              .Where(type => type.IsClass && !type.IsAbstract && typeof(IConsumer).IsAssignableFrom(type))
+              .Select(t => new
+              {
+                  ConsumerType = t,
+                  MessageType = t.GetInterfaces().First().GetGenericArguments().First()
+              })
+              .ToList();
 
                 consumerAssemblyTypes.ForEach(assembly =>
                 {
