@@ -53,7 +53,7 @@ namespace WorkflowManager.Common.EventStore
                 @event.Version = version;
                 @event.CorrelationId = CorrelationId;
                 stream.Add(new EventMessage() { Body = @event });
-                _publishEndpoint.Publish(@event);
+                _publishEndpoint.Publish(@event, @event.GetType());
             }
             stream.CommitChanges(Guid.NewGuid());
 

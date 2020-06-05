@@ -27,15 +27,6 @@ namespace WorkflowManager.ProcessesService.API.Controllers
             _publishEndpoint = publishEndpoint;
         }
 
-        [HttpGet("test-aeb")]
-        [AllowAnonymous]
-        public async Task<IActionResult> TestAzureEventBus()
-        {
-            await this._publishEndpoint.Publish<CreateProcessCommand>(new CreateProcessCommand(Guid.NewGuid(), "1"));
-            await this._publishEndpoint.Publish<CreateProcessCommand>(new CreateProcessCommand(Guid.NewGuid(), "2"));
-            return Ok();
-        }
-
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ProcessModel>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetProcesses([FromQuery]string name = null) =>

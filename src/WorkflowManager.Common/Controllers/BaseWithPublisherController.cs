@@ -17,7 +17,7 @@ namespace WorkflowManager.Common.Controllers
 
         protected async Task<IActionResult> SendAsync<T>(T command) where T : ICommand
         {
-            var correlationId = Guid.Empty;
+            var correlationId = Guid.NewGuid();
             //var context = GetContext<T>(resourceId, resource);
             await _busPublisher.Publish(command,publishCallback => {
                 correlationId = publishCallback.CorrelationId.GetValueOrDefault();
