@@ -13,7 +13,7 @@ namespace WorkflowManager.ProcessesService.Core.CommandHandlers
 
         public override void HandleCommand(UpdateProcessCommand command)
         {
-            aggregate = _repository.GetById(command.Id);
+            aggregate = _repository.GetById(command.AggregateId);
             if (aggregate.Name != command.Name)
             {
                 aggregate.UpdateName(command.Name);

@@ -1,20 +1,23 @@
 ﻿using System;
+using Newtonsoft.Json;
+using WorkflowManager.CQRS.Commands;
 using WorkflowManager.CQRS.Domain;
-using WorkflowManager.CQRS.Domain.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Processes
 {
-    public class CreateProcessCommand : ICommand
+    public class CreateProcessCommand : BaseCommand
     {
-        public Guid Id { get; }
         public string Name { get; }
-        public int Version { get; }
 
-        public CreateProcessCommand(Guid Id, string Name)
+        public CreateProcessCommand(string Name) : base(Guid.NewGuid(), DomainConstants.NewAggregateVersion)
         {
-            this.Id = Id;
             this.Name = Name;
-            Version = DomainConstants.NewAggregateVersion;
+        }
+
+        [JsonConstructor]
+        public CreateProcessCommand(Guid AggregateId, string Name, int Version, Guid CorrelationId) : base(AggregateId, Version, CorrelationId)
+        {
+            this.Name = Name;
         }
     }
 }

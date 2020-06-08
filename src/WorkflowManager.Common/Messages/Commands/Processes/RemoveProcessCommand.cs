@@ -1,17 +1,20 @@
 ﻿using System;
-using WorkflowManager.CQRS.Domain.Commands;
+using Newtonsoft.Json;
+using WorkflowManager.CQRS.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Processes
 {
-    public class RemoveProcessCommand : ICommand
+    public class RemoveProcessCommand : BaseCommand
     {
-        public Guid Id { get; }
-        public int Version { get; }
-
-        public RemoveProcessCommand(Guid Id, int Version)
+        public RemoveProcessCommand(Guid AggregateId, int Version) : base(AggregateId, Version)
         {
-            this.Id = Id;
-            this.Version = Version;
         }
+
+        [JsonConstructor]
+        public RemoveProcessCommand(Guid AggregateId, int Version, Guid CorrelationId) : base(AggregateId, Version, CorrelationId)
+        {
+        }
+
+
     }
 }

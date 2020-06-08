@@ -3,6 +3,7 @@ using WorkflowManager.Common.Messages.Events.Statuses;
 using WorkflowManager.CQRS.Domain.Domain;
 using WorkflowManager.CQRS.Domain.Domain.Mementos;
 using WorkflowManager.CQRS.Domain.Events;
+using WorkflowManager.CQRS.Storage.Mementos;
 using WorkflowManager.StatusesService.Core.Domain.Mementos;
 
 namespace WorkflowManager.StatusesService.Core.Domain

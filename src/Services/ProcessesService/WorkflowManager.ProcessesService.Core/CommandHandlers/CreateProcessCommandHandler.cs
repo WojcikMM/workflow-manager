@@ -13,7 +13,7 @@ namespace WorkflowManager.ProcessesService.Core.CommandHandlers
 
         public override void HandleCommand(CreateProcessCommand command)
         {
-            aggregate = new Process(command.Id, command.Name);
+            aggregate = new Process(command.AggregateId, command.Name);
         }
     }
 }

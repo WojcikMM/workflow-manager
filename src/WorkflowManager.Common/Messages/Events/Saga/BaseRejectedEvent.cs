@@ -30,7 +30,7 @@ namespace WorkflowManager.Common.Messages.Events.Saga
 
         public IRejectedEvent Initialize(ICommand command, Exception exception, Guid correlationId)
         {
-            this.AggregateId = command.Id;
+            this.AggregateId = command.AggregateId;
             this.CorrelationId = correlationId;
             this.Version = command.Version;
             this.ExceptionMessage = exception.Message;

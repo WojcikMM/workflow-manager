@@ -34,9 +34,6 @@ namespace WorkflowManager.ProcessesService.API
             services.AddReadModelStore<ProcessesContext>("MsSqlDatabase");
             services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();
 
-
-            // AZURE SERVICE BUS TEST
-
             services.AddMasstransitWithReflection();
         }
 

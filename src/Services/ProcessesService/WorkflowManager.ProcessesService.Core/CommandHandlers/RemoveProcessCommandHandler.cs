@@ -13,7 +13,7 @@ namespace WorkflowManager.ProcessesService.Core.CommandHandlers
 
         public override void HandleCommand(RemoveProcessCommand command)
         {
-            aggregate = _repository.GetById(command.Id);
+            aggregate = _repository.GetById(command.AggregateId);
             aggregate.Delete();
         }
     }

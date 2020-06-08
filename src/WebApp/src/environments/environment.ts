@@ -8,13 +8,15 @@ const authConfig: AuthConfig = {
   silentRefreshRedirectUri: `${window.location.origin}/silent-refresh.html`,
   clientId: 'spa',
   scope: 'openid profile Processes_Service',
-  responseType: 'code'
+  responseType: 'code',
+  useSilentRefresh: false
 };
+
 
 export const environment = {
   production: false,
   services: {
-    processes: 'https://workflow-manager-processes-service.azurewebsites.net/api/Processes'
+    processes: 'https://workflow-manager-processes-service-api-dev.azurewebsites.net/api/Processes'
   },
   authentication: authConfig,
   sidebarMenu: [

@@ -1,22 +1,26 @@
 ﻿using System;
+using Newtonsoft.Json;
+using WorkflowManager.CQRS.Commands;
 using WorkflowManager.CQRS.Domain;
-using WorkflowManager.CQRS.Domain.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Statuses
 {
-    public class CreateStatusCommand : ICommand
+    public class CreateStatusCommand : BaseCommand
     {
-        public Guid Id { get; }
         public string Name { get; }
         public Guid ProcessId { get; }
-        public int Version { get; }
 
-        public CreateStatusCommand(Guid Id, string Name, Guid ProcessId)
+        public CreateStatusCommand(string Name, Guid ProcessId) : base(Guid.NewGuid(), DomainConstants.NewAggregateVersion)
         {
-            this.Id = Id;
             this.Name = Name;
             this.ProcessId = ProcessId;
-            this.Version = DomainConstants.NewAggregateVersion;
+        }
+
+        [JsonConstructor]
+        public CreateStatusCommand(Guid AggregateId, string Name, Guid ProcessId, int Version, Guid CorrelationId) : base(AggregateId, Version, CorrelationId)
+        {
+            this.Name = Name;
+            this.ProcessId = ProcessId;
         }
     }
 }

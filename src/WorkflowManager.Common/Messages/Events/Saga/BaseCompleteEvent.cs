@@ -26,7 +26,7 @@ namespace WorkflowManager.Common.Messages.Events.Saga
         {
             this.CorrelationId = correlationId;
             this.Version = command.Version;
-            this.AggregateId = command.Id;
+            this.AggregateId = command.AggregateId;
             return this;
 
         }

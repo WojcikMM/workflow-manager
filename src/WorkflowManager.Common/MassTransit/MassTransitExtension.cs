@@ -57,6 +57,7 @@ namespace WorkflowManager.Common.MassTransit
                                 assembly.MessageType.Name,
                                 new Action<IServiceBusSubscriptionEndpointConfigurator>(consumerConfig =>
                                 {
+                                    
                                     var registerConsumerMethod = typeof(DependencyInjectionReceiveEndpointExtensions)
                                     .GetMethods()
                                     .Where(m=>m.IsGenericMethod && m.GetGenericArguments().Length == 1)

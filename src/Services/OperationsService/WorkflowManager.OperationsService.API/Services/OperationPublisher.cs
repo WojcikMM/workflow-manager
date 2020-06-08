@@ -19,7 +19,7 @@ namespace WorkflowManager.OperationsStorage.Api.Services
                 var rejectedEvent = @event as IRejectedEvent;
                 await _busPublisher.Publish(new OperationRejected()
                 {
-                    AggregateId = @event.Id,
+                    AggregateId = @event.AggregateId,
                     Id = @event.Id,
                     Version = @event.Version,
                     ExceptionMessage = rejectedEvent.ExceptionMessage,
@@ -32,7 +32,7 @@ namespace WorkflowManager.OperationsStorage.Api.Services
             {
                 await _busPublisher.Publish(new OperationCompleted()
                 {
-                    AggregateId = @event.Id,
+                    AggregateId = @event.AggregateId,
                     Id = @event.Id,
                     Version = @event.Version,
                     CorrelationId = @event.CorrelationId

@@ -42,7 +42,7 @@ namespace WorkflowManager.ProcessesService.API.Controllers
         [HttpPost]
         [Authorize(Roles = "processes_manager")]
         public async Task<IActionResult> CreateProcess([FromBody] CreateProcessDTOCommand command) =>
-            await SendAsync(new CreateProcessCommand(Guid.NewGuid(), command.Name));
+            await SendAsync(new CreateProcessCommand(command.Name));
 
         [HttpPatch("{id}")]
         [Authorize(Roles = "processes_manager")]
