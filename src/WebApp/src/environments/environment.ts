@@ -2,7 +2,7 @@ import {AuthConfig} from 'angular-oauth2-oidc';
 
 // noinspection SpellCheckingInspection
 const authConfig: AuthConfig = {
-  issuer: 'https://workflow-manager-identity-service-api-dev.azurewebsites.net',
+  issuer: 'http://localhost:5000',
   requireHttps: false,
   redirectUri: `${window.location.origin}`,
   silentRefreshRedirectUri: `${window.location.origin}/silent-refresh.html`,
@@ -14,7 +14,7 @@ const authConfig: AuthConfig = {
 export const environment = {
   production: false,
   services: {
-    processes: 'https://workflow-manager-processes-service.azurewebsites.net/api/Processes'
+    processes: 'https://localhost:8001/api/v1/processes'
   },
   authentication: authConfig,
   sidebarMenu: [
