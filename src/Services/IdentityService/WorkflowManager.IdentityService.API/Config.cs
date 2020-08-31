@@ -21,7 +21,14 @@ namespace IdentityServerAspNetIdentity
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new ApiResource("Processes_Service", "Access to Processes Service API"),
+                new ApiResource("Processes_Service", "Access to Processes Service API"){
+                    UserClaims =
+                    {
+                        IdentityModel.JwtClaimTypes.Name,
+                        IdentityModel.JwtClaimTypes.Profile,
+                        IdentityModel.JwtClaimTypes.Audience
+                    }
+                },
 
                 new ApiResource("Statuses_Service", "Access to Statuses Service API"),
 
@@ -29,7 +36,20 @@ namespace IdentityServerAspNetIdentity
 
                 new ApiResource("Notifications_Service", "Access to Notifications Service API"),
 
-                new ApiResource("Identity_Service", "Access to Identity Service API"),
+                new ApiResource("Identity_Service", "Access to Identity Service API",new List<string>{
+                    IdentityModel.JwtClaimTypes.Name,
+                        IdentityModel.JwtClaimTypes.Profile,
+                        IdentityModel.JwtClaimTypes.Audience}),
+            };
+
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
+            {
+                new ApiScope("Processes_Service"),
+                new ApiScope("Statuses_Service"),
+                new ApiScope("Operations_Service"),
+                new ApiScope("Notifications_Service"),
+                new ApiScope("Identity_Service")
             };
 
 

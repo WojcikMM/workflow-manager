@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Builder;
 using WorkflowManager.Common.Swagger;
 using NLog.Common;
 using System.IO;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.ApplicationInitializer
 {
@@ -103,6 +106,20 @@ namespace WorkflowManager.Common.ApplicationInitializer
                 }
             });
 
+        }
+
+        public static void InjectCommonServices(IServiceCollection services, bool isApi = true)
+        {
+            var versionControlerAssembly = typeof(Controllers.VersionController).Assembly;
+
+            if (isApi)
+            {
+                services.AddControllers().AddApplicationPart(versionControlerAssembly);
+            }
+            else
+            {
+                services.AddMvc().AddApplicationPart(versionControlerAssembly);
+            }
         }
     }
 }

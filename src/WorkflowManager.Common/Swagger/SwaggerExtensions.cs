@@ -39,7 +39,7 @@ namespace WorkflowManager.Common.Swagger
             services.AddSwaggerGen(cfg =>
             {
                 cfg.AddSecurityRequirement(new OpenApiSecurityRequirement{
-                        {
+                    {
                             new OpenApiSecurityScheme {
                                 Reference = new OpenApiReference()
                                 {

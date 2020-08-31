@@ -1,4 +1,6 @@
-﻿using IdentityServerAspNetIdentity.Data;
+﻿using IdentityServer4;
+using IdentityServerAspNetIdentity.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -41,16 +43,20 @@ namespace IdentityServerAspNetIdentity
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiResources(Config.ApiResources)
+                .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<IdentityUser>()
                 .AddProfileService<IdentityProfileService>()
                 .AddRedirectUriValidator<CustomRedirectUriValidator>();
+
+            services.ConfigureNonBreakingSameSiteCookies();
 
             services.AddServiceSwaggerUI();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCookiePolicy();
             app.UseCors("CorsPolicy");
             ServiceConfiguration.InjectCommonMiddlewares(app, env, false);
             app.UseStaticFiles();

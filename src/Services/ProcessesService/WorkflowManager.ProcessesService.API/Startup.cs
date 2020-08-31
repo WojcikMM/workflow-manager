@@ -31,15 +31,8 @@ namespace WorkflowManager.ProcessesService.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CORSPolicy", builder => builder
-                .WithOrigins("http://localhost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-            });
+            ServiceConfiguration.InjectCommonServices(services);
+            services.AddCorsAbility();
             services.AddRabbitMq();
             services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();

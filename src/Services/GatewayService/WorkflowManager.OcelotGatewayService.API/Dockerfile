@@ -3,7 +3,7 @@ WORKDIR /src
 COPY "WorkflowManager.OcelotGatewayService.API.csproj" "WorkflowManager.OcelotGatewayService.API.csproj"
 RUN dotnet restore WorkflowManager.OcelotGatewayService.API.csproj
 COPY . .
-RUN dotnet build --no-restore "WorkflowManager.OcelotGatewayService.API.csproj" -c Release -o /app/build
+RUN dotnet build "WorkflowManager.OcelotGatewayService.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "WorkflowManager.OcelotGatewayService.API.csproj" -c Release -o /app/publish
