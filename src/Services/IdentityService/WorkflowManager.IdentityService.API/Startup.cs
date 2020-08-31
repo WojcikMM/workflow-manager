@@ -52,7 +52,7 @@ namespace IdentityServerAspNetIdentity
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("CorsPolicy");
-            ServiceConfiguration.InjectCommonMiddlewares(app, env, false);
+            ServiceConfiguration.InjectCommonMiddlewares(app, env);
             app.UseStaticFiles();
             app.UseIdentityServer();
         }
