@@ -8,8 +8,4 @@
     <ProjectReference Include="..\..\..\WorkflowManager.Common\WorkflowManager.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
 </Project>
