@@ -6,6 +6,7 @@ using MassTransit.Azure.ServiceBus.Core;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.ObjectPool;
 using WorkflowManager.Common.Configuration;
 
 namespace WorkflowManager.Common.MassTransit
@@ -28,12 +29,21 @@ namespace WorkflowManager.Common.MassTransit
               .Where(assembly => assembly.GetName().Name.Contains("WorkflowManager"))
               .SelectMany(assembly => assembly.GetTypes())
               .Where(type => type.IsClass && !type.IsAbstract && typeof(IConsumer).IsAssignableFrom(type))
-              .Select(t => new ConsumerAssemblyTypeModel
-              {
-                  ConsumerType = t,
-                  MessageType = t.GetInterfaces().First().GetGenericArguments().First()
-              })
-              .ToList();
+              .SelectMany(type => type.GetInterfaces()
+                     .Where(interf => interf.GenericTypeArguments.Any())
+                     .Select(t => new ConsumerAssemblyTypeModel
+                     {
+                         ConsumerType = type,
+                         MessageType = t.GenericTypeArguments.First()
+                     })
+             ).ToList();
+
+                //.Select(t => new ConsumerAssemblyTypeModel
+                //{
+                //    ConsumerType = t,
+                //    MessageType = t.GetInterfaces().First().GetGenericArguments().First()
+                //})
+                //.ToList();
 
                 consumerAssemblyTypes.ForEach(assembly =>
                 {
@@ -115,38 +125,23 @@ namespace WorkflowManager.Common.MassTransit
 
 
                 consumerAssemblyTypes
-             .GroupBy(assembly => assembly.MessageType)
-             .Select(assemblyGroup => new
+             //.GroupBy(assembly => assembly.MessageType)
+             //.Select(assemblyGroup => new
+             //{
+             //    MessageType = assemblyGroup.Key,
+             //    ConsumerTypes = assemblyGroup.Select(assembly => assembly.ConsumerType).ToList()
+             //})
+             //.ToList()
+             .ForEach(assemblyType =>
              {
-                 MessageType = assemblyGroup.Key,
-                 ConsumerTypes = assemblyGroup.Select(assembly => assembly.ConsumerType).ToList()
-             })
-             .ToList()
-             .ForEach(assembly =>
-             {
-                 busFactoryConfig.GetType()
-                 .GetMethod(nameof(busFactoryConfig.ReceiveEndpoint), 1, new Type[] {
-                                typeof(string),
-                                typeof(Action<IReceiveEndpointConfigurator>)
-                 })
-                 .MakeGenericMethod(assembly.MessageType)
-                 .Invoke(busFactoryConfig, new object[] {
-                                assembly.MessageType.Name,
-                                new Action<IReceiveEndpointConfigurator>(consumerConfig =>
-                                {
-
-                                    var registerConsumerMethod = typeof(DependencyInjectionReceiveEndpointExtensions)
-                                    .GetMethods()
-                                    .Where(m=>m.IsGenericMethod && m.GetGenericArguments().Length == 1)
-                                    .First();
-
-                                    assembly.ConsumerTypes.ForEach(consumerType =>
-                                    {
-                                        registerConsumerMethod.MakeGenericMethod(consumerType)
-                                        .Invoke(null, new object[] { consumerConfig, provider.Container, null });
-                                    });
-                                })
-                 });
+                 busFactoryConfig.ReceiveEndpoint(assemblyType.MessageType.Name, cfg =>
+                  {
+                      var registerConsumerMethod = typeof(DependencyInjectionReceiveEndpointExtensions)
+                                     .GetMethods()
+                                     .Where(m => m.IsGenericMethod && m.GetGenericArguments().Length == 1)
+                                     .First();
+                      registerConsumerMethod.MakeGenericMethod(assemblyType.ConsumerType).Invoke(null, new object[] { cfg, provider.Container, null });
+                  });
              });
             }));
         }

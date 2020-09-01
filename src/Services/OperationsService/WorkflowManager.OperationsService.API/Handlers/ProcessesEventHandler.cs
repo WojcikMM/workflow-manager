@@ -8,7 +8,7 @@ using WorkflowManager.OperationsStorage.Api.Services;
 
 namespace WorkflowManager.OperationsStorage.API.Handlers
 {
-    public class ProcessesEventHandler<T> :
+    public class ProcessesEventHandler :
         IConsumer<ProcessCreatedEvent>,
         IConsumer<ProcessNameUpdatedEvent>,
         IConsumer<ProcessRemovedEvent>,
