@@ -1,44 +1,53 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MassTransit;
 using WorkflowManager.Common.Messages.Events.Operations;
-using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.CQRS.Domain.Events;
 
 namespace WorkflowManager.OperationsStorage.Api.Services
 {
     public class OperationPublisher : IOperationPublisher
     {
-        private readonly IBusPublisher _busPublisher;
+        private readonly IPublishEndpoint _busPublisher;
 
-        public OperationPublisher(IBusPublisher busPublisher) => _busPublisher = busPublisher;
+        public OperationPublisher(IPublishEndpoint busPublisher) => _busPublisher = busPublisher;
 
-        public async Task PendingAsync(Guid correlationId, IEvent @event) =>
-            await _busPublisher.PublishAsync(new OperationPending()
+
+        public async Task PublishResult(IEvent @event)
+        {
+            if (@event is IRejectedEvent)
             {
-                AggregateId = @event.AggregateId,
-                Id = @event.Id,
-                Version = @event.Version
-            }, correlationId);
-
-
-        public async Task CompleteAsync(Guid correlationId, IEvent @event) =>
-            await _busPublisher.PublishAsync(new OperationCompleted()
+                var rejectedEvent = @event as IRejectedEvent;
+                await _busPublisher.Publish(new OperationRejected()
+                {
+                    AggregateId = @event.AggregateId,
+                    Id = @event.Id,
+                    Version = @event.Version,
+                    ExceptionMessage = rejectedEvent.ExceptionMessage,
+                    BusinessResponse = rejectedEvent.BusinessResponse,
+                    ExceptionStack = rejectedEvent.ExceptionStack,
+                    CorrelationId = rejectedEvent.CorrelationId
+                });
+            }
+            else if (@event is ICompleteEvent)
             {
-                AggregateId = @event.Id,
-                Id = @event.Id,
-                Version = @event.Version
-            }, correlationId);
-
-        public async Task RejectAsync(Guid correlationId, IRejectedEvent @event) =>
-            await _busPublisher.PublishAsync(new OperationRejected()
+                await _busPublisher.Publish(new OperationCompleted()
+                {
+                    AggregateId = @event.AggregateId,
+                    Id = @event.Id,
+                    Version = @event.Version,
+                    CorrelationId = @event.CorrelationId
+                });
+            }
+            else
             {
-                AggregateId = @event.Id,
-                Id = @event.Id,
-                Version = @event.Version,
-                ExceptionMessage = @event.ExceptionMessage,
-                BusinessResponse = @event.BusinessResponse,
-                ExceptionStack = @event.ExceptionStack
-
-            }, correlationId);
+                await _busPublisher.Publish(new OperationPending()
+                {
+                    AggregateId = @event.AggregateId,
+                    Id = @event.Id,
+                    Version = @event.Version,
+                    CorrelationId = @event.CorrelationId
+                });
+            }
+        }
     }
 }

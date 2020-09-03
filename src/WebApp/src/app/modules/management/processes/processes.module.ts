@@ -15,12 +15,27 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {PROCESS_EDIT_FORM_CONST} from './process-edit-form/process-edit-form.const';
+import {MatListModule} from '@angular/material/list';
+import {ProcessResolverService} from './process-resolver.service';
+import {MatStepperModule} from '@angular/material/stepper';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     component: ProcessesListComponent
+  },
+  {
+    path: 'preview/:id',
+    component: ProcessEditFormComponent,
+    resolve: {
+      [PROCESS_EDIT_FORM_CONST.RESOLVER_PROP_NAME]: ProcessResolverService
+    }
+  },
+  {
+    path: 'create',
+    component: ProcessEditFormComponent
   }
 ];
 
@@ -39,15 +54,12 @@ const routes: Routes = [
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatStepperModule
   ],
   providers: [
     ProcessesService,
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi: true
-    // }
+    ProcessResolverService
   ]
 })
 export class ProcessesModule {

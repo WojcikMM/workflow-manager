@@ -1,5 +1,6 @@
 ﻿using System;
-using WorkflowManager.CQRS.Domain.Commands;
+using Newtonsoft.Json;
+using WorkflowManager.CQRS.Commands;
 
 namespace WorkflowManager.Common.Messages.Commands.Statuses
 {
@@ -8,7 +9,14 @@ namespace WorkflowManager.Common.Messages.Commands.Statuses
         public string Name { get; }
         public Guid? ProcessId { get; }
 
-        public UpdateStatusCommand(Guid Id, string Name, Guid? ProcessId, int Version) : base(Id, Version)
+        public UpdateStatusCommand(Guid AggregateId, string Name, Guid? ProcessId, int Version) : base(AggregateId, Version)
+        {
+            this.Name = Name;
+            this.ProcessId = ProcessId;
+        }
+
+        [JsonConstructor]
+        public UpdateStatusCommand(Guid AggregateId, string Name, Guid? ProcessId, int Version, Guid CorrelationId) : base(AggregateId, Version, CorrelationId)
         {
             this.Name = Name;
             this.ProcessId = ProcessId;

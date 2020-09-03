@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkflowManager.Common.ApiResponses;
 using WorkflowManager.Common.Controllers;
 using WorkflowManager.Common.Messages.Commands.Statuses;
-using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.CQRS.ReadModel;
 using WorkflowManager.StatusesService.API.DTO.Commands;
 using WorkflowManager.StatusesService.ReadModel.ReadDatabase;
@@ -19,11 +19,9 @@ namespace WorkflowManager.StatusesService.API.Controllers
     {
         private readonly IReadModelRepository<StatusModel> _readModelRepository;
 
-        public StatusesController(IBusPublisher busPublisher, IReadModelRepository<StatusModel> readModelRepository) : base(busPublisher)
-        {
-            _readModelRepository = readModelRepository ??
-                throw new ArgumentNullException(nameof(readModelRepository));
-        }
+        public StatusesController(IPublishEndpoint publishEndpoint, IReadModelRepository<StatusModel> readModelRepository) : base(publishEndpoint) =>
+            _readModelRepository = readModelRepository;
+
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StatusModel>), (int)HttpStatusCode.OK)]
@@ -39,13 +37,14 @@ namespace WorkflowManager.StatusesService.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "statuses_manager")]
-        [ProducesResponseType(typeof(AcceptedResponse),(int)HttpStatusCode.Accepted)]
+        [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.Accepted)]
         public async Task<IActionResult> CreateStatus([FromBody] CreateStatusDTOCommand command) =>
-            await SendAsync(new CreateStatusCommand(Guid.NewGuid(), command.Name, command.ProcessId));
+            await SendAsync(new CreateStatusCommand(command.Name, command.ProcessId));
 
         [HttpPatch("{id}")]
         [Authorize(Roles = "statuses_manager")]
         [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.Accepted)]
-        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand command) => await SendAsync(new UpdateStatusCommand(id, command.Name, command.ProcessId, command.Version));
+        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand command) =>
+            await SendAsync(new UpdateStatusCommand(id, command.Name, command.ProcessId, command.Version));
     }
 }

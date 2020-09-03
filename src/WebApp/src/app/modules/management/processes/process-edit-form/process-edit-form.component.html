@@ -1,27 +1,31 @@
-<form class="process-edit-form"
-      [formGroup]="reactForm"
-      (ngSubmit)="submitFormEvent.emit(reactForm.value)">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{formTitle}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-        <mat-error>Name is required.</mat-error>
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button
-              (click)="closeFormEvent.emit()">
-        Cancel
-      </button>
-      <button mat-button
-              type="submit"
-              [disabled]="reactForm.invalid">
-        Save
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+<div class="process-edit-form">
+  <mat-vertical-stepper [linear]="true">
+    <mat-step [stepControl]="reactForm">
+      <form [formGroup]="reactForm">
+        <ng-template matStepLabel>Definition</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput [formControlName]="PROCESS_EDIT_FORM_CONST.REACT_FORM_NAMES.NAME">
+        </mat-form-field>
+        <br>
+        <button mat-button matStepperNext>Next</button>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Preview</ng-template>
+      <span>Process Preview</span>
+      <div>
+        <div>Name</div>
+        <div>{{processViewModel.name}}</div>
+      </div>
+      <div>
+        <div>Created at</div>
+        <div>{{processViewModel.createdAt}}</div>
+      </div>
+      <div>
+        <div>Last updated at:</div>
+        <div>{{processViewModel.updatedAt}}</div>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

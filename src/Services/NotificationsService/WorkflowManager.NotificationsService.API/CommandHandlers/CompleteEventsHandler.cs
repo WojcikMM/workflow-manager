@@ -1,33 +1,22 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Threading.Tasks;
-using WorkflowManager.Common.Messages.Events.Processes;
+﻿using System.Threading.Tasks;
+using MassTransit;
+using Microsoft.AspNetCore.SignalR;
+using WorkflowManager.Common.Messages;
 using WorkflowManager.Common.Messages.Events.Saga;
-using WorkflowManager.CQRS.Domain.EventHandlers;
 using WorkflowManager.NotificationsService.API.HubConfig;
 
 namespace WorkflowManager.NotificationsService.API.CommandHandlers
 {
-    public class CompleteEventsHandler :
-        IEventHandler<BaseCompleteEvent>,
-        IEventHandler<BaseRejectedEvent>
+    public class CompleteEventsHandler : BaseEventHandler<BaseCompleteEvent>
 
     {
         private readonly IHubContext<EventHub> _hubContext;
 
-        public CompleteEventsHandler(IHubContext<EventHub> hubContext)
-        {
-            this._hubContext = hubContext;
-        }
+        public CompleteEventsHandler(IHubContext<EventHub> hubContext) => _hubContext = hubContext;
 
-        public async Task HandleAsync(BaseCompleteEvent @event, Guid correlationId)
+        public override async Task Consume(ConsumeContext<BaseCompleteEvent> context)
         {
-            await _hubContext.Clients.All.SendAsync("operation_complete", @event);
-        }
-
-        public async Task HandleAsync(BaseRejectedEvent @event, Guid correlationId)
-        {
-            await _hubContext.Clients.All.SendAsync("operation_rejected", @event);
+            await _hubContext.Clients.All.SendAsync("operation_complete", context.Message);
         }
     }
 }

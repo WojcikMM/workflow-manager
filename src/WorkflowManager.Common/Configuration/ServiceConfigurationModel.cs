@@ -6,7 +6,7 @@ namespace WorkflowManager.Common.ApplicationInitializer
     {
         public string Name { get; set; }
 
-        public string ServiceName => 
+        public string ServiceName =>
             string.IsNullOrWhiteSpace(Name) ? "Service" : $"{Name} Service";
 
         public string ServiceVersion =>
@@ -15,6 +15,10 @@ namespace WorkflowManager.Common.ApplicationInitializer
         public string ServiceNameWithVersion => $"{ServiceName} {ServiceVersion}";
 
         public AssemblyName ServiceAssemblyInformations => Assembly.GetEntryAssembly().GetName();
+
+        public bool IsApi { get; set; } = true;
+
+        public bool IsAzureServiceApp { get; set; }
 
     }
 }

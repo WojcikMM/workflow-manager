@@ -1,31 +1,29 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using WorkflowManager.Common.RabbitMq;
 using WorkflowManager.CQRS.Domain.Commands;
 
 namespace WorkflowManager.Common.Controllers
 {
     public class BaseWithPublisherController : BaseController
     {
-        private readonly IBusPublisher _busPublisher;
+        private readonly IPublishEndpoint _busPublisher;
 
-        protected BaseWithPublisherController(IBusPublisher busPublisher)
+        protected BaseWithPublisherController(IPublishEndpoint busPublisher)
         {
             _busPublisher = busPublisher;
         }
 
         protected async Task<IActionResult> SendAsync<T>(T command) where T : ICommand
         {
-            //var context = GetContext<T>(resourceId, resource);
-            Guid correlationId = Guid.NewGuid();
-            await _busPublisher.SendAsync(command, correlationId);
+            await _busPublisher.Publish(command, typeof(T));
 
             return Accepted(new
             {
-                AggregateId = command.Id,
-                CorrelationId = correlationId
+                command.AggregateId,
+                command.CorrelationId
             });
+
         }
     }
 }

@@ -1,23 +1,23 @@
-﻿using WorkflowManager.CQRS.Domain.Events;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using WorkflowManager.CQRS.Domain.Events;
 
 namespace WorkflowManager.CQRS.Domain.Domain
 {
     public abstract class AggregateRoot
     {
-        private readonly List<BaseEvent> _changes;
+        private readonly List<IEvent> _changes;
         public Guid AggregateId { get; protected set; }
         public int Version { get; protected set; }
         public int EventVersion { get; protected set; }
 
         protected AggregateRoot()
         {
-            _changes = new List<BaseEvent>();
+            _changes = new List<IEvent>();
         }
 
-        public IEnumerable<BaseEvent> GetUncommittedChanges()
+        public IEnumerable<IEvent> GetUncommittedChanges()
         {
             return _changes;
         }
@@ -27,13 +27,13 @@ namespace WorkflowManager.CQRS.Domain.Domain
             _changes.Clear();
         }
 
-        public void LoadsFromHistory(IEnumerable<BaseEvent> eventsHistory)
+        public void LoadsFromHistory(IEnumerable<IEvent> eventsHistory)
         {
             if (eventsHistory is null)
             {
                 throw new ArgumentNullException(nameof(eventsHistory), "Cannot load changes from null valued history.");
             }
-            foreach (BaseEvent @event in eventsHistory)
+            foreach (IEvent @event in eventsHistory)
             {
                 ApplyEventChanges(@event);
             }
@@ -41,14 +41,14 @@ namespace WorkflowManager.CQRS.Domain.Domain
 
         }
 
-        protected void ApplyEvent(BaseEvent @event)
+        protected void ApplyEvent(IEvent @event)
         {
             ApplyEventChanges(@event);
             _changes.Add(@event);
         }
 
 
-        private void ApplyEventChanges(BaseEvent @event)
+        private void ApplyEventChanges(IEvent @event)
         {
             if (@event is null)
             {

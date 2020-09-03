@@ -1,6 +1,6 @@
-﻿using WorkflowManager.Common.Messages.Commands.Statuses;
-using WorkflowManager.CQRS.Domain.CommandHandlers;
-using WorkflowManager.CQRS.Domain.Storage;
+﻿using WorkflowManager.Common.Messages;
+using WorkflowManager.Common.Messages.Commands.Statuses;
+using WorkflowManager.CQRS.Storage;
 using WorkflowManager.StatusesService.Core.Domain;
 
 namespace WorkflowManager.StatusesService.Core.CommandHandlers
@@ -13,7 +13,7 @@ namespace WorkflowManager.StatusesService.Core.CommandHandlers
 
         public override void HandleCommand(CreateStatusCommand command)
         {
-            aggregate = new Status(command.Id, command.ProcessId, command.Name);
+            aggregate = new Status(command.AggregateId, command.ProcessId, command.Name);
         }
     }
 }

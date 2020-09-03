@@ -8,8 +8,8 @@ namespace WorkflowManager.CQRS.Domain.Events
         public Guid Id { get; }
         public int Version { get; set; }
         public Guid AggregateId { get; set; }
+        public Guid CorrelationId { get; set; }
 
-        protected BaseEvent() { }
         public BaseEvent(Guid AggregateId)
         {
             Id = Guid.NewGuid();

@@ -9,28 +9,16 @@
     <DockerfileBuildArguments>--build-arg BUILD_CONFIGURATION=$(Configuration)</DockerfileBuildArguments>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DockerfileTag>workflowmanager.azurecr.io/workflow-manager-processes-service-api:dev</DockerfileTag>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WorkflowManager.ProcessesService.Core\WorkflowManager.ProcessesService.Core.csproj" />
     <ProjectReference Include="..\WorkflowManager.ProcessesService.ReadModel\WorkflowManager.ProcessesService.ReadModel.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\..\..\WorkflowManager.Common\Logger\nlog.config" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-
 </Project>

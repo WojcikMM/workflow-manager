@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this._oauthService.loadDiscoveryDocumentAndLogin()
       .then(result => {
-        return result || this._redirectToServiceUnavailable();
+        return result || this._oauthService.tryLoginImplicitFlow();
       }).catch(() => {
         return this._redirectToServiceUnavailable();
       });

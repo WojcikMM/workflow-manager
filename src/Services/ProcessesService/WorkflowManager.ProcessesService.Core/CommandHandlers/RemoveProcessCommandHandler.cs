@@ -1,6 +1,6 @@
-﻿using WorkflowManager.CQRS.Domain.CommandHandlers;
-using WorkflowManager.CQRS.Domain.Storage;
+﻿using WorkflowManager.Common.Messages;
 using WorkflowManager.Common.Messages.Commands.Processes;
+using WorkflowManager.CQRS.Storage;
 using WorkflowManager.ProcessesService.Core.Domain;
 
 namespace WorkflowManager.ProcessesService.Core.CommandHandlers
@@ -13,7 +13,7 @@ namespace WorkflowManager.ProcessesService.Core.CommandHandlers
 
         public override void HandleCommand(RemoveProcessCommand command)
         {
-            aggregate = _repository.GetById(command.Id);
+            aggregate = _repository.GetById(command.AggregateId);
             aggregate.Delete();
         }
     }

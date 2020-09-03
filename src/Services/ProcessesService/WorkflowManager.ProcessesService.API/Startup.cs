@@ -2,22 +2,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using WorkflowManager.Common.ApplicationInitializer;
 using WorkflowManager.Common.Authentication;
-using WorkflowManager.Common.CQRSHandlers;
+using WorkflowManager.Common.Configuration;
 using WorkflowManager.Common.EventStore;
-using WorkflowManager.Common.Messages.Commands.Processes;
-using WorkflowManager.Common.Messages.Events.Processes;
-using WorkflowManager.Common.Messages.Events.Processes.Complete;
-using WorkflowManager.Common.Messages.Events.Processes.Rejected;
-using WorkflowManager.Common.RabbitMq;
+using WorkflowManager.Common.MassTransit;
 using WorkflowManager.Common.ReadModelStore;
 using WorkflowManager.Common.Swagger;
 using WorkflowManager.ProcessesService.ReadModel;
 using WorkflowManager.ProcessesService.ReadModel.ReadDatabase;
-using WorkflowManager.ProcessesService.Core.CommandHandlers;
-using WorkflowManager.ProcessesService.Core.EventHandlers;
-using WorkflowManager.Common.ApplicationInitializer;
-using WorkflowManager.Common.Cors;
 
 namespace WorkflowManager.ProcessesService.API
 {
@@ -33,7 +27,6 @@ namespace WorkflowManager.ProcessesService.API
         {
             ServiceConfiguration.InjectCommonServices(services);
             services.AddCorsAbility();
-            services.AddRabbitMq();
             services.AddEventStore(NEventStore.Logging.LogLevel.Info, "MsSqlDatabase");
             services.AddServiceSwaggerUI();
             services.AddClientAuthentication();
@@ -41,29 +34,13 @@ namespace WorkflowManager.ProcessesService.API
             services.AddReadModelStore<ProcessesContext>("MsSqlDatabase");
             services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();
 
-            services.AddCommandHandler<CreateProcessCommand, CreateProcessCommandHandler>()
-                    .AddCommandHandler<UpdateProcessCommand, UpdateProcessCommandHandler>()
-                    .AddCommandHandler<RemoveProcessCommand, RemoveProcessCommandHandler>()
-
-                    .AddEventHandler<ProcessCreatedEvent, ProcessCreatedEventHandler>()
-                    .AddEventHandler<ProcessNameUpdatedEvent, ProcessNameUpdatedEventHandler>()
-                    .AddEventHandler<ProcessRemovedEvent, ProcessRemovedEventHandler>();
+            services.AddMasstransitWithReflection();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             ServiceConfiguration.InjectCommonMiddlewares(app, env);
-            //  app.RegisterCorsMiddleware();
-            app.UseCors("CORSPolicy");
-            app.UseRabbitMq()
-                .SubscribeCommand<CreateProcessCommand, ProcessCreateRejectedEvent>()
-                .SubscribeCommand<UpdateProcessCommand, ProcessUpdateRejectedEvent>()
-                .SubscribeCommand<RemoveProcessCommand, ProcessRemoveRejectedEvent>()
-
-                .SubscribeEvent<ProcessCreatedEvent, ProcessCreateRejectedEvent, ProcessCreateCompleteEvent>()
-                .SubscribeEvent<ProcessNameUpdatedEvent, ProcessUpdateRejectedEvent, ProcessUpdateCompleteEvent>()
-                .SubscribeEvent<ProcessRemovedEvent, ProcessRemoveRejectedEvent, ProcessRemoveCompleteEvent>();
         }
     }
 }

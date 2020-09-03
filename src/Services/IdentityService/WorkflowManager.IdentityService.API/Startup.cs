@@ -26,8 +26,7 @@ namespace IdentityServerAspNetIdentity
                 .AllowAnyHeader()
                 .AllowCredentials());
             });
-
-            services.AddMvc();
+            ServiceConfiguration.InjectCommonServices(services, false);
             services.AddClientAuthentication();
             services.AddReadModelStore<ApplicationDbContext>("MsSqlDatabase");
 
@@ -52,13 +51,15 @@ namespace IdentityServerAspNetIdentity
             services.ConfigureNonBreakingSameSiteCookies();
 
             services.AddServiceSwaggerUI();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCookiePolicy();
             app.UseCors("CorsPolicy");
-            ServiceConfiguration.InjectCommonMiddlewares(app, env, false);
+            ServiceConfiguration.InjectCommonMiddlewares(app, env);
             app.UseStaticFiles();
             app.UseIdentityServer();
         }

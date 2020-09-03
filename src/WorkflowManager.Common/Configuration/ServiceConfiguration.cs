@@ -1,16 +1,12 @@
 ﻿using System;
-using NLog.Web;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Configuration;
 using WorkflowManager.Common.Configuration;
-using Microsoft.AspNetCore.Builder;
 using WorkflowManager.Common.Swagger;
-using NLog.Common;
-using System.IO;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.ApplicationInitializer
@@ -20,36 +16,38 @@ namespace WorkflowManager.Common.ApplicationInitializer
         public static void Initialize<TStartup>(string[] args)
             where TStartup : class
         {
-            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-            InternalLogger.LogFile =
-               Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs", "nlog-internals.txt");
 
+            ILogger logger = LoggerFactory.Create(x =>
+            {
+                x.AddConsole();
+                x.AddConfiguration();
+            }).CreateLogger("Boot");
 
             ServiceConfigurationModel serviceInformations = GetServiceInformations();
             try
             {
-                logger.Info($"{serviceInformations.ServiceNameWithVersion}) started successfully");
-
                 Host.CreateDefaultBuilder(args)
                   .ConfigureWebHostDefaults(webBuilder =>
                   {
+                      var serviceInfo = GetServiceInformations(true);
+
                       webBuilder.UseStartup<TStartup>()
-                      .ConfigureLogging((context, logging) =>
+                      .ConfigureLogging(logConfig =>
                       {
-                          logging.ClearProviders();
-                          logging.SetMinimumLevel(LogLevel.Trace);
-                      })
-                      .UseNLog();
-                  }).Build().Run();
+                          if (serviceInfo.IsAzureServiceApp)
+                          {
+                              logConfig.AddAzureWebAppDiagnostics();
+                          }
+                      });
+                  })
+                  .Build()
+                  .Run();
+                logger.LogInformation($"{serviceInformations.ServiceNameWithVersion}) started successfully");
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"{serviceInformations.ServiceNameWithVersion}) stopped by error.");
+                logger.LogError(ex, $"{serviceInformations.ServiceNameWithVersion}) stopped by error.");
                 throw;
-            }
-            finally
-            {
-                NLog.LogManager.Shutdown();
             }
         }
 
@@ -79,24 +77,25 @@ namespace WorkflowManager.Common.ApplicationInitializer
             return serviceConfiguration;
         }
 
-
-        public static void InjectCommonMiddlewares(IApplicationBuilder app,
-                                                   IWebHostEnvironment env,
-                                                   bool isApi = true)
+        public static void InjectCommonMiddlewares(IApplicationBuilder applicationBuilder, IHostEnvironment environment)
         {
-            if (env.IsEnvironment("Docker") || env.IsEnvironment("Compose") || env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseServiceSwaggerUI();
+            ServiceConfigurationModel serviceInformations = GetServiceInformations();
+           // logger.LogInformation($"{serviceInformations.ServiceNameWithVersion} starting ...");
 
-            app.UseEndpoints(endpoints =>
+            if (environment.IsEnvironment("Docker") || environment.IsEnvironment("Compose") || environment.IsDevelopment())
             {
-                if (isApi)
+                applicationBuilder.UseDeveloperExceptionPage();
+                //  app.UseDatabaseErrorPage();
+            }
+            applicationBuilder.UseRouting();
+            applicationBuilder.UseAuthentication();
+            applicationBuilder.UseAuthorization();
+            applicationBuilder.UseServiceSwaggerUI();
+            applicationBuilder.RegisterCorsMiddleware();
+
+            applicationBuilder.UseEndpoints(endpoints =>
+            {
+                if (serviceInformations.IsApi)
                 {
                     endpoints.MapControllers();
                 }

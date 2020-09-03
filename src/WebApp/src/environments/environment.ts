@@ -8,8 +8,10 @@ const authConfig: AuthConfig = {
   silentRefreshRedirectUri: `${window.location.origin}/silent-refresh.html`,
   clientId: 'spa',
   scope: 'openid profile Processes_Service',
-  responseType: 'code'
+  responseType: 'code',
+  useSilentRefresh: false
 };
+
 
 export const environment = {
   production: false,

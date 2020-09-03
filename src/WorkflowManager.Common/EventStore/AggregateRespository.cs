@@ -1,88 +1,63 @@
-﻿using WorkflowManager.CQRS.Domain.Domain;
-using WorkflowManager.CQRS.Domain.Domain.Mementos;
-using WorkflowManager.CQRS.Domain.Events;
-using WorkflowManager.CQRS.Domain.Exceptions;
-using WorkflowManager.CQRS.Domain.Storage;
-using NEventStore;
-using RawRabbit.vNext.Disposable;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
+using NEventStore;
+using WorkflowManager.CQRS.Domain.Domain;
+using WorkflowManager.CQRS.Domain.Domain.Mementos;
+using WorkflowManager.CQRS.Domain.Events;
+using WorkflowManager.CQRS.Storage;
+using WorkflowManager.CQRS.Storage.Mementos;
 
 namespace WorkflowManager.Common.EventStore
 {
-    public class AggregateRespository<TAggregate> : IRepository<TAggregate> where TAggregate : AggregateRoot, new()
+    public class AggregateRespository<TAggregate> : BaseAggregateRepository<TAggregate>, IRepository<TAggregate> where TAggregate : AggregateRoot, IOriginator, new()
     {
         private readonly IStoreEvents _storage;
-        private readonly IBusClient _busClient;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public AggregateRespository(IStoreEvents storage, IBusClient busClient)
+        public AggregateRespository(IStoreEvents storage, IPublishEndpoint busClient)
         {
             _storage = storage;
-            _busClient = busClient;
+            _publishEndpoint = busClient;
         }
 
-        public TAggregate GetById(Guid id)
+        protected override IEnumerable<IEvent> GetEventsById(Guid AggregateId, int LeatestSnapshotVersion)
         {
+            using IEventStream stream = _storage.OpenStream(AggregateId);
+            return stream.CommittedEvents.Select(m => m.Body as IEvent).Where(m => m.Version > LeatestSnapshotVersion).ToList();
 
-            BaseMemento leatestSnapshot = _storage.Advanced.GetSnapshot(id, int.MaxValue)?.Payload as BaseMemento;
-
-            using IEventStream stream = _storage.OpenStream(id);
-            int leatestSnapshotVersion = leatestSnapshot is null ? -1 : leatestSnapshot.Version;
-            System.Collections.Generic.List<BaseEvent> events = stream.CommittedEvents.Select(m => m.Body as BaseEvent).Where(m => m.Version > leatestSnapshotVersion).ToList();
-
-            TAggregate obj = new TAggregate();
-            if (leatestSnapshot != null)
-            {
-                ((IOriginator)obj).SetMemento(leatestSnapshot);
-            }
-
-            obj.LoadsFromHistory(events);
-            return obj;
         }
 
-        public async Task SaveAsync(TAggregate aggregate, int expectedVersion, Guid correlationId)
+        protected override BaseMemento GetLatestSnapshot(Guid AggregateId)
         {
-            System.Collections.Generic.IEnumerable<BaseEvent> uncommitedEvents = aggregate.GetUncommittedChanges();
-            if (uncommitedEvents.Any())
+            return _storage.Advanced.GetSnapshot(AggregateId, int.MaxValue)?.Payload as BaseMemento;
+        }
+
+        protected override Task SaveAndPublishEvents(TAggregate Aggregate, IEnumerable<IEvent> UncommitedEvents, Guid CorrelationId)
+        {
+            var version = Aggregate.Version;
+
+            using IEventStream stream = _storage.OpenStream(Aggregate.AggregateId);
+            foreach (IEvent @event in UncommitedEvents)
             {
-                // TODO: Specyfi lock system in async
-                // lock (_lockStorage)
-                if (expectedVersion != DomainConstants.NewAggregateVersion)
+                version++;
+                if (version > 2 && version % 3 == 0)
                 {
-                    TAggregate item = GetById(aggregate.AggregateId); // ???
-                    if (item.Version != expectedVersion)
-                    {
-                        throw new AggregateConcurrencyException($"Aggregate {item.AggregateId} has been previously modified");
-                    }
+
+                    BaseMemento memento = Aggregate.GetMemento();
+
+                    _storage.Advanced.AddSnapshot(new Snapshot(stream.StreamId, version, memento));
                 }
-
-                int version = aggregate.Version;
-
-                using (IEventStream stream = _storage.OpenStream(aggregate.AggregateId))
-                {
-                    foreach (BaseEvent @event in uncommitedEvents)
-                    {
-                        version++;
-                        if (version > 2 && version % 3 == 0)
-                        {
-                            IOriginator originator = (IOriginator)aggregate;
-                            BaseMemento memento = originator.GetMemento();
-
-                            _storage.Advanced.AddSnapshot(new Snapshot(stream.StreamId, version, memento));
-                        }
-                        @event.Version = version;
-                        stream.Add(new EventMessage() { Body = @event });
-                    }
-                    stream.CommitChanges(Guid.NewGuid());
-                }
-
-                foreach (BaseEvent @event in uncommitedEvents)
-                {
-                    dynamic desEvent = (dynamic)Convert.ChangeType(@event, @event.GetType());
-                    await _busClient.PublishAsync(desEvent, correlationId);
-                }
+                @event.Version = version;
+                @event.CorrelationId = CorrelationId;
+                stream.Add(new EventMessage() { Body = @event });
+                _publishEndpoint.Publish(@event, @event.GetType());
             }
+            stream.CommitChanges(Guid.NewGuid());
+
+            return Task.CompletedTask;
         }
     }
 }
