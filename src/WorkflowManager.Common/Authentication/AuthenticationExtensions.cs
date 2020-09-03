@@ -29,7 +29,7 @@ namespace WorkflowManager.Common.Authentication
                    configuration.RequireHttpsMetadata = false;
                    configuration.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                    {
-                       ValidateAudience = true,
+                       ValidateAudience = false, //TODO: CHECK WHY TOKEN NOT CONTAINS "AUD" CLAIM
                        ValidAudience = identityAudience,
                        ValidateIssuer = true,
                        ValidIssuer = IssuerUrl

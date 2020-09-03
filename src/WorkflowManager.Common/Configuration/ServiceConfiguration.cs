@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Configuration;
 using WorkflowManager.Common.Configuration;
 using WorkflowManager.Common.Swagger;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkflowManager.Common.ApplicationInitializer
 {
@@ -103,6 +104,21 @@ namespace WorkflowManager.Common.ApplicationInitializer
                     endpoints.MapDefaultControllerRoute();
                 }
             });
+
+        }
+
+        public static void InjectCommonServices(IServiceCollection services, bool isApi = true)
+        {
+            var versionControlerAssembly = typeof(Controllers.VersionController).Assembly;
+
+            if (isApi)
+            {
+                services.AddControllers().AddApplicationPart(versionControlerAssembly);
+            }
+            else
+            {
+                services.AddMvc().AddApplicationPart(versionControlerAssembly);
+            }
         }
     }
 }

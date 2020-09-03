@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 COPY ["src/Services/IdentityService/WorkflowManager.IdentityService.API/WorkflowManager.IdentityService.API.csproj", "src/Services/IdentityService/WorkflowManager.IdentityService.API/"]
 COPY ["src/WorkflowManager.Common/WorkflowManager.Common.csproj", "src/WorkflowManager.Common/"]
 COPY ["src/WorkflowManager.CQRS/WorkflowManager.CQRS.csproj", "src/WorkflowManager.CQRS/"]

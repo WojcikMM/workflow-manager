@@ -7,7 +7,7 @@ services:
     hostname: "rabbitmq"
     ports:
       - "15672:15672"
-      - "5652:5672"
+      - "5672:5672"
     labels:
       NAME: "rabbitmq"
 
@@ -37,21 +37,22 @@ services:
 
 
   # API GATEWAY (PORT: 8000)
-  #workflowmanager.gateway.api:
-  #  image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
-  #  build:
-  #    context: src/Services/GatewayService/WorkflowManager.OcelotGatewayService.API
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - "8000:80"
-  #  environment:
-  #    ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
-  #  depends_on:
-  #    - workflowmanager.processesservice.api
-  #    - workflowmanager.statusesservice.api
-  #    - workflowmanager.operationsservice.api
-  #    - workflowmanager.identityservice.api
-  #  restart: on-failure
+  workflowmanager.gateway.api:
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
+    build:
+      context: src/Services/GatewayService/WorkflowManager.OcelotGatewayService.API
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
+      ASPNETCORE_URLS: "http://*:80"
+    depends_on:
+      - workflowmanager.processesservice.api
+      - workflowmanager.statusesservice.api
+      - workflowmanager.operationsservice.api
+      - workflowmanager.identityservice.api
+    restart: on-failure
 
 
   # PROCESS SERVICE (PORT: 8001)
