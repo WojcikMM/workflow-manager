@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["src/Services/OperationsService/WorkflowManager.OperationsService.API/WorkflowManager.OperationsService.API.csproj", "src/Services/OperationsService/WorkflowManager.OperationsService.API/"]
 COPY ["src/WorkflowManager.Common/WorkflowManager.Common.csproj", "src/WorkflowManager.Common/"]
@@ -11,7 +11,7 @@ RUN dotnet build "WorkflowManager.OperationsService.API.csproj" -c Release -o /a
 FROM build AS publish
 RUN dotnet publish "WorkflowManager.OperationsService.API.csproj" -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
 WORKDIR /app
 COPY --from=publish /app/publish .
 EXPOSE 80

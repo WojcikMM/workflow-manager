@@ -13,7 +13,7 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "WorkflowManager.IdentityService.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
 WORKDIR /app
 COPY --from=publish /app/publish .
 ADD vsdbg-linux-x64.tar.gz /vsdbg

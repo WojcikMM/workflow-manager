@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 COPY ["src/Services/ProcessesService/WorkflowManager.ProcessesService.API/WorkflowManager.ProcessesService.API.csproj", "src/Services/ProcessesService/WorkflowManager.ProcessesService.API/"]
 COPY ["src/Services/ProcessesService/WorkflowManager.ProcessesService.Core/WorkflowManager.ProcessesService.Core.csproj", "src/Services/ProcessesService/WorkflowManager.ProcessesService.Core/"]
 COPY ["src/Services/ProcessesService/WorkflowManager.ProcessesService.ReadModel/WorkflowManager.ProcessesService.ReadModel.csproj", "src/Services/ProcessesService/WorkflowManager.ProcessesService.ReadModel/"]
@@ -15,7 +15,7 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "WorkflowManager.ProcessesService.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
 WORKDIR /app
 COPY --from=publish /app/publish .
 ADD vsdbg-linux-x64.tar.gz /vsdbg

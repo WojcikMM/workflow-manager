@@ -44,6 +44,7 @@ namespace WorkflowManager.Common.MassTransit
                 //    MessageType = t.GetInterfaces().First().GetGenericArguments().First()
                 //})
                 //.ToList();
+                
 
                 consumerAssemblyTypes.ForEach(assembly =>
                 {
@@ -69,7 +70,7 @@ namespace WorkflowManager.Common.MassTransit
 
         }
 
-        private static void CreateConfigForAzureServiceBus(IServiceCollection services, IServiceCollectionConfigurator config, List<ConsumerAssemblyTypeModel> consumerAssemblyTypes)
+        private static void CreateConfigForAzureServiceBus(IServiceCollection services, IServiceCollectionBusConfigurator config, List<ConsumerAssemblyTypeModel> consumerAssemblyTypes)
         {
             config.AddBus(provider => Bus.Factory.CreateUsingAzureServiceBus(busFactoryConfig =>
             {
@@ -105,7 +106,7 @@ namespace WorkflowManager.Common.MassTransit
                                     assembly.ConsumerTypes.ForEach(consumerType =>
                                     {
                                         registerConsumerMethod.MakeGenericMethod(consumerType)
-                                        .Invoke(null, new object[] { consumerConfig, provider.Container, null });
+                                        .Invoke(null, new object[] { consumerConfig, null });
                                     });
                                 })
                     });
@@ -113,7 +114,7 @@ namespace WorkflowManager.Common.MassTransit
             }));
         }
 
-        private static void CreateConfigForRabbitMq(IServiceCollection services, IServiceCollectionConfigurator configurator, List<ConsumerAssemblyTypeModel> consumerAssemblyTypes)
+        private static void CreateConfigForRabbitMq(IServiceCollection services, IServiceCollectionBusConfigurator configurator, List<ConsumerAssemblyTypeModel> consumerAssemblyTypes)
         {
             configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(busFactoryConfig =>
             {
@@ -136,11 +137,14 @@ namespace WorkflowManager.Common.MassTransit
              {
                  busFactoryConfig.ReceiveEndpoint(assemblyType.MessageType.Name, cfg =>
                   {
-                      var registerConsumerMethod = typeof(DependencyInjectionReceiveEndpointExtensions)
-                                     .GetMethods()
-                                     .Where(m => m.IsGenericMethod && m.GetGenericArguments().Length == 1)
-                                     .First();
-                      registerConsumerMethod.MakeGenericMethod(assemblyType.ConsumerType).Invoke(null, new object[] { cfg, provider.Container, null });
+                      
+                      cfg.Consumer(assemblyType.ConsumerType, (Type type) => provider.GetService(type));
+                      //cfg.Consumer()
+                      //var registerConsumerMethod = typeof(ConsumerExtensions)
+                      //               .GetMethods()
+                      //               .Where(m => m.IsGenericMethod && m.GetGenericArguments().Length == 1 && m.GetParameters().Length == 2)
+                      //               .First();
+                      //registerConsumerMethod.MakeGenericMethod(assemblyType.ConsumerType).Invoke(null, new object[] { cfg,  null });
                   });
              });
             }));
