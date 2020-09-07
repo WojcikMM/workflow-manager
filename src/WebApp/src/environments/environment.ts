@@ -16,7 +16,7 @@ const authConfig: AuthConfig = {
 export const environment = {
   production: false,
   services: {
-    processes: 'https://localhost:8001/api/v1/processes'
+    processes: 'http://localhost:8000/api/processes/processes'
   },
   authentication: authConfig,
   sidebarMenu: [

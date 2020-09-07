@@ -18,11 +18,7 @@ export class ProcessesClientService {
   }
 
   getProcesses(): Observable<ProcessDto[]> {
-    return this._httpClient.get<any>(this.baseUrl)
-      .pipe(catchError(err => {
-        console.log(err);
-        return throwError(err);
-      }));
+    return this._httpClient.get<any>(this.baseUrl);
   }
 
   getProcessById(id: string) {

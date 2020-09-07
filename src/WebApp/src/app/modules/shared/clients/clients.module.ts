@@ -14,7 +14,8 @@ import {OAuthModule} from 'angular-oauth2-oidc';
       {resourceServer: {
           sendAccessToken: true,
           allowedUrls: [
-            'https://workflow-manager'
+            'https://workflow-manager',
+            'http://localhost'
           ]
         }}
     ),

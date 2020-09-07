@@ -1,12 +1,11 @@
-﻿using IdentityServer4;
-using IdentityServerAspNetIdentity.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using IdentityServerAspNetIdentity.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using WorkflowManager.Common.ApplicationInitializer;
 using WorkflowManager.Common.Authentication;
+using WorkflowManager.Common.Configuration;
 using WorkflowManager.Common.ReadModelStore;
 using WorkflowManager.Common.Swagger;
 using WorkflowManager.IdentityService.API.Services;
@@ -18,14 +17,7 @@ namespace IdentityServerAspNetIdentity
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder => builder
-                .WithOrigins("http://localhost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-            });
+            services.AddCorsAbility();
             ServiceConfiguration.InjectCommonServices(services, false);
             services.AddClientAuthentication();
             services.AddReadModelStore<ApplicationDbContext>("MsSqlDatabase");
@@ -58,7 +50,6 @@ namespace IdentityServerAspNetIdentity
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCookiePolicy();
-            app.UseCors("CorsPolicy");
             ServiceConfiguration.InjectCommonMiddlewares(app, env);
             app.UseStaticFiles();
             app.UseIdentityServer();
