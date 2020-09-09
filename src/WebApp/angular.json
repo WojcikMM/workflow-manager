@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "newProjectRoot": "",
   "projects": {
     "workflow-manager-frontend": {
       "projectType": "application",
@@ -10,26 +10,26 @@
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/workflow-manager-frontend",
+      "sourceRoot": "apps/workflow-manager-frontend/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/workflow-manager-frontend",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/apps/workflow-manager-frontend",
+            "index": "apps/workflow-manager-frontend/src/index.html",
+            "main": "apps/workflow-manager-frontend/src/main.ts",
+            "polyfills": "apps/workflow-manager-frontend/src/polyfills.ts",
+            "tsConfig": "apps/workflow-manager-frontend/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "apps/workflow-manager-frontend/src/favicon.ico",
+              "apps/workflow-manager-frontend/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "apps/workflow-manager-frontend/src/styles.scss"
             ],
             "scripts": []
           },
@@ -37,8 +37,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "apps/workflow-manager-frontend/src/environments/environment.ts",
+                  "with": "apps/workflow-manager-frontend/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -82,19 +82,17 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@nrwl/jest:jest",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "jestConfig": "apps/myapp/jest.config.js",
+            "tsConfig": "apps/workflow-manager-frontend/tsconfig.spec.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "apps/workflow-manager-frontend/src/favicon.ico",
+              "apps/workflow-manager-frontend/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "apps/workflow-manager-frontend/src/styles.scss"
             ],
             "scripts": []
           }
@@ -103,8 +101,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json"
+              "apps/workflow-manager-frontend/tsconfig.app.json",
+              "apps/workflow-manager-frontend/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

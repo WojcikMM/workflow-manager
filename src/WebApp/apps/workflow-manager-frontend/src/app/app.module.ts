@@ -8,7 +8,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutComponent} from './layout/layout.component';
 import {ToolbarComponent} from './layout/toolbar/toolbar.component';
 import {SidebarComponent} from './layout/sidebar/sidebar.component';
-import {environment} from '../environments/environment';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
