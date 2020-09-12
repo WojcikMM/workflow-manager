@@ -18,14 +18,16 @@
         <div>Name</div>
         <div>{{processViewModel.name}}</div>
       </div>
-      <div>
-        <div>Created at</div>
-        <div>{{processViewModel.createdAt}}</div>
-      </div>
-      <div>
-        <div>Last updated at:</div>
-        <div>{{processViewModel.updatedAt}}</div>
-      </div>
+      <ng-container *ngIf="processViewModel.id">
+        <div>
+          <div>Created at</div>
+          <div>{{processViewModel.createdAt}}</div>
+        </div>
+        <div>
+          <div>Last updated at:</div>
+          <div>{{processViewModel.updatedAt}}</div>
+        </div>
+      </ng-container>
     </mat-step>
   </mat-vertical-stepper>
 </div>
