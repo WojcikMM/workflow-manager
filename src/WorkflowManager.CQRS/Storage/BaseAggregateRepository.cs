@@ -19,6 +19,12 @@ namespace WorkflowManager.CQRS.Storage
         protected abstract Task SaveAndPublishEvents(TAggregate Aggregate, IEnumerable<IEvent> UncommitedEvents, Guid CorrelationId);
 
 
+        public bool Any(Guid id)
+        {
+            return GetEventsById(id, DomainConstants.NewAggregateVersion).Any();
+        }
+
+
         public TAggregate GetById(Guid AggregateId)
         {
 

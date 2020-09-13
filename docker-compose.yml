@@ -32,8 +32,8 @@ services:
      SA_PASSWORD: "${DB_PASSWORD}"
      ACCEPT_EULA: "Y"
    ports:
-     - "1443:1433"
-     - "1444:1434"
+     - "1433:1433"
+     - "1434:1434"
 
 
   # API GATEWAY (PORT: 8000)
@@ -48,19 +48,17 @@ services:
       ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
       ASPNETCORE_URLS: "http://*:80"
     depends_on:
-      - workflowmanager.processesservice.api
-      - workflowmanager.statusesservice.api
+      - workflowmanager.configurationservice.api
       - workflowmanager.operationsservice.api
       - workflowmanager.identityservice.api
     restart: on-failure
 
-
-  # PROCESS SERVICE (PORT: 8001)
-  workflowmanager.processesservice.api:
-    image: "${DOCKER_HUB_LOGIN}/workflow-manager-process-service-api"
+  # CONFIGURATION SERVICE (PORT: 8001)
+  workflowmanager.configurationservice.api:
+    image: "${DOCKER_HUB_LOGIN}/workflow-manager-configuration-service-api"
     build:
       context: .
-      dockerfile: src/Services/ProcessesService/WorkflowManager.ProcessesService.API/Dockerfile
+      dockerfile: src/Services/ConfigurationService/WorkflowManager.ConfigurationService.API/Dockerfile
     ports:
       - "8001:80"
     environment:
@@ -68,55 +66,27 @@ services:
       ASPNETCORE_URLS: "http://*:80"
     depends_on:
       - workflowmanager.rabbitmq
-      - workflowmanager.processesservice.db
+      - workflowmanager.configurationservice.db
     restart: on-failure
 
-  workflowmanager.processesservice.db:
+  workflowmanager.configurationservice.db:
     image: "microsoft/mssql-server-linux"
     environment:
       SA_PASSWORD: "${DB_PASSWORD}"
       ACCEPT_EULA: "Y"
     ports:
-      - "1453:1433"
-      - "1454:1434"
+      - "1443:1433"
+      - "1444:1434"
 
 
-  #STATUS SERVICE (PORT: 8002)
-  workflowmanager.statusesservice.api:
-    image: "${DOCKER_HUB_LOGIN}/workflow-manager-status-service-api"
-    build:
-      context: .
-      dockerfile: src/Services/StatusesService/WorkflowManager.StatusesService.API/Dockerfile
-      args:
-        rabbit_port: 5672
-    ports:
-      - "8002:80"
-    environment:
-      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
-      ASPNETCORE_URLS: "http://*:80"
-    depends_on:
-      - workflowmanager.rabbitmq
-      - workflowmanager.statusesservice.db
-    restart: on-failure
-
-  workflowmanager.statusesservice.db:
-    image: "microsoft/mssql-server-linux"
-    environment:
-      SA_PASSWORD: "${DB_PASSWORD}"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1463:1433"
-      - "1464:1434"
-
-
-  # OPERATIONS SERVICE(PORT: 8003)
+  # OPERATIONS SERVICE(PORT: 8002)
   workflowmanager.operationsservice.api:
     image: "${DOCKER_HUB_LOGIN}/workflow-manager-operations-service-api"
     build:
       context: .
       dockerfile: src/Services/OperationsService/WorkflowManager.OperationsService.API/Dockerfile
     ports:
-      - "8003:80"
+      - "8002:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
       ASPNETCORE_URLS: "http://*:80"

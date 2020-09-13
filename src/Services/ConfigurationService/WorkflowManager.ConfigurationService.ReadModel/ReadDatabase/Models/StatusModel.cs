@@ -1,0 +1,20 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using WorkflowManager.CQRS.ReadModel;
+
+namespace WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models
+{
+    public class StatusModel : IReadModel
+    {
+        [Column("StatusId")]
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public int Version { get; set; }
+
+        public Guid ProcessId { get; set; }
+        public ProcessModel Process { get; set; }
+    }
+}

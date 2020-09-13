@@ -26,7 +26,7 @@ namespace WorkflowManager.Common.Messages
                 throw new ArgumentNullException(nameof(context.Message), "Passed command value is null.");
             }
 
-            HandleCommand(context.Message);
+            HandleCommand(context.Message, context);
 
             if (aggregate is null)
             {
@@ -38,6 +38,6 @@ namespace WorkflowManager.Common.Messages
             await Task.CompletedTask;
         }
 
-        public abstract void HandleCommand(TCommand command);
+        public abstract void HandleCommand(TCommand command, ConsumeContext<TCommand> context);
     }
 }

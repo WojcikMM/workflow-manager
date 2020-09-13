@@ -20,11 +20,18 @@ namespace IdentityServerAspNetIdentity.Data
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole()
                 {
-                    Id = new Guid("ff16184b-ded6-47c5-87eb-9f8078c53762").ToString(),
+                    Id = new Guid("00000000-0000-0000-0000-000000000001").ToString(),
                     Name = "processes_manager",
                     NormalizedName = "PROCESSES_MANAGER",
                     ConcurrencyStamp = Guid.NewGuid().ToString()
-                }
+                },
+                  new IdentityRole()
+                  {
+                      Id = new Guid("00000000-0000-0000-0000-000000000002").ToString(),
+                      Name = "statuses_manager",
+                      NormalizedName = "STATUSES_MANAGER",
+                      ConcurrencyStamp = Guid.NewGuid().ToString()
+                  }
                 );
 
             builder.Entity<IdentityUser>().HasData(
@@ -45,7 +52,12 @@ namespace IdentityServerAspNetIdentity.Data
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>()
                 {
-                    RoleId = new Guid("ff16184b-ded6-47c5-87eb-9f8078c53762").ToString(),
+                    RoleId = new Guid("00000000-0000-0000-0000-000000000001").ToString(),
+                    UserId = new Guid("0f732d1f-def8-4d72-82a3-d5609fd4ea5e").ToString()
+                },
+                new IdentityUserRole<string>()
+                {
+                    RoleId = new Guid("00000000-0000-0000-0000-000000000002").ToString(),
                     UserId = new Guid("0f732d1f-def8-4d72-82a3-d5609fd4ea5e").ToString()
                 }
                 );

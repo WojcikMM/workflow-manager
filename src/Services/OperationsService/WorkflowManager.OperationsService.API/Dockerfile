@@ -14,5 +14,6 @@ RUN dotnet publish "WorkflowManager.OperationsService.API.csproj" -c Release -o 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
 WORKDIR /app
 COPY --from=publish /app/publish .
+ADD vsdbg-linux-x64.tar.gz /vsdbg
 EXPOSE 80
 ENTRYPOINT ["dotnet", "WorkflowManager.OperationsService.API.dll"]
