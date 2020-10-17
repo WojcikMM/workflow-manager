@@ -1,24 +1,24 @@
-import {AuthConfig} from 'angular-oauth2-oidc';
-
-// noinspection SpellCheckingInspection
-const authConfig: AuthConfig = {
-  issuer: 'http://localhost:5000',
-  requireHttps: false,
-  redirectUri: `${window.location.origin}`,
-  silentRefreshRedirectUri: `${window.location.origin}/silent-refresh.html`,
-  clientId: 'spa',
-  scope: 'openid profile Processes_Service',
-  responseType: 'code',
-  useSilentRefresh: false
-};
-
-
 export const environment = {
   production: false,
   services: {
     processes: 'http://localhost:8000/api/processes/processes'
   },
-  authentication: authConfig,
+  authentication: {
+    authority: 'http://localhost:5000',
+    client_id: 'spa',
+    redirect_uri: `${window.location.origin}/callback.html`,
+    post_logout_redirect_uri: `${window.location.origin}/signout-callback.html`,
+    response_type: 'code',
+    scope: 'openid profile Configuration_Service',
+
+    silent_redirect_uri: `${window.location.origin}/renew-callback.html`,
+    // automaticSilentRenew: true,
+    // accessTokenExpiringNotificationTime: 4,
+    silentRequestTimeout: 1,
+
+    // filterProtocolClaims: true,
+    // loadUserInfo: true
+  },
   sidebarMenu: [
     {
       label: 'Case Handling',

@@ -1,34 +1,25 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
-import {OAuthService} from 'angular-oauth2-oidc';
-import {JwksValidationHandler} from 'angular-oauth2-oidc-jwks';
-import {environment} from '../../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private readonly _oauthService: OAuthService,
-              private readonly _router: Router) {
-    this._oauthService.configure(environment.authentication);
-    this._oauthService.tokenValidationHandler = new JwksValidationHandler();
+  constructor(private readonly _oauthService: AuthService) {
   }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this._oauthService.loadDiscoveryDocumentAndLogin()
-      .then(result => {
-        return result || this._oauthService.tryLoginImplicitFlow();
-      }).catch(() => {
-        return this._redirectToServiceUnavailable();
-      });
-  }
-
-  private _redirectToServiceUnavailable() {
-    return this._router.createUrlTree(['/unauthorized']);
+  canActivate(): Observable<boolean> {
+    return this._oauthService.isLoggedIn$.pipe(
+      tap(result => {
+        if (!result) {
+          this._oauthService.login();
+        }
+      })
+    );
   }
 
 }

@@ -58,7 +58,8 @@ namespace IdentityServerAspNetIdentity
                     RequirePkce = true,
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:4200"
+                        "http://localhost:4200",
+                        "http://localhost:4200/callback.html"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {

@@ -25,7 +25,17 @@
             "aot": true,
             "assets": [
               "apps/workflow-manager-frontend/src/favicon.ico",
-              "apps/workflow-manager-frontend/src/assets"
+              "apps/workflow-manager-frontend/src/assets",
+              {
+                "glob": "**/*",
+                "input": "apps/workflow-manager-frontend/src/static",
+                "output": "/"
+              },
+              {
+                "glob": "oidc-client.min.js",
+                "input": "node_modules/oidc-client/dist",
+                "output": "/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -88,7 +98,17 @@
             "tsConfig": "apps/workflow-manager-frontend/tsconfig.spec.json",
             "assets": [
               "apps/workflow-manager-frontend/src/favicon.ico",
-              "apps/workflow-manager-frontend/src/assets"
+              "apps/workflow-manager-frontend/src/assets",
+              {
+                "glob": "**/*",
+                "input": "apps/workflow-manager-frontend/src/static",
+                "output": "/"
+              },
+              {
+                "glob": "oidc-client.min.js",
+                "input": "node_modules/oidc-client/dist",
+                "output": "/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
