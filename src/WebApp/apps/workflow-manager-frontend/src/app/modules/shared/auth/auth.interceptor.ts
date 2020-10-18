@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {from, Observable} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from '../../../../environments/environment';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -12,16 +13,20 @@ export class AuthInterceptor implements HttpInterceptor {
 
   // TODO: fix interceptor
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request);
-    // const refreshTokenReq = this._oauthService.hasValidAccessToken() ?
-    //   Promise.resolve(this._oauthService.getAccessToken()) :
-    //   this._oauthService.refreshToken().then(res => res.access_token);
-    //
-    // return from(refreshTokenReq)
-    //   .pipe(switchMap(token => {
-    //     const req = this._addAuthorizationHeader(request, token);
-    //     return next.handle(req);
-    //   }));
+
+    if (this._isInternalCall(request.url)) {
+      return this._oauthService.getToken$.pipe(
+        map(token => token ? this._addAuthorizationHeader(request, token) : request),
+        mergeMap(req => {
+          return next.handle(req);
+        })
+      );
+    }
+  }
+
+
+  private _isInternalCall(url: string) {
+    return Object.values(environment.services).some(serviceBaseUrl => url.includes(serviceBaseUrl));
   }
 
 

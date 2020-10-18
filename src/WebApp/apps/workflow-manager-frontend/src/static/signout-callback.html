@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <title>Signout Callback</title>
   <link rel="icon"
         type="image/x-icon"
@@ -15,26 +15,16 @@
 <script>
   var Oidc = window.Oidc;
 
-  var config = {
-    // userStore: new Oidc.WebStorageStateStore({store: window.sessionStorage}),
-    client_id: 'spa',
-    response_type: 'code',
-    authority: 'http://localhost:5000',
-  }
-
   if ((Oidc && Oidc.Log && Oidc.Log.logger)) {
     Oidc.Log.logger = console;
   }
+  new Oidc.UserManager({
+    client_id: 'spa',
+    response_type: 'code',
+  }).signoutRedirectCallback().then(() => {
+    window.location.href = '/';
+  });
 
-  var isPopupCallback = JSON.parse(window.localStorage.getItem('ngoidc:isPopupCallback'));
-
-  if (isPopupCallback) {
-    new Oidc.UserManager(config).signoutPopupCallback();
-  } else {
-    new Oidc.UserManager(config).signoutRedirectCallback().then(test => {
-      window.location.href = '/';
-    });
-  }
 </script>
 </body>
 

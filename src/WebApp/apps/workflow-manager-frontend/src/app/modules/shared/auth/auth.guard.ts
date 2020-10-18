@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     return this._oauthService.isLoggedIn$.pipe(
       tap(result => {
         if (!result) {
-          this._oauthService.login();
+         this._oauthService.login();
         }
       })
     );

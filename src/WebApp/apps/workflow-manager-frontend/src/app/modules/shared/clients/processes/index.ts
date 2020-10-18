@@ -1,4 +1,4 @@
 export * from './processes-client.service';
-export {ProcessDto} from './process.dto';
-export {CreateProcessDto} from './create-process.dto';
-export {UpdateProcessDto} from './update-process.dto';
+export * from './process.dto';
+export * from './create-process.dto';
+export * from './update-process.dto';

@@ -1,7 +1,8 @@
 export const environment = {
   production: false,
   services: {
-    processes: 'http://localhost:8000/api/processes/processes'
+    processes: 'http://localhost:8000/api/configuration',
+    configurationService: 'http://localhost:8000/api/configuration'
   },
   authentication: {
     authority: 'http://localhost:5000',
@@ -10,14 +11,10 @@ export const environment = {
     post_logout_redirect_uri: `${window.location.origin}/signout-callback.html`,
     response_type: 'code',
     scope: 'openid profile Configuration_Service',
-
     silent_redirect_uri: `${window.location.origin}/renew-callback.html`,
-    // automaticSilentRenew: true,
-    // accessTokenExpiringNotificationTime: 4,
-    silentRequestTimeout: 1,
-
-    // filterProtocolClaims: true,
-    // loadUserInfo: true
+    automaticSilentRenew: false,
+    monitorSession: false,
+    loadUserInfo: true
   },
   sidebarMenu: [
     {

@@ -50,8 +50,8 @@ namespace IdentityServerAspNetIdentity
                 {
                     ClientId = "spa",
                     ClientName = "SPA Code Client",
-                    AccessTokenLifetime = 330,
-                    IdentityTokenLifetime = 60,
+                    //AccessTokenLifetime = 330,
+                    //IdentityTokenLifetime = 60,
 
                     RequireClientSecret = false,
                     AllowedGrantTypes = GrantTypes.Code,

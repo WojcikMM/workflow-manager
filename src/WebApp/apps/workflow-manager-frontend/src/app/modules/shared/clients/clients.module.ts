@@ -1,29 +1,20 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {ProcessesClientService} from './processes';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ProcessesClientService } from './processes';
+import { AuthInterceptor } from '../auth';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule,
-    // OAuthModule.forRoot(
-    //   {resourceServer: {
-    //       sendAccessToken: true,
-    //       allowedUrls: [
-    //         'https://workflow-manager',
-    //         'http://localhost'
-    //       ]
-    //     }}
-    // ),
-  ],
-  exports: [
     HttpClientModule
   ],
+  exports: [],
   providers: [
-    ProcessesClientService
+    ProcessesClientService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ]
 
 })

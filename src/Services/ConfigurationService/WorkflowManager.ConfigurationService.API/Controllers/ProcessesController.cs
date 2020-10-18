@@ -14,6 +14,7 @@ using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models;
 
 namespace WorkflowManager.ConfigurationService.API.Controllers
 {
+    [Authorize]
     public class ProcessesController : BaseWithPublisherController
     {
         private readonly IReadModelRepository<ProcessModel> _readModelRepository;

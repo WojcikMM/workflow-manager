@@ -1,20 +1,19 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../../environments/environment';
-import {Observable, throwError} from 'rxjs';
-import {ProcessDto} from './process.dto';
-import {CreateProcessDto} from './create-process.dto';
-import {UpdateProcessDto} from './update-process.dto';
-import {catchError} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { ProcessDto } from './process.dto';
+import { CreateProcessDto } from './create-process.dto';
+import { UpdateProcessDto } from './update-process.dto';
+import { BaseClientService } from '../base';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProcessesClientService {
+export class ProcessesClientService extends BaseClientService {
 
-  private readonly baseUrl = environment.services.processes;
-
-  constructor(private readonly _httpClient: HttpClient) {
+  constructor(httpClient: HttpClient) {
+    super(httpClient, environment.services.configurationService, 'processes');
   }
 
   getProcesses(): Observable<ProcessDto[]> {
