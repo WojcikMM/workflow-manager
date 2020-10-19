@@ -3,7 +3,7 @@ import { User, UserManager } from 'oidc-client';
 import { environment } from '../../../../environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +14,18 @@ export class AuthService {
   userLoadedEvent: Subject<User> = new Subject<User>();
 
   constructor() {
-    this.manager.events.addAccessTokenExpiring(x => {
-      console.log('WARNING! ACCESS TOKEN WILL EXPIRE IN SOME TIME', x);
+    this.manager.events.addAccessTokenExpiring(() => {
+      this.renewToken();
+      console.log(`WARNING! ACCESS TOKEN WILL EXPIRE IN ${this.manager.settings.accessTokenExpiringNotificationTime} SECONDS.`);
     });
 
     this.manager.events.addSilentRenewError(x => {
       console.log('SILENT RENEW ERROR', x);
     });
 
-    this.manager.events.addAccessTokenExpired(x => {
-      console.log('WARNING ACCESS TOKEN HAS EXPIRED', x);
+    this.manager.events.addAccessTokenExpired(() => {
+      this.renewToken();
+      console.log('WARNING ACCESS TOKEN HAS EXPIRED');
     });
   }
 
@@ -40,13 +42,7 @@ export class AuthService {
   }
 
   get getUserInfo$(): Observable<User> {
-    return fromPromise(this.manager.getUser()).pipe(
-      tap(x => {
-        if (x) {
-          console.log('Expires in', x.expires_in);
-        }
-      })
-    );
+    return fromPromise(this.manager.getUser());
   }
 
   login(): void {
@@ -59,5 +55,13 @@ export class AuthService {
     this.manager.signoutRedirect().catch(e => {
       console.log('Cannot logout redirect. Cause:', e);
     });
+  }
+
+  renewToken(): void {
+    this.manager.signinSilent().catch(err => this._logError('CANNOT RENEW TOKEN. CAUSE:', err));
+  }
+
+  private _logError(message: string, e: unknown) {
+    console.log(message, e);
   }
 }
