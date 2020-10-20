@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../apps/workflow-manager-frontend/src/environments/environment';
 import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable()
@@ -11,7 +11,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private readonly _oauthService: AuthService) {
   }
 
-  // TODO: fix interceptor
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     if (this._isInternalCall(request.url)) {

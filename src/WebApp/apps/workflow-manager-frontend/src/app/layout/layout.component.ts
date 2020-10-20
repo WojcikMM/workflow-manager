@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {AbilitiesService} from '../modules/shared';
+import {AbilitiesService} from '@workflow-manager-frontend/shared';
 
 @Component({
   selector: 'app-layout',

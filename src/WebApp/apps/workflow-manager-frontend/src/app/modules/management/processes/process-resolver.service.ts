@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {ProcessViewModel} from './process.view-model';
 import {Observable} from 'rxjs';
-import {ProcessesClientService} from '@workflow-manager/shared';
+import {ProcessesClientService} from '@workflow-manager-frontend/shared';
 import {map} from 'rxjs/operators';
 
 @Injectable()

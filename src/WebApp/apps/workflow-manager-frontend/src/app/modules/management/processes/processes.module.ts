@@ -5,7 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ProcessEditFormComponent} from './process-edit-form/process-edit-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProcessesService} from './processes.service';
-import {SharedModule} from '../../shared';
+import {SharedModule} from '@workflow-manager-frontend/shared';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -16,7 +16,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import {PROCESS_EDIT_FORM_CONST} from './process-edit-form/process-edit-form.const';
-import {MatListModule} from '@angular/material/list';
 import {ProcessResolverService} from './process-resolver.service';
 import {MatStepperModule} from '@angular/material/stepper';
 

@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {StatusesService} from '../statuses.service';
-import {AbilitiesService, SimpleDialogComponent, SimpleDialogData} from '../../../shared';
+import {AbilitiesService, SimpleDialogComponent, SimpleDialogData} from '@workflow-manager-frontend/shared';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
-import {ProcessDto, ProcessesClientService} from '@workflow-manager/shared';
+import {ProcessDto, ProcessesClientService} from '@workflow-manager-frontend/shared';
 
 class StatusViewModel {
   $key: string;

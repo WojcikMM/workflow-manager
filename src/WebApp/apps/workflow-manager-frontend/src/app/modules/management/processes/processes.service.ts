@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, throwError} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ProcessDto, ProcessesClientService} from '@workflow-manager/shared';
+import {ProcessDto, ProcessesClientService} from '@workflow-manager-frontend/shared';
 import {catchError, tap} from 'rxjs/operators';
 
 @Injectable()

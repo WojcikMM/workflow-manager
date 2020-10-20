@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProcessDto} from '@workflow-manager/shared';
+import {ProcessDto} from '@workflow-manager-frontend/shared';
 
 class StatusViewModel {
   $key: string;

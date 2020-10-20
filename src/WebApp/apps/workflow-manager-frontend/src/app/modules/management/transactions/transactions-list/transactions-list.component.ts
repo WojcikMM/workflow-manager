@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {AbilitiesService, SimpleDialogComponent, SimpleDialogData} from '../../../shared';
+import {AbilitiesService, SimpleDialogComponent, SimpleDialogData, ProcessDto, ProcessesClientService} from '@workflow-manager-frontend/shared';
 import {TransactionsService} from '../transactions.service';
 import {StatusesService} from '../../statuses/statuses.service';
-import {ProcessDto, ProcessesClientService} from '@workflow-manager/shared';
 
 class TransactionViewModel {
   $key: string;

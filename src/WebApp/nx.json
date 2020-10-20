@@ -13,6 +13,9 @@
   "projects": {
     "workflow-manager-frontend": {
       "tags": []
+    },
+    "shared": {
+      "tags": []
     }
   }
 }

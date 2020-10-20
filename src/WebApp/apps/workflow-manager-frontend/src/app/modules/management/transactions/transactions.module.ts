@@ -10,7 +10,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {RouterModule, Routes} from '@angular/router';
 import {TransactionsService} from './transactions.service';
-import {SharedModule} from '../../shared';
+import {SharedModule} from '@workflow-manager-frontend/shared';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ProcessesService} from '../processes.service';
 import {MatDialog} from '@angular/material/dialog';
-import {AbilitiesService, ProcessDto, SimpleDialogComponent, SimpleDialogData} from '../../../shared';
+import {AbilitiesService, ProcessDto, SimpleDialogComponent, SimpleDialogData} from '@workflow-manager-frontend/shared';
 
 
 @Component({

@@ -3,7 +3,6 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {SimpleDialogData} from './simple-dialog.data';
 
 @Component({
-  selector: 'app-process-remove-dialog',
   templateUrl: './simple-dialog.component.html'
 })
 export class SimpleDialogComponent {

@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ProcessesService} from '../../processes/processes.service';
-import {switchMap} from 'rxjs/operators';
-import {ProcessDto} from '@workflow-manager/shared';
+import {ProcessDto} from '@workflow-manager-frontend/shared';
 
 class TransactionViewModel {
   $key: string;
@@ -29,7 +28,6 @@ export class TransactionEditFormComponent {
 
   processes$: Observable<ProcessDto[]>;
   statuses$: Observable<StatusViewModel[]>;
-  private processSubject$ = new BehaviorSubject('');
   @Output() submitFormEvent: EventEmitter<TransactionViewModel> = new EventEmitter<TransactionViewModel>();
   @Output() closeFormEvent: EventEmitter<void> = new EventEmitter<void>();
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager } from 'oidc-client';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../apps/workflow-manager-frontend/src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {StatusesListComponent} from './statuses-list/statuses-list.component';
 import {RouterModule, Routes} from '@angular/router';
-import {SharedModule} from '../../shared';
+import {SharedModule} from '@workflow-manager-frontend/shared';
 import {StatusEditFormComponent} from './status-edit-form/status-edit-form.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {StatusesService} from './statuses.service';

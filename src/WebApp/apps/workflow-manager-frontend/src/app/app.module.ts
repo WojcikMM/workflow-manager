@@ -1,22 +1,26 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LayoutComponent} from './layout/layout.component';
-import {ToolbarComponent} from './layout/toolbar/toolbar.component';
-import {SidebarComponent} from './layout/sidebar/sidebar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {SharedModule} from '@workflow-manager/shared';
-import {HttpClientModule} from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutComponent } from './layout/layout.component';
+import { ToolbarComponent } from './layout/toolbar/toolbar.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { SharedModule } from '@workflow-manager-frontend/shared';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     LayoutComponent,
     ToolbarComponent,
     SidebarComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
   ],
   imports: [
     HttpClientModule,
@@ -39,11 +43,24 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     MatSidenavModule,
     MatExpansionModule,
 
-    SharedModule
+    SharedModule,
+
+    StoreModule.forRoot(
+      {},
+      {
+        metaReducers: !environment.production ? [] : [],
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+        },
+      }
+    ),
+
+    EffectsModule.forRoot([]),
+
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [
-  ],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

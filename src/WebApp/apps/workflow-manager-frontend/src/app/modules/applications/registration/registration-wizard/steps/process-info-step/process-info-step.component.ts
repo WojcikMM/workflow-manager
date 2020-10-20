@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {FormControl} from '@angular/forms';
-import {ProcessDto, ProcessesClientService} from '@workflow-manager/shared';
+import {ProcessDto, ProcessesClientService} from '@workflow-manager-frontend/shared';
 
 @Component({
   selector: 'app-process-info-step',

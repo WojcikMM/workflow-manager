@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import { AuthService } from '../../modules/shared/auth/auth.service';
+import {Observable } from 'rxjs';
+import { AuthService } from '@workflow-manager-frontend/shared';
 
 @Component({
   selector: 'app-toolbar',
