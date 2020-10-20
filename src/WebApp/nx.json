@@ -16,6 +16,12 @@
     },
     "shared": {
       "tags": []
+    },
+    "management-products": {
+      "tags": []
+    },
+    "management-core": {
+      "tags": []
     }
   }
 }

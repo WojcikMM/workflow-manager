@@ -17,7 +17,13 @@
       "@workflow-manager/shared": [
         "apps/workflow-manager-frontend/src/app/modules/shared"
       ],
-      "@workflow-manager-frontend/shared": ["libs/shared/src/index.ts"]
+      "@workflow-manager-frontend/shared": ["libs/shared/src/index.ts"],
+      "@workflow-manager-frontend/management/products": [
+        "libs/management/products/src/index.ts"
+      ],
+      "@workflow-manager-frontend/management/core": [
+        "libs/management/core/src/index.ts"
+      ]
     },
     "rootDir": "."
   },

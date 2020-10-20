@@ -164,6 +164,70 @@
           "style": "scss"
         }
       }
+    },
+    "management-products": {
+      "projectType": "library",
+      "root": "libs/management/products",
+      "sourceRoot": "libs/management/products/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/management/products/tsconfig.lib.json",
+              "libs/management/products/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/management/products/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/management/products/jest.config.js",
+            "tsConfig": "libs/management/products/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/management/products/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "management-core": {
+      "projectType": "library",
+      "root": "libs/management/core",
+      "sourceRoot": "libs/management/core/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/management/core/tsconfig.lib.json",
+              "libs/management/core/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/management/core/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/management/core/jest.config.js",
+            "tsConfig": "libs/management/core/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/management/core/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "defaultProject": "workflow-manager-frontend",
