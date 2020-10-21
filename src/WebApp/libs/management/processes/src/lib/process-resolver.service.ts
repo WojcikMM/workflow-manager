@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {ProcessViewModel} from './process.view-model';
 import {Observable} from 'rxjs';
 import {ProcessesClientService} from '@workflow-manager-frontend/shared';
 import {map} from 'rxjs/operators';
+import { ProcessesEntity } from '@workflow-manager-frontend/management/processes';
 
 @Injectable()
-export class ProcessResolverService implements Resolve<ProcessViewModel> {
+export class ProcessResolverService implements Resolve<ProcessesEntity> {
 
   constructor(private readonly _processesClientService: ProcessesClientService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProcessViewModel> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProcessesEntity> {
     const processId = route.paramMap.get('id');
     return this._processesClientService.getProcessById(processId)
       .pipe(map(processDto => {
@@ -21,7 +21,7 @@ export class ProcessResolverService implements Resolve<ProcessViewModel> {
           createdAt: new Date(processDto.createdAt).toLocaleDateString(),
           updatedAt: new Date(processDto.updatedAt).toLocaleDateString(),
           version: processDto.version
-        } as ProcessViewModel;
+        } as ProcessesEntity;
       }));
   }
 }

@@ -18,7 +18,7 @@ const routes: Routes = [
     children: [
       {
         path: 'management',
-        loadChildren: () => import('./modules/management/management.module').then(mod => mod.ManagementModule)
+        loadChildren: () => import('@workflow-manager-frontend/management/core').then(mod => mod.ManagementCoreModule)
       },
       {
         path: 'applications',

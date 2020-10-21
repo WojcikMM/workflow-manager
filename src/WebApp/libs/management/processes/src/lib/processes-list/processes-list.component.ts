@@ -6,7 +6,7 @@ import {AbilitiesService, ProcessDto, SimpleDialogComponent, SimpleDialogData} f
 
 
 @Component({
-  selector: 'app-processes-list',
+  selector: 'management-processes-list',
   templateUrl: './processes-list.component.html',
   styleUrls: ['./processes-list.component.scss']
 })

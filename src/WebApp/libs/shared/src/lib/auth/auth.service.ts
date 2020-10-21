@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager } from 'oidc-client';
-import { environment } from '../../../../../apps/workflow-manager-frontend/src/environments/environment';
+import { environment } from 'apps/workflow-manager-frontend/src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   manager: UserManager = new UserManager(environment.authentication);
   userLoadedEvent: Subject<User> = new Subject<User>();
 
-  constructor() {
+  constructor(private readonly _router: Router) {
     this.manager.events.addAccessTokenExpiring(() => {
       this.renewToken();
       console.log(`WARNING! ACCESS TOKEN WILL EXPIRE IN ${this.manager.settings.accessTokenExpiringNotificationTime} SECONDS.`);
@@ -47,6 +48,7 @@ export class AuthService {
 
   login(): void {
     this.manager.signinRedirect().catch(e => {
+      this._router.navigateByUrl('/unauthorized');
       console.error('Cannot login redirect. Cause:', e);
     });
   }

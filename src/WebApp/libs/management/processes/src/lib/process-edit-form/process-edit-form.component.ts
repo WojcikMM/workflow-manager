@@ -2,12 +2,12 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PROCESS_EDIT_FORM_CONST } from './process-edit-form.const';
-import { ProcessViewModel } from '../process.view-model';
 import { MatVerticalStepper } from '@angular/material/stepper';
 import { Observable } from 'rxjs';
+import { ProcessesEntity } from '../+state/processes';
 
 @Component({
-  selector: 'app-process-edit-form',
+  selector: 'management-processes-edit-form',
   templateUrl: './process-edit-form.component.html',
   styleUrls: ['./process-edit-form.component.scss']
 })
@@ -15,7 +15,7 @@ export class ProcessEditFormComponent implements AfterViewInit {
   public reactForm: FormGroup;
   public formTitle: string;
   public processName$: Observable<string>;
-  public processViewModel: ProcessViewModel;
+  public processViewModel: ProcessesEntity;
   public PROCESS_EDIT_FORM_CONST = PROCESS_EDIT_FORM_CONST;
 
   @ViewChild(MatVerticalStepper)
@@ -23,11 +23,11 @@ export class ProcessEditFormComponent implements AfterViewInit {
 
   constructor(private readonly _formBuilder: FormBuilder,
               route: ActivatedRoute) {
-    this.processViewModel = route.snapshot.data[PROCESS_EDIT_FORM_CONST.RESOLVER_PROP_NAME] || {} as ProcessViewModel;
+    this.processViewModel = route.snapshot.data[PROCESS_EDIT_FORM_CONST.RESOLVER_PROP_NAME] || {} as ProcessesEntity;
     this._setupForm(this.processViewModel);
   }
 
-  private _setupForm(model: ProcessViewModel) {
+  private _setupForm(model: ProcessesEntity) {
     this.formTitle = !!model.id ? 'Edit Process' : 'Add Process';
 
     this.reactForm = this._formBuilder.group({
