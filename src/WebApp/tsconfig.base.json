@@ -24,7 +24,16 @@
       "@workflow-manager-frontend/management/core": [
         "libs/management/core/src/index.ts"
       ],
-      "@workflow-manager-frontend/theme": ["libs/theme/src/index.ts"]
+      "@workflow-manager-frontend/theme": ["libs/theme/src/index.ts"],
+      "@workflow-manager-frontend/states/management/processes": [
+        "libs/states/management/processes/src/index.ts"
+      ],
+      "@workflow-manager-frontend/states/management/statuses": [
+        "libs/states/management/statuses/src/index.ts"
+      ],
+      "@workflow-manager-frontend/states/management/transactions": [
+        "libs/states/management/transactions/src/index.ts"
+      ]
     },
     "rootDir": "."
   },

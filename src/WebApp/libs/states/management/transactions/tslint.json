@@ -1,0 +1,20 @@
+{
+  "extends": "../../../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "workflowManagerFrontend",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "workflow-manager-frontend",
+      "kebab-case"
+    ]
+  },
+  "linterOptions": {
+    "exclude": ["!**/*"]
+  }
+}

@@ -25,6 +25,15 @@
     },
     "theme": {
       "tags": []
+    },
+    "states-management-processes": {
+      "tags": []
+    },
+    "states-management-statuses": {
+      "tags": []
+    },
+    "states-management-transactions": {
+      "tags": []
     }
   }
 }

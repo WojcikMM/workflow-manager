@@ -24,8 +24,9 @@ export const getProcessesError = createSelector(
   (state: State) => state.error
 );
 
-export const getAllProcesses = createSelector(getProcessesState, (state: State) =>
-  selectAll(state)
+export const getAllProcesses = createSelector(
+  getProcessesState,
+  (state: State) => selectAll(state)
 );
 
 export const getProcessesEntities = createSelector(

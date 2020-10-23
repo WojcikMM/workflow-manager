@@ -3,9 +3,9 @@ import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { fetch } from '@nrwl/angular';
 
 import * as ProcessesActions from './processes.actions';
-import { ProcessesClientService } from '@workflow-manager-frontend/shared';
 import { map } from 'rxjs/operators';
-import { ProcessesEntity } from '@workflow-manager-frontend/management/processes';
+import { ProcessesClientService } from '@workflow-manager-frontend/shared';
+import { ProcessesEntity } from './processes.models';
 
 @Injectable()
 export class ProcessesEffects {

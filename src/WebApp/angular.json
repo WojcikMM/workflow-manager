@@ -260,6 +260,111 @@
           "style": "scss"
         }
       }
+    },
+    "states-management-processes": {
+      "projectType": "library",
+      "root": "libs/states/management/processes",
+      "sourceRoot": "libs/states/management/processes/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/states/management/processes/tsconfig.lib.json",
+              "libs/states/management/processes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/states/management/processes/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/states/management/processes/jest.config.js",
+            "tsConfig": "libs/states/management/processes/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/states/management/processes/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "states-management-statuses": {
+      "projectType": "library",
+      "root": "libs/states/management/statuses",
+      "sourceRoot": "libs/states/management/statuses/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/states/management/statuses/tsconfig.lib.json",
+              "libs/states/management/statuses/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/states/management/statuses/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/states/management/statuses/jest.config.js",
+            "tsConfig": "libs/states/management/statuses/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/states/management/statuses/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "states-management-transactions": {
+      "projectType": "library",
+      "root": "libs/states/management/transactions",
+      "sourceRoot": "libs/states/management/transactions/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/states/management/transactions/tsconfig.lib.json",
+              "libs/states/management/transactions/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/states/management/transactions/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/states/management/transactions/jest.config.js",
+            "tsConfig": "libs/states/management/transactions/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/states/management/transactions/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "defaultProject": "workflow-manager-frontend",

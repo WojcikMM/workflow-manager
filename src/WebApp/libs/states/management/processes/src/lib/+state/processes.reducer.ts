@@ -16,7 +16,9 @@ export interface ProcessesPartialState {
   readonly [PROCESSES_FEATURE_KEY]: State;
 }
 
-export const processesAdapter: EntityAdapter<ProcessesEntity> = createEntityAdapter<ProcessesEntity>();
+export const processesAdapter: EntityAdapter<ProcessesEntity> = createEntityAdapter<
+  ProcessesEntity
+>();
 
 export const initialState: State = processesAdapter.getInitialState({
   // set initial required properties
