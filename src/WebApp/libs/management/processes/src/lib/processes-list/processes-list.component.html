@@ -5,13 +5,11 @@
           mat-fab
           color="accent"
           matTooltip="Add Process"
-          [routerLink]="['create']"
-          (click)="onAddProcessClicked()">
+          [routerLink]="['create']">
     <mat-icon>add</mat-icon>
   </button>
 
-  <div class="processes-list__container"
-       [class.processes-list__container--mobile]="isHandset$ | async">
+  <div class="processes-list__container" fxLayout="row" fxLayout.xs="column">
     <div class="processes-list__container__list">
       <mat-card *ngFor="let process of processes$ | async">
         <mat-card-header>

@@ -21,6 +21,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { SharedModule } from '@workflow-manager-frontend/shared';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,9 @@ import { SharedModule } from '@workflow-manager-frontend/shared';
     SharedModule,
 
     StoreModule.forRoot(
-      {},
+      {
+        router: routerReducer
+      },
       {
         metaReducers: !environment.production ? [] : [],
         runtimeChecks: {
@@ -57,6 +60,7 @@ import { SharedModule } from '@workflow-manager-frontend/shared';
     ),
 
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
 
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],

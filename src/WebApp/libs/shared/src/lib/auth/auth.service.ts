@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager } from 'oidc-client';
-import { environment } from 'apps/workflow-manager-frontend/src/environments/environment';
 import { Observable, Subject } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { GLOBAL_CONFIG } from '../consts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  manager: UserManager = new UserManager(environment.authentication);
+  manager: UserManager = new UserManager(GLOBAL_CONFIG.AUTH_CONFIG);
   userLoadedEvent: Subject<User> = new Subject<User>();
 
   constructor(private readonly _router: Router) {

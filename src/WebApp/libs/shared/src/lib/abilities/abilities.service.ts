@@ -3,7 +3,9 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AbilitiesService {
 
   public isHandset$: Observable<boolean>;

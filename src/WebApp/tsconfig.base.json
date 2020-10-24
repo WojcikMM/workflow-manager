@@ -25,6 +25,9 @@
         "libs/management/core/src/index.ts"
       ],
       "@workflow-manager-frontend/theme": ["libs/theme/src/index.ts"],
+      "@workflow-manager-frontend/states/management": [
+        "libs/states/management/index.ts"
+      ],
       "@workflow-manager-frontend/states/management/processes": [
         "libs/states/management/processes/src/index.ts"
       ],
@@ -33,6 +36,9 @@
       ],
       "@workflow-manager-frontend/states/management/transactions": [
         "libs/states/management/transactions/src/index.ts"
+      ],
+      "@workflow-manager-frontend/states/shared/router": [
+        "libs/states/shared/router/src/index.ts"
       ]
     },
     "rootDir": "."

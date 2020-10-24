@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromProcesses from './+state/processes.reducer';
 import { ProcessesEffects } from './+state/processes.effects';
 import { ProcessesFacade } from './+state/processes.facade';
+import { SharedModule } from '@workflow-manager-frontend/shared';
 
 @NgModule({
   imports: [
@@ -16,5 +17,8 @@ import { ProcessesFacade } from './+state/processes.facade';
     EffectsModule.forFeature([ProcessesEffects]),
   ],
   providers: [ProcessesFacade],
+  exports: [
+    SharedModule
+  ]
 })
 export class StatesManagementProcessesModule {}

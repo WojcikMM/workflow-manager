@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '@workflow-manager-frontend/shared';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -15,27 +12,29 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
-import { PROCESSES_FEATURE_KEY, reducer, ProcessesEffects } from './+state/processes';
 import { ProcessesListComponent } from './processes-list/processes-list.component';
 import { ProcessEditFormComponent } from './process-edit-form/process-edit-form.component';
-import { PROCESS_EDIT_FORM_CONST } from './process-edit-form/process-edit-form.const';
 import { ProcessResolverService } from './process-resolver.service';
+import { StatesManagementProcessesModule } from '@workflow-manager-frontend/states/management/processes';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: ProcessesListComponent
+    component: ProcessesListComponent,
+    resolve: {
+      ngrx: ProcessResolverService
+    }
   },
   {
     path: 'create',
     component: ProcessEditFormComponent,
   },
   {
-    path: 'preview/:id',
+    path: 'preview/:processId',
     component: ProcessEditFormComponent,
     resolve: {
-      [PROCESS_EDIT_FORM_CONST.RESOLVER_PROP_NAME]: ProcessResolverService
+      ngrx: ProcessResolverService
     }
   }
 ];
@@ -46,7 +45,6 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    SharedModule,
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
@@ -57,8 +55,7 @@ const routes: Routes = [
     MatInputModule,
     MatDialogModule,
     MatStepperModule,
-    StoreModule.forFeature(PROCESSES_FEATURE_KEY, reducer),
-    EffectsModule.forFeature([ProcessesEffects]),
+    StatesManagementProcessesModule
   ],
 })
 export class ManagementProcessesModule {

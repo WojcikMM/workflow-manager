@@ -2,18 +2,34 @@ import { Injectable } from '@angular/core';
 
 import { select, Store, Action } from '@ngrx/store';
 
+import * as ProcessesActions from './processes.actions';
 import * as fromProcesses from './processes.reducer';
 import * as ProcessesSelectors from './processes.selectors';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProcessesFacade {
-  loaded$ = this.store.pipe(select(ProcessesSelectors.getProcessesLoaded));
   allProcesses$ = this.store.pipe(select(ProcessesSelectors.getAllProcesses));
-  selectedProcesses$ = this.store.pipe(select(ProcessesSelectors.getSelected));
+  processById$ = this.store.pipe(select(ProcessesSelectors.getProcessByPathId));
 
-  constructor(private store: Store<fromProcesses.ProcessesPartialState>) {}
+  constructor(private store: Store<fromProcesses.ProcessesPartialState>) {
+  }
+
+  loadProcesses() {
+    this.store.dispatch(ProcessesActions.loadProcesses());
+  }
+
 
   dispatch(action: Action) {
     this.store.dispatch(action);
+  }
+
+  createProcess(processName: string) {
+    this.store.dispatch(ProcessesActions.createProcess({processName}));
+  }
+
+  updateProcess(processId: string, processName: string, version: number) {
+    this.store.dispatch(ProcessesActions.updateProcess({processName, processId, version}));
   }
 }

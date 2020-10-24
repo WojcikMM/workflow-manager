@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { environment } from '../../../../../apps/workflow-manager-frontend/src/environments/environment';
 import { map, mergeMap } from 'rxjs/operators';
+import { GLOBAL_CONFIG } from '../consts';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
   private _isInternalCall(url: string) {
-    return Object.values(environment.services).some(serviceBaseUrl => url.includes(serviceBaseUrl));
+    return Object.values(GLOBAL_CONFIG.SERVICES).some(serviceBaseUrl => url.includes(serviceBaseUrl));
   }
 
 

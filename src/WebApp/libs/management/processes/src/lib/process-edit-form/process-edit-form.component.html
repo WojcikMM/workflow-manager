@@ -1,44 +1,61 @@
 <div class="process-edit-form">
   <mat-vertical-stepper [linear]="true">
-    <mat-step [stepControl]="reactForm">
-      <form [formGroup]="reactForm">
-        <ng-template matStepLabel>Definition</ng-template>
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput [formControlName]="PROCESS_EDIT_FORM_CONST.REACT_FORM_NAMES.NAME">
-        </mat-form-field>
-        <br>
-        <button mat-button matStepperNext>Next</button>
-      </form>
+    <mat-step [stepControl]="nameFormControl">
+      <ng-template matStepLabel>Definition</ng-template>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="nameFormControl">
+      </mat-form-field>
+      <br>
+      <button mat-button (click)="redirectToList()">Cancel</button>
+      <button mat-button matStepperNext>Next</button>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Preview</ng-template>
-      <mat-card [style.width]="'15em'">
+      <mat-card>
 
         <mat-card-header>
-          <mat-card-title>Process</mat-card-title>
+          <mat-card-title *ngIf="isUpdateProcess">Process</mat-card-title>
+          <mat-card-title *ngIf="!isUpdateProcess">New Process</mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
-          <div fxLayout="row" fxLayoutAlign="space-around stretch">
+          <div fxLayout="row" fxLayoutAlign="space-between stretch">
             <div class="mat-body-strong">Name:</div>
-            <div>{{processName$ | async}}</div>
+            <div>{{nameFormControl.valueChanges | async}}</div>
           </div>
-          <ng-container *ngIf="processViewModel.id">
-            <div fxLayout="row">
-              <div>Created at</div>
-              <div>{{processViewModel.createdAt}}</div>
+          <ng-container *ngIf="selectedProcess">
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+              <div class="mat-body-strong">Created at:</div>
+              <div>{{selectedProcess.createdAt | date}}</div>
             </div>
-            <div fxLayout="row">
-              <div>Last updated at:</div>
-              <div>{{processViewModel.updatedAt}}</div>
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+              <div class="mat-body-strong">Last updated at:</div>
+              <div>{{selectedProcess.updatedAt | date}}</div>
             </div>
           </ng-container>
         </mat-card-content>
 
-        <mat-card-actions align="end" *ngIf="reactForm.touched">
-          <button *ngIf="!processViewModel.id" mat-raised-button>Create</button>
-          <button *ngIf="!!processViewModel.id" mat-raised-button>Update</button>
+        <mat-card-actions *ngIf="nameFormControl.untouched">
+          <button mat-button *ngIf="nameFormControl.untouched" (click)="redirectToList()">Back To List</button>
+        </mat-card-actions>
+
+        <mat-card-actions *ngIf="nameFormControl.touched" align="end">
+          <button mat-raised-button (click)="redirectToList()">Cancel</button>
+          <button *ngIf="!!selectedProcess"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="nameFormControl.invalid"
+                  (click)="onUpdateProcess(selectedProcess.id, nameFormControl.value, selectedProcess.version)">
+            Save Process
+          </button>
+          <button *ngIf="!selectedProcess"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="nameFormControl.invalid"
+                  (click)="onCreateProcess(this.nameFormControl.value)">
+            Create Process
+          </button>
         </mat-card-actions>
 
       </mat-card>

@@ -12,7 +12,9 @@
   },
   "projects": {
     "workflow-manager-frontend": {
-      "tags": []
+      "tags": [
+        "app"
+      ]
     },
     "shared": {
       "tags": []
@@ -24,16 +26,25 @@
       "tags": []
     },
     "theme": {
-      "tags": []
+      "tags": [
+        "theme",
+        "styles"
+      ]
     },
     "states-management-processes": {
-      "tags": []
+      "tags": [
+        "ngrx/state"
+      ]
     },
     "states-management-statuses": {
-      "tags": []
+      "tags": [
+        "ngrx/state"
+      ]
     },
     "states-management-transactions": {
-      "tags": []
+      "tags": [
+        "ngrx/state"
+      ]
     }
   }
 }

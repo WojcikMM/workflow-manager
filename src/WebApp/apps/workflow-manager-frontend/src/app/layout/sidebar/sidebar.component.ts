@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {SidebarViewModel} from './sidebar.view-model';
-import {environment} from '../../../environments/environment';
+import { GLOBAL_CONFIG } from '@workflow-manager-frontend/shared';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,5 +9,5 @@ import {environment} from '../../../environments/environment';
 })
 export class SidebarComponent {
   @Output() linkClicked: EventEmitter<void> = new EventEmitter<void>();
-  sidebarItems: SidebarViewModel[] = environment.sidebarMenu;
+  sidebarItems: SidebarViewModel[] = GLOBAL_CONFIG.SIDEBAR_MENU_CONFIG;
 }
