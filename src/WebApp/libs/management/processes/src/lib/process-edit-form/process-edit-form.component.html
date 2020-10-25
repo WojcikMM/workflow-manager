@@ -20,20 +20,28 @@
         </mat-card-header>
 
         <mat-card-content>
-          <div fxLayout="row" fxLayoutAlign="space-between stretch">
-            <div class="mat-body-strong">Name:</div>
-            <div>{{nameFormControl.valueChanges | async}}</div>
+          <div fxLayout="row" fxLayoutGap="1em">
+            <div>
+              <div class="mat-body">
+                <i>Name:</i>
+              </div>
+              <ng-container *ngIf="selectedProcess">
+                <div class="mat-body">
+                  <i>Created at:</i>
+                </div>
+                <div class="mat-body">
+                  <i>Last updated at:</i>
+                </div>
+              </ng-container>
+            </div>
+            <div>
+              <div class="mat-body">{{nameFormControl.valueChanges | async}}</div>
+              <ng-container *ngIf="selectedProcess">
+                <div class="mat-body">{{selectedProcess.createdAt | date}}</div>
+                <div class="mat-body">{{selectedProcess.updatedAt | date}}</div>
+              </ng-container>
+            </div>
           </div>
-          <ng-container *ngIf="selectedProcess">
-            <div fxLayout="row" fxLayoutAlign="space-between stretch">
-              <div class="mat-body-strong">Created at:</div>
-              <div>{{selectedProcess.createdAt | date}}</div>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="space-between stretch">
-              <div class="mat-body-strong">Last updated at:</div>
-              <div>{{selectedProcess.updatedAt | date}}</div>
-            </div>
-          </ng-container>
         </mat-card-content>
 
         <mat-card-actions *ngIf="nameFormControl.untouched">

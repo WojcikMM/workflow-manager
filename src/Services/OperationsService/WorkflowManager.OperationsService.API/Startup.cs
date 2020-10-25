@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Distributed;
@@ -7,8 +10,13 @@ using WorkflowManager.Common.ApplicationInitializer;
 using WorkflowManager.Common.Authentication;
 using WorkflowManager.Common.Configuration;
 using WorkflowManager.Common.MassTransit;
+using WorkflowManager.Common.Messages.Commands.Processes;
+using WorkflowManager.Common.Messages.Commands.Statuses;
+using WorkflowManager.Common.Messages.Events.Processes;
+using WorkflowManager.Common.Messages.Events.Statuses;
 using WorkflowManager.Common.Swagger;
 using WorkflowManager.OperationsStorage.Api.Services;
+using WorkflowManager.OperationsStorage.API.Handlers;
 
 namespace WorkflowManager.OperationsStorage.Api
 {
@@ -26,7 +34,7 @@ namespace WorkflowManager.OperationsStorage.Api
             services.AddServiceSwaggerUI();
             services.AddClientAuthentication();
 
-            services.AddMasstransitWithReflection();
+            services.AddMasstransitWithReflection(GetConsumerTypesToRegister());
 
             services.AddTransient<IOperationsStorage, OperationStorage>();
             services.AddTransient<IOperationPublisher, OperationPublisher>();
@@ -37,6 +45,21 @@ namespace WorkflowManager.OperationsStorage.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             ServiceConfiguration.InjectCommonMiddlewares(app, env);
+        }
+
+        private IDictionary<Type, Type> GetConsumerTypesToRegister()
+        {
+            return new Dictionary<Type, Type>()
+            {
+
+                {typeof(ProcessCreatedEvent), typeof(ProcessesEventHandler) },
+                {typeof(ProcessNameUpdatedEvent), typeof(ProcessesEventHandler) },
+
+
+                {typeof(StatusCreatedEvent), typeof(StatusesEventHandler) },
+                {typeof(StatusNameUpdatedEvent), typeof(StatusesEventHandler) },
+                {typeof(StatusProcessIdUpdatedEvent), typeof(StatusesEventHandler) }
+            };
         }
     }
 }

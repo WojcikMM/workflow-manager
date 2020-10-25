@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { createEffect, Actions, ofType, OnInitEffects } from '@ngrx/effects';
 import { fetch } from '@nrwl/angular';
 
 import * as ProcessesActions from './processes.actions';
@@ -7,21 +7,24 @@ import { map, tap } from 'rxjs/operators';
 import { ProcessesClientService } from '@workflow-manager-frontend/shared';
 import { ProcessesEntity } from './processes.models';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Action } from '@ngrx/store';
 
 @Injectable()
-export class ProcessesEffects {
+export class ProcessesEffects implements OnInitEffects{
+
+  // TODO: Handle UTC format conversion ( with local offset apply )
   loadProcesses$ = createEffect(() =>
     this._actions$.pipe(
       ofType(ProcessesActions.loadProcesses),
       fetch({
         run: () => {
-        return this._processesClientService.getProcesses()
+          return this._processesClientService.getProcesses()
             .pipe(
               map(processesDtoArray => processesDtoArray.map(processDto => ({
                   id: processDto.id,
                   name: processDto.name,
-                  createdAt: processDto.createdAt,
-                  updatedAt: processDto.updatedAt,
+                  createdAt: new Date(processDto.createdAt) ,
+                  updatedAt: new Date(processDto.updatedAt),
                   version: processDto.version
                 } as ProcessesEntity))
               ),
@@ -41,12 +44,12 @@ export class ProcessesEffects {
       ofType(ProcessesActions.createProcess),
       fetch({
         run: (action) => {
-         return this._processesClientService.createProcess({name: action.processName})
+          return this._processesClientService.createProcess({name: action.processName})
             .pipe(
               tap(() => {
                 this._matSnackBar.open('Process creation accepted.');
               }),
-              map(() => ProcessesActions.createProcessAccepted())
+              map(acceptedResponse => ProcessesActions.createProcessAccepted({acceptedResponse, processName: action.processName}))
             );
         },
         onError: (action, error) => {
@@ -62,18 +65,21 @@ export class ProcessesEffects {
       ofType(ProcessesActions.updateProcess),
       fetch({
         run: (action) => {
-         return this._processesClientService.updateProcess(action.processId, {name: action.processName, version: action.version})
+          return this._processesClientService.updateProcess(action.processId, {name: action.processName, version: action.version})
             .pipe(
               tap(() => {
                 this._matSnackBar.open('Process updating accepted.', null, {
                   horizontalPosition: 'end',
                   verticalPosition: 'bottom',
                   duration: 2500,
-                  announcementMessage: 'Dupa',
                   panelClass: 'snack-bar'
                 });
               }),
-              map(() => ProcessesActions.updateProcessAccepted())
+              map((acceptedResponse) => ProcessesActions.updateProcessAccepted({
+                acceptedResponse,
+                processName: action.processName,
+                version: action.version
+              }))
             );
         },
         onError: (action, error) => {
@@ -86,5 +92,9 @@ export class ProcessesEffects {
   constructor(private readonly _actions$: Actions,
               private readonly _processesClientService: ProcessesClientService,
               private readonly _matSnackBar: MatSnackBar) {
+  }
+
+  ngrxOnInitEffects(): Action {
+    return ProcessesActions.loadProcesses();
   }
 }

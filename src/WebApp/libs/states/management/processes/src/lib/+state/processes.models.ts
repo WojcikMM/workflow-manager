@@ -4,7 +4,7 @@
 export interface ProcessesEntity {
   id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
   version: number;
 }

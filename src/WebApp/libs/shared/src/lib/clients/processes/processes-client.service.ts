@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ProcessDto } from './process.dto';
 import { CreateProcessDto } from './create-process.dto';
 import { UpdateProcessDto } from './update-process.dto';
-import { BaseClientService } from '../base';
+import { BaseClientService, BaseAcceptedResponseDto } from '../base';
 import { GLOBAL_CONFIG } from '../../consts';
 
 @Injectable({
@@ -24,11 +24,11 @@ export class ProcessesClientService extends BaseClientService {
     return this._httpClient.get<ProcessDto>(`${this.baseUrl}/${id}`);
   }
 
-  createProcess(body: CreateProcessDto): Observable<void> {
-    return this._httpClient.post<void>(this.baseUrl, body);
+  createProcess(body: CreateProcessDto): Observable<BaseAcceptedResponseDto> {
+    return this._httpClient.post<BaseAcceptedResponseDto>(this.baseUrl, body);
   }
 
-  updateProcess(id: string, body: UpdateProcessDto): Observable<void> {
-    return this._httpClient.patch<void>(`${this.baseUrl}/${id}`, body);
+  updateProcess(id: string, body: UpdateProcessDto): Observable<BaseAcceptedResponseDto> {
+    return this._httpClient.patch<BaseAcceptedResponseDto>(`${this.baseUrl}/${id}`, body);
   }
 }

@@ -7,6 +7,7 @@ import { ProcessesEntity } from './processes.models';
 export const PROCESSES_FEATURE_KEY = 'processes';
 
 export interface State extends EntityState<ProcessesEntity> {
+  pendingCommands: string[];
   error?: string | null; // last known error (if any)
 }
 
@@ -16,7 +17,9 @@ export interface ProcessesPartialState {
 
 export const processesAdapter: EntityAdapter<ProcessesEntity> = createEntityAdapter<ProcessesEntity>();
 
-export const initialState: State = processesAdapter.getInitialState({});
+export const initialState: State = processesAdapter.getInitialState({
+  pendingCommands: []
+});
 
 const processesReducer = createReducer(
   initialState,
@@ -42,9 +45,28 @@ const processesReducer = createReducer(
     processesAdapter.setAll(processes, {...state})),
 
   // Request Accepted
-  on(ProcessesActions.createProcessAccepted, (state) => ({...state})),
-  on(ProcessesActions.updateProcessAccepted, (state) => ({...state}))
+  on(ProcessesActions.createProcessAccepted, (state, {acceptedResponse, processName}) =>
+    processesAdapter.addOne({
+      id: acceptedResponse.aggregateId,
+      name: processName,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      version: 1
+    }, {
+      ...state,
+      pendingCommands: [...state.pendingCommands, acceptedResponse.correlationId]
+    })),
+  on(ProcessesActions.updateProcessAccepted, (state, {acceptedResponse, processName, version}) =>
+    processesAdapter.setOne({
+      ...state.entities[acceptedResponse.aggregateId],
+      name: processName,
+      version: version++,
+    }, {
+      ...state,
+      pendingCommands: [...state.pendingCommands, acceptedResponse.correlationId]
+    }))
 );
+
 
 export function reducer(state: State | undefined, action: Action) {
   return processesReducer(state, action);

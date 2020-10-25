@@ -14,17 +14,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ProcessesListComponent } from './processes-list/processes-list.component';
 import { ProcessEditFormComponent } from './process-edit-form/process-edit-form.component';
-import { ProcessResolverService } from './process-resolver.service';
 import { StatesManagementProcessesModule } from '@workflow-manager-frontend/states/management/processes';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: ProcessesListComponent,
-    resolve: {
-      ngrx: ProcessResolverService
-    }
+    component: ProcessesListComponent
   },
   {
     path: 'create',
@@ -32,10 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'preview/:processId',
-    component: ProcessEditFormComponent,
-    resolve: {
-      ngrx: ProcessResolverService
-    }
+    component: ProcessEditFormComponent
   }
 ];
 
