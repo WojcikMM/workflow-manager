@@ -11,6 +11,17 @@ services:
     labels:
       NAME: "rabbitmq"
 
+  workflowmanager.mssql:
+    image: "microsoft/mssql-server-linux"
+    environment:
+      SA_PASSWORD: "${DB_PASSWORD}"
+      ACCEPT_EULA: "Y"
+    volumes:
+      -  /var/lib/docker/volumes/workflow-manager-mssql/_data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+      - "1434:1434"
+
   # IDENTITY SERVICE (PORT: 5000)
   workflowmanager.identityservice.api:
    image: "${DOCKER_HUB_LOGIN}/workflow-manager-identity-service-api"
@@ -23,17 +34,18 @@ services:
      ASPNETCORE_ENVIRONMENT: "${ENVIRONMENT}"
      ASPNETCORE_URLS: "http://*:80"
    depends_on:
-     - workflowmanager.identityservice.db
+     - workflowmanager.mssql
+#     - workflowmanager.identityservice.db
    restart: on-failure
 
-  workflowmanager.identityservice.db:
-   image: "microsoft/mssql-server-linux"
-   environment:
-     SA_PASSWORD: "${DB_PASSWORD}"
-     ACCEPT_EULA: "Y"
-   ports:
-     - "1433:1433"
-     - "1434:1434"
+#  workflowmanager.identityservice.db:
+#   image: "microsoft/mssql-server-linux"
+#   environment:
+#     SA_PASSWORD: "${DB_PASSWORD}"
+#     ACCEPT_EULA: "Y"
+#   ports:
+#     - "1433:1433"
+#     - "1434:1434"
 
 
   # API GATEWAY (PORT: 8000)
@@ -66,17 +78,20 @@ services:
       ASPNETCORE_URLS: "http://*:80"
     depends_on:
       - workflowmanager.rabbitmq
-      - workflowmanager.configurationservice.db
+      - workflowmanager.mssql
+#      - workflowmanager.configurationservice.db
     restart: on-failure
 
-  workflowmanager.configurationservice.db:
-    image: "microsoft/mssql-server-linux"
-    environment:
-      SA_PASSWORD: "${DB_PASSWORD}"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1443:1433"
-      - "1444:1434"
+#  workflowmanager.configurationservice.db:
+#    image: "microsoft/mssql-server-linux"
+#    environment:
+#      SA_PASSWORD: "${DB_PASSWORD}"
+#      ACCEPT_EULA: "Y"
+#    volumes:
+#      -  ~/mssql:/var/opt/mssql
+#    ports:
+#      - "1443:1433"
+#      - "1444:1434"
 
 
   # OPERATIONS SERVICE(PORT: 8002)
