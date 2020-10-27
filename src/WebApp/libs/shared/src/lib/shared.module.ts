@@ -6,9 +6,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { UnauthorizedComponent } from './components/unauthorized';
 
 @NgModule({
-  declarations: [SimpleDialogComponent],
+  declarations: [
+    SimpleDialogComponent,
+    UnauthorizedComponent
+  ],
   imports: [
     CommonModule,
     ClientsModule,
@@ -17,15 +21,19 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
   ],
   exports: [
     SimpleDialogComponent,
+    UnauthorizedComponent,
     ClientsModule,
     FlexLayoutModule
   ],
   providers: [
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
         horizontalPosition: 'end',
         verticalPosition: 'bottom',
         duration: 2500,
-    }}
+      }
+    }
   ]
 })
 export class SharedModule {

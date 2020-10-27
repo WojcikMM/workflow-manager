@@ -2,8 +2,6 @@ import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {AbilitiesService, SimpleDialogComponent, SimpleDialogData, ProcessDto, ProcessesClientService} from '@workflow-manager-frontend/shared';
-import {TransactionsService} from '../transactions.service';
-import {StatusesService} from '../../statuses/statuses.service';
 
 class TransactionViewModel {
   $key: string;
@@ -13,7 +11,7 @@ class StatusViewModel {
 }
 
 @Component({
-  selector: 'app-transactions-list',
+  selector: 'management-transactions-list',
   templateUrl: './transactions-list.component.html',
   styleUrls: ['./transactions-list.component.scss']
 })
@@ -26,8 +24,8 @@ export class TransactionsListComponent {
   processes$: Observable<ProcessDto[]>;
 
   constructor(private readonly _processesService: ProcessesClientService,
-              private readonly _statusesService: StatusesService,
-              private readonly _transactionsService: TransactionsService,
+              private readonly _statusesService: any,
+             // private readonly _transactionsService: TransactionsService,
               private readonly _dialog: MatDialog,
               abilitiesService: AbilitiesService) {
     this.isHandset$ = abilitiesService.isHandset$;
@@ -60,7 +58,7 @@ export class TransactionsListComponent {
       }).afterClosed()
         .subscribe(isConfirmed => {
           if (isConfirmed) {
-            this._transactionsService.remove(status.$key);
+           // this._transactionsService.remove(status.$key);
           }
         });
     }
@@ -68,10 +66,10 @@ export class TransactionsListComponent {
 
 
   onFormSubmitted(status: TransactionViewModel) {
-    this._transactionsService.addOrUpdate(status)
-      .then(() => {
-        this.transactionToEdit = null;
-      });
+    // this._transactionsService.addOrUpdate(status)
+    //   .then(() => {
+    //     this.transactionToEdit = null;
+    //   });
   }
 
   onFormClosed() {
@@ -110,6 +108,6 @@ export class TransactionsListComponent {
   }
 
   onStatusSelectionChange(statusKey: string) {
-    this._transactionsService.setStatusKey(statusKey);
+  //  this._transactionsService.setStatusKey(statusKey);
   }
 }

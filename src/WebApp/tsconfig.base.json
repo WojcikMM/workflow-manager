@@ -39,6 +39,12 @@
       ],
       "@workflow-manager-frontend/states/shared/router": [
         "libs/states/shared/router/src/index.ts"
+      ],
+      "@workflow-manager-frontend/management/statuses": [
+        "libs/management/statuses/src/index.ts"
+      ],
+      "@workflow-manager-frontend/management/transactions": [
+        "libs/management/transactions/src/index.ts"
       ]
     },
     "rootDir": "."

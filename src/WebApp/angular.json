@@ -365,6 +365,73 @@
           "style": "scss"
         }
       }
+    },
+    "management-statuses": {
+      "projectType": "library",
+      "root": "libs/management/statuses",
+      "sourceRoot": "libs/management/statuses/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/management/statuses/tsconfig.lib.json",
+              "libs/management/statuses/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/management/statuses/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/management/statuses/jest.config.js",
+            "tsConfig": "libs/management/statuses/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/management/statuses/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "management-transactions": {
+      "projectType": "library",
+      "root": "libs/management/transactions",
+      "sourceRoot": "libs/management/transactions/src",
+      "prefix": "workflow-manager-frontend",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/management/transactions/tsconfig.lib.json",
+              "libs/management/transactions/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/management/transactions/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/management/transactions/jest.config.js",
+            "tsConfig": "libs/management/transactions/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/management/transactions/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "defaultProject": "workflow-manager-frontend",

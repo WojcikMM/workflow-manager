@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ProcessesService} from '../../processes/processes.service';
-import {ProcessDto} from '@workflow-manager-frontend/shared';
+import {Observable} from 'rxjs';
+import { ProcessesEntity } from '@workflow-manager-frontend/states/management/processes';
 
 class TransactionViewModel {
   $key: string;
@@ -12,11 +11,11 @@ class StatusViewModel {
 }
 
 @Component({
-  selector: 'app-transaction-edit-form',
-  templateUrl: './transaction-edit-form.component.html',
-  styleUrls: ['./transaction-edit-form.component.scss']
+  selector: 'management-transactions-edit-form',
+  templateUrl: './transactions-edit-form.component.html',
+  styleUrls: ['./transactions-edit-form.component.scss']
 })
-export class TransactionEditFormComponent {
+export class TransactionsEditFormComponent {
 
   formTitle: string;
   reactForm: FormGroup;
@@ -26,14 +25,13 @@ export class TransactionEditFormComponent {
     this._setupForm(value);
   }
 
-  processes$: Observable<ProcessDto[]>;
+  processes$: Observable<ProcessesEntity[]>;
   statuses$: Observable<StatusViewModel[]>;
   @Output() submitFormEvent: EventEmitter<TransactionViewModel> = new EventEmitter<TransactionViewModel>();
   @Output() closeFormEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private _fb: FormBuilder,
-              processesService: ProcessesService) {
-    this.processes$ = processesService.processes$;
+  constructor(private _fb: FormBuilder) {
+   // this.processes$ = processesService.processes$;
     // this.statuses$ = this.processSubject$.pipe(switchMap(processKey =>
     //   _firestore.collection<StatusViewModel>('statuses', query =>
     //     query.where('processKey', '==', processKey))

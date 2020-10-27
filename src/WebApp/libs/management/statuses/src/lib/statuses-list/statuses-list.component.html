@@ -14,7 +14,7 @@
     <div class="statuses-list__container__list">
       <mat-select placeholder="Select process"
                   (selectionChange)="onProcessSelectionChange($event)">
-        <mat-option *ngFor="let process of processes$ | async" [value]="process.$key">
+        <mat-option *ngFor="let process of processes$ | async" [value]="process.id">
           {{process.name}}
         </mat-option>
       </mat-select>

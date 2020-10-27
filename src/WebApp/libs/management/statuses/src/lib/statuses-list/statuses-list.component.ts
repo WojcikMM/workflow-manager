@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
-import {StatusesService} from '../statuses.service';
 import {AbilitiesService, SimpleDialogComponent, SimpleDialogData} from '@workflow-manager-frontend/shared';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
@@ -11,7 +10,7 @@ class StatusViewModel {
 }
 
 @Component({
-  selector: 'app-statuses-list',
+  selector: 'management-statuses-list',
   templateUrl: './statuses-list.component.html',
   styleUrls: ['./statuses-list.component.scss']
 })
@@ -21,7 +20,7 @@ export class StatusesListComponent {
   isHandset$: Observable<boolean>;
   processes$: Observable<ProcessDto[]>;
 
-  constructor(private readonly _statusesService: StatusesService,
+  constructor(private readonly _statusesService: any,
               private readonly _dialog: MatDialog,
               abilitiesService: AbilitiesService,
               processesCollectionService: ProcessesClientService) {

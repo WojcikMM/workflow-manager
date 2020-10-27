@@ -18,7 +18,7 @@ namespace WorkflowManager.Common.ReadModelStore
         public static void AddReadModelRepository<TReadModel, TReadModelRepository>(this IServiceCollection services)
             where TReadModel : IReadModel, new() where TReadModelRepository : IReadModelRepository<TReadModel>
         {
-            services.AddScoped(typeof(IReadModelRepository<TReadModel>), typeof(TReadModelRepository));
+            services.AddTransient(typeof(IReadModelRepository<TReadModel>), typeof(TReadModelRepository));
         }
     }
 }

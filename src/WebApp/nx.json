@@ -12,9 +12,7 @@
   },
   "projects": {
     "workflow-manager-frontend": {
-      "tags": [
-        "app"
-      ]
+      "tags": ["app"]
     },
     "shared": {
       "tags": []
@@ -26,25 +24,22 @@
       "tags": []
     },
     "theme": {
-      "tags": [
-        "theme",
-        "styles"
-      ]
+      "tags": ["theme", "styles"]
     },
     "states-management-processes": {
-      "tags": [
-        "ngrx/state"
-      ]
+      "tags": ["ngrx/state"]
     },
     "states-management-statuses": {
-      "tags": [
-        "ngrx/state"
-      ]
+      "tags": ["ngrx/state"]
     },
     "states-management-transactions": {
-      "tags": [
-        "ngrx/state"
-      ]
+      "tags": ["ngrx/state"]
+    },
+    "management-statuses": {
+      "tags": []
+    },
+    "management-transactions": {
+      "tags": []
     }
   }
 }

@@ -64,7 +64,7 @@ namespace WorkflowManager.ConfigurationService.API
                 {typeof(UpdateProcessCommand), typeof(UpdateProcessCommandHandler) },
 
                 {typeof(CreateStatusCommand), typeof(CreateStatusCommandHandler) },
-                {typeof(UpdateStatusCommand), typeof(UpdateProcessCommandHandler) },
+                {typeof(UpdateStatusCommand), typeof(UpdateStatusCommandHandler) },
 
                 {typeof(ProcessCreatedEvent), typeof(ProcessCreatedEventHandler) },
                 {typeof(ProcessNameUpdatedEvent), typeof(ProcessNameUpdatedEventHandler) },

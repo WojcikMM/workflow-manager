@@ -1,0 +1,5 @@
+@import '../../../../../theme/src/styles/management-common-styles';
+
+.statuses-list {
+  @include shared-management-list;
+}

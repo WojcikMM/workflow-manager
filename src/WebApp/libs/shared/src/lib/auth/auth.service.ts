@@ -12,7 +12,6 @@ import { GLOBAL_CONFIG } from '../consts';
 export class AuthService {
 
   manager: UserManager = new UserManager(GLOBAL_CONFIG.AUTH_CONFIG);
-  userLoadedEvent: Subject<User> = new Subject<User>();
 
   constructor(private readonly _router: Router) {
     this.manager.events.addAccessTokenExpiring(() => {
@@ -48,7 +47,7 @@ export class AuthService {
 
   login(): void {
     this.manager.signinRedirect().catch(e => {
-      this._router.navigateByUrl('/unauthorized');
+      this._router.navigateByUrl('/unauthorized').catch(console.log);
       console.error('Cannot login redirect. Cause:', e);
     });
   }

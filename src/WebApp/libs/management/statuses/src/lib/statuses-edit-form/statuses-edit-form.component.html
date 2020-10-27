@@ -18,7 +18,7 @@
                     placeholder="Linked Process">
           <mat-option>-</mat-option>
           <mat-option *ngFor="let process of processes"
-                      [value]="process.$key">
+                      [value]="process.id">
             {{process.name}}
           </mat-option>
         </mat-select>

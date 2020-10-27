@@ -9,6 +9,7 @@ import { ProcessesEntity } from './processes.models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Action } from '@ngrx/store';
 
+// noinspection JSUnusedGlobalSymbols
 @Injectable()
 export class ProcessesEffects implements OnInitEffects{
 

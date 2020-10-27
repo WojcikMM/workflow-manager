@@ -15,7 +15,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -28,8 +27,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
     AppComponent,
     LayoutComponent,
     ToolbarComponent,
-    SidebarComponent,
-    UnauthorizedComponent,
+    SidebarComponent
   ],
   imports: [
     HttpClientModule,

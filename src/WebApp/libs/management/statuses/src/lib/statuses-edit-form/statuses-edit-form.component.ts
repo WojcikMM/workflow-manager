@@ -11,11 +11,11 @@ class StatusViewModel {
 }
 
 @Component({
-  selector: 'app-status-edit-form',
-  templateUrl: './status-edit-form.component.html',
-  styleUrls: ['./status-edit-form.component.scss']
+  selector: 'management-statuses-edit-form',
+  templateUrl: './statuses-edit-form.component.html',
+  styleUrls: ['./statuses-edit-form.component.scss']
 })
-export class StatusEditFormComponent {
+export class StatusesEditFormComponent {
 
   formTitle: string;
   reactForm: FormGroup;

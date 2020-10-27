@@ -29,7 +29,7 @@ namespace WorkflowManager.Common.EventStore
 
         public static void AddInMemoryEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info)
         {
-            serviceCollection.AddSingleton(typeof(IRepository<>), typeof(AggregateRespository<>));
+            serviceCollection.AddTransient(typeof(IRepository<>), typeof(AggregateRespository<>));
             serviceCollection.AddTransient(service => Wireup
                 .Init()
                 .LogToConsoleWindow(logLevel)
