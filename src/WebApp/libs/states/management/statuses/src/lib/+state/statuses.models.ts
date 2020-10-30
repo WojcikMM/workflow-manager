@@ -8,4 +8,5 @@ export interface StatusesEntity {
   updatedAt: Date;
   version: number;
   processId: string;
+  processName: string;
 }

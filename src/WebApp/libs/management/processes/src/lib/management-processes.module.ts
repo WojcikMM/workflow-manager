@@ -49,7 +49,7 @@ const routes: Routes = [
     MatDialogModule,
     MatStepperModule,
     StatesManagementProcessesModule
-  ],
+  ]
 })
 export class ManagementProcessesModule {
 }

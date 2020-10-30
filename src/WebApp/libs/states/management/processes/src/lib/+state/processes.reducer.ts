@@ -23,7 +23,7 @@ export const initialState: State = processesAdapter.getInitialState({
 
 const processesReducer = createReducer(
   initialState,
-  // Init loading / action
+  // Init http action
   on(ProcessesActions.loadProcesses,
     ProcessesActions.createProcess,
     ProcessesActions.updateProcess,

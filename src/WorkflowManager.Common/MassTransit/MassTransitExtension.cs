@@ -6,6 +6,7 @@ using MassTransit.Azure.ServiceBus.Core;
 using MassTransit.ExtensionsDependencyInjectionIntegration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WorkflowManager.Common.ApplicationInitializer;
 using WorkflowManager.Common.Configuration;
 
 namespace WorkflowManager.Common.MassTransit
@@ -23,7 +24,8 @@ namespace WorkflowManager.Common.MassTransit
         {
             services.AddMassTransit(config =>
             {
-                var consumerAssemblyTypes = messageTypeAndClientTypeDictionary.ToList().Select(dictVal => new ConsumerAssemblyTypeModel() {
+                var consumerAssemblyTypes = messageTypeAndClientTypeDictionary.ToList().Select(dictVal => new ConsumerAssemblyTypeModel()
+                {
                     ConsumerType = dictVal.Value,
                     MessageType = dictVal.Key
                 }).ToList();
@@ -98,6 +100,9 @@ namespace WorkflowManager.Common.MassTransit
         // TODO: Provide configuration for handle RabbitMq Host/Username/Password
         private static void CreateConfigForRabbitMq(IServiceCollection services, IServiceCollectionBusConfigurator configurator, List<ConsumerAssemblyTypeModel> consumerAssemblyTypes)
         {
+
+            var serviceConfigModel = services.GetOptions<ServiceConfigurationModel>("Service");
+
             configurator.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(busFactoryConfig =>
             {
                 busFactoryConfig.Host("workflowmanager.rabbitmq", "/", h =>
@@ -106,27 +111,12 @@ namespace WorkflowManager.Common.MassTransit
                       h.Password("guest");
                   });
 
-
-                consumerAssemblyTypes
-             //.GroupBy(assembly => assembly.MessageType)
-             //.Select(assemblyGroup => new
-             //{
-             //    MessageType = assemblyGroup.Key,
-             //    ConsumerTypes = assemblyGroup.Select(assembly => assembly.ConsumerType).ToList()
-             //})
-             //.ToList()
-             .ForEach(assemblyType =>
+                var serviceConfigModel = services.GetOptions<ServiceConfigurationModel>("Service");
+                consumerAssemblyTypes.ForEach(assemblyType =>
              {
-                 busFactoryConfig.ReceiveEndpoint(assemblyType.MessageType.Name, cfg =>
+                 busFactoryConfig.ReceiveEndpoint($"{serviceConfigModel.Name}_{assemblyType.MessageType.Name}", cfg =>
                   {
-
                       cfg.Consumer(assemblyType.ConsumerType, (Type type) => provider.GetService(type));
-                      //cfg.Consumer()
-                      //var registerConsumerMethod = typeof(ConsumerExtensions)
-                      //               .GetMethods()
-                      //               .Where(m => m.IsGenericMethod && m.GetGenericArguments().Length == 1 && m.GetParameters().Length == 2)
-                      //               .First();
-                      //registerConsumerMethod.MakeGenericMethod(assemblyType.ConsumerType).Invoke(null, new object[] { cfg,  null });
                   });
              });
             }));

@@ -33,7 +33,7 @@ const transactionsReducer = createReducer(
     error: null,
   })),
   on(TransactionsActions.loadTransactionsSuccess, (state, { transactions }) =>
-    transactionsAdapter.addAll(transactions, { ...state, loaded: true })
+    transactionsAdapter.addMany(transactions, { ...state, loaded: true })
   ),
   on(TransactionsActions.loadTransactionsFailure, (state, { error }) => ({
     ...state,

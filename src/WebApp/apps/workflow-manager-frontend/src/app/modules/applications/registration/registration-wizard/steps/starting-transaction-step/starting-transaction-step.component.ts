@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {TransactionsService} from '../../../../../management/transactions/transactions.service';
 
 @Component({
   selector: 'app-starting-transaction-step',
@@ -9,9 +8,6 @@ import {TransactionsService} from '../../../../../management/transactions/transa
 })
 export class StartingTransactionStepComponent implements OnInit {
   @Input() startingProcessKey: FormControl;
-
-  constructor(transactionService: TransactionsService) {
-  }
 
   ngOnInit(): void {
   }

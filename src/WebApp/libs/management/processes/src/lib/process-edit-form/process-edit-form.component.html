@@ -14,8 +14,8 @@
       <ng-template matStepLabel>Preview</ng-template>
       <mat-card class="process-edit-form__step-two__card">
         <mat-card-header>
-          <mat-card-title *ngIf="isUpdateProcess">Process</mat-card-title>
-          <mat-card-title *ngIf="!isUpdateProcess">New Process</mat-card-title>
+          <mat-card-title *ngIf="!!selectedProcess">Process</mat-card-title>
+          <mat-card-title *ngIf="!selectedProcess">New Process</mat-card-title>
         </mat-card-header>
 
         <mat-card-content>

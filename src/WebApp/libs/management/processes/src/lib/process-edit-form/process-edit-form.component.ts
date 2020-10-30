@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class ProcessEditFormComponent {
   public readonly nameFormControl: FormControl;
   public selectedProcess: ProcessesEntity;
-  public isUpdateProcess: boolean;
 
   @ViewChild(MatVerticalStepper, {static: true})
   private readonly _matStepperComponent: MatVerticalStepper;
@@ -24,7 +23,9 @@ export class ProcessEditFormComponent {
       this.selectedProcess = process;
       if (process) {
         this.nameFormControl.setValue(process.name);
-        this._matStepperComponent.next();
+        setTimeout(() => {
+          this._matStepperComponent.next();
+        }, 1);
       }
     });
   }

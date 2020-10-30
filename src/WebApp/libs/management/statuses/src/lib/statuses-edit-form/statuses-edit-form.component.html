@@ -1,40 +1,84 @@
-<form [formGroup]="reactForm" (ngSubmit)="onSubmit()">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{formTitle}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-        <mat-error>Name is required.</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input matInput formControlName="description">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select formControlName="processKey"
-                    placeholder="Linked Process">
-          <mat-option>-</mat-option>
-          <mat-option *ngFor="let process of processes"
-                      [value]="process.id">
-            {{process.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error>Process is required.</mat-error>
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button
-              (click)="closeFormEvent.emit()">
-        Cancel
-      </button>
-      <button mat-button
-              type="submit"
-              [disabled]="reactForm.invalid">
-        Save
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+<div class="status-edit-form">
+  <mat-vertical-stepper [linear]="true">
+    <mat-step [stepControl]="reactForm">
+      <ng-template matStepLabel>Definition</ng-template>
+      <div [formGroup]="reactForm">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>Parent Process</mat-label>
+          <mat-select formControlName="processId">
+            <mat-option *ngFor="let process of allProcesses$ | async" [value]="process.id">{{process.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <br>
+      <button mat-button (click)="redirectToList()">Cancel</button>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Preview</ng-template>
+      <mat-card class="status-edit-form__step-two__card">
+        <mat-card-header>
+          <mat-card-title *ngIf="!!selectedStatus">Status</mat-card-title>
+          <mat-card-title *ngIf="!selectedStatus">New Status</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div fxLayout="row" fxLayoutGap="1em">
+            <div>
+              <div class="mat-body">
+                <i>Name:</i>
+              </div>
+              <div class="mat-body">
+                <i>Parent Process:</i>
+              </div>
+              <ng-container *ngIf="selectedStatus">
+                <div class="mat-body">
+                  <i>Created at:</i>
+                </div>
+                <div class="mat-body">
+                  <i>Last updated at:</i>
+                </div>
+              </ng-container>
+            </div>
+            <div>
+              <div class="mat-body">{{reactForm.get('name').value}}</div>
+              <div class="mat-body">{{selectedProcessName$ | async}}</div>
+              <ng-container *ngIf="selectedStatus">
+                <div class="mat-body">{{selectedStatus.createdAt | date}}</div>
+                <div class="mat-body">{{selectedStatus.updatedAt | date}}</div>
+              </ng-container>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions *ngIf="reactForm.untouched">
+          <button mat-button *ngIf="reactForm.untouched" (click)="redirectToList()">Back To List</button>
+        </mat-card-actions>
+
+        <mat-card-actions *ngIf="reactForm.touched" align="end">
+          <button mat-raised-button (click)="redirectToList()">Cancel</button>
+          <button *ngIf="!!selectedStatus"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="reactForm.invalid"
+                  (click)="onUpdateStatus()">
+            Save Status
+          </button>
+          <button *ngIf="!selectedStatus"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="reactForm.invalid"
+                  (click)="onCreateStatus()">
+            Create Status
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

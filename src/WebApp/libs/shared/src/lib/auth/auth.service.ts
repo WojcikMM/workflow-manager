@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager } from 'oidc-client';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';

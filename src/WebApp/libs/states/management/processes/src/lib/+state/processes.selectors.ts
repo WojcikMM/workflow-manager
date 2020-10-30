@@ -14,7 +14,7 @@ export const getProcessesState = createFeatureSelector<ProcessesPartialState, St
 const {selectAll, selectEntities} = processesAdapter.getSelectors();
 // Router selectors
 const routerStateSelectors = fromRouter.getSelectors((state) => state[GLOBAL_CONST.FEATURE_STATE_NAMES.ROUTER]);
-export const selectRouteProcessId = routerStateSelectors.selectRouteParam('processId');
+export const selectRouteProcessId = routerStateSelectors.selectRouteParam(GLOBAL_CONST.ROUTER_PARAM_NAMES.PROCESS_ID);
 
 
 export const getProcessesError = createSelector(
@@ -37,5 +37,3 @@ export const getProcessByPathId = createSelector(
   selectRouteProcessId,
   (processesEntities, processId) => processId && processesEntities[processId] as ProcessesEntity
 );
-
-

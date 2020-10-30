@@ -24,13 +24,12 @@ export class TransactionsListComponent {
   processes$: Observable<ProcessDto[]>;
 
   constructor(private readonly _processesService: ProcessesClientService,
-              private readonly _statusesService: any,
              // private readonly _transactionsService: TransactionsService,
               private readonly _dialog: MatDialog,
               abilitiesService: AbilitiesService) {
     this.isHandset$ = abilitiesService.isHandset$;
    // this.transactions$ = _transactionsService.transactions$;
-    this.statuses$ = _statusesService.statuses$;
+    this.statuses$ = null;
     this.processes$ = _processesService.getProcesses();
   }
 
@@ -104,7 +103,7 @@ export class TransactionsListComponent {
   }
 
   onProcessSelectionChange(processKey: string) {
-    this._statusesService.setValue(processKey);
+    //this._statusesService.setValue(processKey);
   }
 
   onStatusSelectionChange(statusKey: string) {

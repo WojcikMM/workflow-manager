@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { select, Store, Action } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import * as ProcessesActions from './processes.actions';
 import * as fromProcesses from './processes.reducer';
@@ -18,11 +18,6 @@ export class ProcessesFacade {
 
   loadProcesses() {
     this.store.dispatch(ProcessesActions.loadProcesses());
-  }
-
-
-  dispatch(action: Action) {
-    this.store.dispatch(action);
   }
 
   createProcess(processName: string) {
