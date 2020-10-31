@@ -26,15 +26,6 @@
     "theme": {
       "tags": ["theme", "styles"]
     },
-    "states-management-processes": {
-      "tags": ["ngrx/state"]
-    },
-    "states-management-statuses": {
-      "tags": ["ngrx/state"]
-    },
-    "states-management-transactions": {
-      "tags": ["ngrx/state"]
-    },
     "management-statuses": {
       "tags": []
     },

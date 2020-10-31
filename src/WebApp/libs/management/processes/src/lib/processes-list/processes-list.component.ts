@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProcessesEntity, ProcessesFacade } from '@workflow-manager-frontend/states/management/processes';
+import { NxProcessesFacade, ProcessEntity } from '@workflow-manager-frontend/shared';
 
 
 @Component({
@@ -9,9 +9,9 @@ import { ProcessesEntity, ProcessesFacade } from '@workflow-manager-frontend/sta
   styleUrls: ['./processes-list.component.scss']
 })
 export class ProcessesListComponent {
-  readonly processes$: Observable<ProcessesEntity[]>;
+  readonly processes$: Observable<ProcessEntity[]>;
 
-  constructor(processesFacade: ProcessesFacade) {
+  constructor(processesFacade: NxProcessesFacade) {
     this.processes$ = processesFacade.allProcesses$;
   }
 }

@@ -15,12 +15,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { SharedModule } from '@workflow-manager-frontend/shared';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomRouterSerializer, SharedModule } from '@workflow-manager-frontend/shared';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
 
 @NgModule({
   declarations: [
@@ -35,6 +34,10 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
     BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+
+    SharedModule,
+
+    // Material
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -42,27 +45,15 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
     MatSidenavModule,
     MatExpansionModule,
 
-    SharedModule,
-
-    StoreModule.forRoot(
-      {
-        router: routerReducer
-      },
-      {
-        metaReducers: !environment.production ? [] : [],
-        runtimeChecks: {
-          strictActionImmutability: true,
-          strictStateImmutability: true,
-        },
-      }
-    ),
-
-    EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot(),
-
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    // NGXS
+    NgxsModule.forRoot([], {developmentMode: !environment.production}),
+    NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production}),
+    NgxsRouterPluginModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {provide: RouterStateSerializer, useClass: CustomRouterSerializer}
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

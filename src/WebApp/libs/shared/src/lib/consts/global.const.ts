@@ -1,6 +1,7 @@
 export const GLOBAL_CONST = {
   FEATURE_STATE_NAMES: {
-    ROUTER: 'router'
+    ROUTER: 'router',
+    PROCESSES: 'processes'
   },
   AGGREGATE_INITIAL_VERSION: 1,
   ROUTER_PARAM_NAMES: {

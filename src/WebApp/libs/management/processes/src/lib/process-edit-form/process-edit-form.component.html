@@ -34,7 +34,7 @@
               </ng-container>
             </div>
             <div>
-              <div class="mat-body">{{nameFormControl.valueChanges | async}}</div>
+              <div class="mat-body">{{nameFormControl.value}}</div>
               <ng-container *ngIf="selectedProcess">
                 <div class="mat-body">{{selectedProcess.createdAt | date}}</div>
                 <div class="mat-body">{{selectedProcess.updatedAt | date}}</div>
@@ -53,7 +53,7 @@
                   mat-raised-button
                   color="primary"
                   [disabled]="nameFormControl.invalid"
-                  (click)="onUpdateProcess(selectedProcess.id, nameFormControl.value, selectedProcess.version)">
+                  (click)="onUpdateProcess(selectedProcess.id, nameFormControl.value)">
             Save Process
           </button>
           <button *ngIf="!selectedProcess"

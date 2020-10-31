@@ -14,7 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ProcessesListComponent } from './processes-list/processes-list.component';
 import { ProcessEditFormComponent } from './process-edit-form/process-edit-form.component';
-import { StatesManagementProcessesModule } from '@workflow-manager-frontend/states/management/processes';
+import { NxStateManagementProcessesModule } from '@workflow-manager-frontend/shared';
+import { FlexModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
   declarations: [ProcessesListComponent, ProcessEditFormComponent],
   imports: [
     CommonModule,
+    FlexModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     MatCardModule,
@@ -48,7 +50,7 @@ const routes: Routes = [
     MatInputModule,
     MatDialogModule,
     MatStepperModule,
-    StatesManagementProcessesModule
+    NxStateManagementProcessesModule
   ]
 })
 export class ManagementProcessesModule {

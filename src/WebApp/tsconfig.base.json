@@ -11,34 +11,28 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2018", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "@workflow-manager/shared": [
-        "apps/workflow-manager-frontend/src/app/modules/shared"
+      "@workflow-manager-frontend/shared": [
+        "libs/shared/src/index.ts"
       ],
-      "@workflow-manager-frontend/shared": ["libs/shared/src/index.ts"],
       "@workflow-manager-frontend/management/processes": [
         "libs/management/processes/src/index.ts"
       ],
       "@workflow-manager-frontend/management/core": [
         "libs/management/core/src/index.ts"
       ],
-      "@workflow-manager-frontend/theme": ["libs/theme/src/index.ts"],
+      "@workflow-manager-frontend/theme": [
+        "libs/theme/src/index.ts"
+      ],
       "@workflow-manager-frontend/states/management": [
         "libs/states/management/index.ts"
-      ],
-      "@workflow-manager-frontend/states/management/processes": [
-        "libs/states/management/processes/src/index.ts"
-      ],
-      "@workflow-manager-frontend/states/management/statuses": [
-        "libs/states/management/statuses/src/index.ts"
-      ],
-      "@workflow-manager-frontend/states/management/transactions": [
-        "libs/states/management/transactions/src/index.ts"
-      ],
-      "@workflow-manager-frontend/states/shared/router": [
-        "libs/states/shared/router/src/index.ts"
       ],
       "@workflow-manager-frontend/management/statuses": [
         "libs/management/statuses/src/index.ts"

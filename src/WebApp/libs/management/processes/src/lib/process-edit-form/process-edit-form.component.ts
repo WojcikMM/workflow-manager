@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatVerticalStepper } from '@angular/material/stepper';
-import { ProcessesEntity, ProcessesFacade } from '@workflow-manager-frontend/states/management/processes';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NxProcessesFacade, ProcessEntity } from '@workflow-manager-frontend/shared';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'management-processes-edit-form',
@@ -11,27 +11,29 @@ import { Router } from '@angular/router';
 })
 export class ProcessEditFormComponent {
   public readonly nameFormControl: FormControl;
-  public selectedProcess: ProcessesEntity;
+  public selectedProcess: ProcessEntity;
 
   @ViewChild(MatVerticalStepper, {static: true})
   private readonly _matStepperComponent: MatVerticalStepper;
 
-  constructor(private readonly processesFacade: ProcessesFacade,
-              private readonly router: Router) {
+  constructor(private readonly processesFacade: NxProcessesFacade) {
     this.nameFormControl = new FormControl('', Validators.required);
-    processesFacade.processById$.subscribe((process) => {
-      this.selectedProcess = process;
-      if (process) {
-        this.nameFormControl.setValue(process.name);
-        setTimeout(() => {
-          this._matStepperComponent.next();
-        }, 1);
-      }
-    });
+
+    processesFacade.selectedProcess$
+      .pipe(map(paramFun => paramFun('processId')))
+      .subscribe((process) => {
+        this.selectedProcess = process;
+        if (process) {
+          this.nameFormControl.setValue(process.name);
+          setTimeout(() => {
+            this._matStepperComponent.next();
+          }, 1);
+        }
+      });
   }
 
-  onUpdateProcess(id: string, processName: string, version: number) {
-    this.processesFacade.updateProcess(id, processName, version);
+  onUpdateProcess(id: string, processName: string) {
+    this.processesFacade.updateProcess(id, processName);
     this.redirectToList();
   }
 
@@ -41,7 +43,6 @@ export class ProcessEditFormComponent {
   }
 
   redirectToList() {
-    this.router.navigateByUrl('/management/processes')
-      .catch(console.log);
+    this.processesFacade.navigateTo('/management/processes');
   }
 }
