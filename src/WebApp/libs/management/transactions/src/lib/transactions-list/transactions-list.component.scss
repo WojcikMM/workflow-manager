@@ -1,9 +1,0 @@
-@import '../../../../../theme/src/styles/management-common-styles';
-
-.transactions-list {
-  @include shared-management-list;
-
-  &__container__list__search-row {
-    display: flex;
-  }
-}

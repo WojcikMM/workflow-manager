@@ -16,10 +16,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { CustomRouterSerializer, SharedModule } from '@workflow-manager-frontend/shared';
+import { SharedCoreModule } from '@workflow-manager-frontend/shared/core';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
+import { CustomRouterSerializer } from '@workflow-manager-frontend/shared/states';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plug
     AppRoutingModule,
     ReactiveFormsModule,
 
-    SharedModule,
+    SharedCoreModule,
 
     // Material
     MatToolbarModule,

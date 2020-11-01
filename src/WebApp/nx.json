@@ -14,23 +14,18 @@
     "workflow-manager-frontend": {
       "tags": ["app"]
     },
-    "shared": {
+    "shared-core": {
       "tags": []
     },
-    "management-processes": {
+    "shared-states": {
       "tags": []
     },
-    "management-core": {
+    "shared-theme": {
       "tags": []
     },
-    "theme": {
-      "tags": ["theme", "styles"]
-    },
-    "management-statuses": {
-      "tags": []
-    },
-    "management-transactions": {
-      "tags": []
+    "features-management": {
+      "tags": [],
+      "implicitDependencies": ["shared-theme"]
     }
   }
 }

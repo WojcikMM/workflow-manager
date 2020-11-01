@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -6,10 +6,7 @@ import {FormControl} from '@angular/forms';
   templateUrl: './starting-transaction-step.component.html',
   styleUrls: ['./starting-transaction-step.component.scss']
 })
-export class StartingTransactionStepComponent implements OnInit {
+export class StartingTransactionStepComponent {
   @Input() startingProcessKey: FormControl;
-
-  ngOnInit(): void {
-  }
 
 }

@@ -133,29 +133,29 @@
         }
       }
     },
-    "shared": {
+    "shared-core": {
       "projectType": "library",
-      "root": "libs/shared",
-      "sourceRoot": "libs/shared/src",
+      "root": "libs/shared/core",
+      "sourceRoot": "libs/shared/core/src",
       "prefix": "workflow-manager-frontend",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/shared/tsconfig.lib.json",
-              "libs/shared/tsconfig.spec.json"
+              "libs/shared/core/tsconfig.lib.json",
+              "libs/shared/core/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/shared/core/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared/jest.config.js",
-            "tsConfig": "libs/shared/tsconfig.spec.json",
+            "jestConfig": "libs/shared/core/jest.config.js",
+            "tsConfig": "libs/shared/core/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/shared/src/test-setup.ts"
+            "setupFile": "libs/shared/core/src/test-setup.ts"
           }
         }
       },
@@ -165,29 +165,29 @@
         }
       }
     },
-    "management-core": {
+    "shared-states": {
       "projectType": "library",
-      "root": "libs/management/core",
-      "sourceRoot": "libs/management/core/src",
+      "root": "libs/shared/states",
+      "sourceRoot": "libs/shared/states/src",
       "prefix": "workflow-manager-frontend",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/management/core/tsconfig.lib.json",
-              "libs/management/core/tsconfig.spec.json"
+              "libs/shared/states/tsconfig.lib.json",
+              "libs/shared/states/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/management/core/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/shared/states/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/management/core/jest.config.js",
-            "tsConfig": "libs/management/core/tsconfig.spec.json",
+            "jestConfig": "libs/shared/states/jest.config.js",
+            "tsConfig": "libs/shared/states/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/management/core/src/test-setup.ts"
+            "setupFile": "libs/shared/states/src/test-setup.ts"
           }
         }
       },
@@ -197,29 +197,29 @@
         }
       }
     },
-    "theme": {
+    "shared-theme": {
       "projectType": "library",
-      "root": "libs/theme",
-      "sourceRoot": "libs/theme/src",
+      "root": "libs/shared/theme",
+      "sourceRoot": "libs/shared/theme/src",
       "prefix": "workflow-manager-frontend",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/theme/tsconfig.lib.json",
-              "libs/theme/tsconfig.spec.json"
+              "libs/shared/theme/tsconfig.lib.json",
+              "libs/shared/theme/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/theme/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/shared/theme/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/theme/jest.config.js",
-            "tsConfig": "libs/theme/tsconfig.spec.json",
+            "jestConfig": "libs/shared/theme/jest.config.js",
+            "tsConfig": "libs/shared/theme/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/theme/src/test-setup.ts"
+            "setupFile": "libs/shared/theme/src/test-setup.ts"
           }
         }
       },
@@ -229,96 +229,29 @@
         }
       }
     },
-    "management-processes": {
+    "features-management": {
       "projectType": "library",
-      "root": "libs/management/processes",
-      "sourceRoot": "libs/management/processes/src",
+      "root": "libs/features/management",
+      "sourceRoot": "libs/features/management/src",
       "prefix": "workflow-manager-frontend",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/management/processes/tsconfig.lib.json",
-              "libs/management/processes/tsconfig.spec.json"
+              "libs/features/management/tsconfig.lib.json",
+              "libs/features/management/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/management/processes/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/features/management/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/management/processes/jest.config.js",
-            "tsConfig": "libs/management/processes/tsconfig.spec.json",
+            "jestConfig": "libs/features/management/jest.config.js",
+            "tsConfig": "libs/features/management/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/management/processes/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "management-statuses": {
-      "projectType": "library",
-      "root": "libs/management/statuses",
-      "sourceRoot": "libs/management/statuses/src",
-      "prefix": "workflow-manager-frontend",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/management/statuses/tsconfig.lib.json",
-              "libs/management/statuses/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/management/statuses/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/management/statuses/jest.config.js",
-            "tsConfig": "libs/management/statuses/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/management/statuses/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "management-transactions": {
-      "projectType": "library",
-      "root": "libs/management/transactions",
-      "sourceRoot": "libs/management/transactions/src",
-      "prefix": "workflow-manager-frontend",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/management/transactions/tsconfig.lib.json",
-              "libs/management/transactions/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/management/transactions/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/management/transactions/jest.config.js",
-            "tsConfig": "libs/management/transactions/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/management/transactions/src/test-setup.ts"
+            "setupFile": "libs/features/management/src/test-setup.ts"
           }
         }
       },
