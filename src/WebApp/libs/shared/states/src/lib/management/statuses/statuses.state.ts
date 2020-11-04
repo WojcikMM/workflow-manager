@@ -4,19 +4,17 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as fromActions from './statuses.actions';
 import { catchError, map, tap } from 'rxjs/operators';
-import { createEntityAdapter } from '@ngrx/entity';
-import { BackendOperationStatus } from '@workflow-manager-frontend/shared/states';
+import { BackendOperationStatus } from '../../core';
 import { throwError } from 'rxjs';
 import { StatusEntity, StatusesStateModel } from './statuses.models';
-
-export const statusesEntityAdapter = createEntityAdapter<StatusEntity>();
 
 @Injectable()
 @State<StatusesStateModel>({
   name: GLOBAL_CONST.FEATURE_STATE_NAMES.STATUSES,
-  defaults: statusesEntityAdapter.getInitialState({
+  defaults: {
+    entities: {},
     pendingOperations: []
-  })
+  }
 })
 export class StatusesState implements NgxsOnInit {
 
@@ -29,22 +27,25 @@ export class StatusesState implements NgxsOnInit {
   }
 
   @Action(fromActions.LoadStatusesAction)
-  loadStatuses({patchState, getState}: StateContext<StatusesStateModel>) {
+  loadStatuses({patchState}: StateContext<StatusesStateModel>) {
     return this._statusesClientService.getStatuses()
       .pipe(
-        map((statuses) => statuses.map(status => ({
-          id: status.id,
-          name: status.name,
-          processId: status.processId,
-          createdAt: new Date(status.createdAt),
-          updatedAt: new Date(status.updatedAt),
-          version: status.version
-        } as StatusEntity))),
+        map((statuses) => Object.assign({},
+          ...statuses.map(status => ({
+            [status.id]: {
+              id: status.id,
+              name: status.name,
+              processId: status.processId,
+              createdAt: new Date(status.createdAt),
+              updatedAt: new Date(status.updatedAt),
+              version: status.version
+            } as StatusEntity
+          })))),
         tap((statusesEntities) => {
-          patchState(statusesEntityAdapter.addMany(statusesEntities, {
-            ...getState(),
+          patchState({
+            entities: statusesEntities,
             error: null
-          }));
+          });
         }),
         catchError(err => {
           patchState({
@@ -60,28 +61,31 @@ export class StatusesState implements NgxsOnInit {
     return this._statusesClientService.createStatus({name, processId})
       .pipe(
         tap(acceptedResponse => {
-          patchState(statusesEntityAdapter.addOne({
-            id: acceptedResponse.aggregateId,
-            name,
-            processId,
-            createdAt: new Date(new Date().getUTCDate()),
-            updatedAt: new Date(new Date().getUTCDate()),
-            version: GLOBAL_CONST.AGGREGATE_INITIAL_VERSION
-          }, {
-            ...getState(),
-            error: null,
-            pendingOperations: [
-              ...getState().pendingOperations,
-              {
-                aggregateId: acceptedResponse.aggregateId,
-                correlationId: acceptedResponse.correlationId,
-                status: BackendOperationStatus.PENDING
-              }
-            ]
-          }));
-
-          this._matSnackbar.open('Status creation accepted.');
-        }),
+            patchState({
+              entities: {
+                ...getState().entities,
+                [acceptedResponse.aggregateId]: {
+                  id: acceptedResponse.aggregateId,
+                  name,
+                  processId,
+                  createdAt: new Date(new Date().getUTCDate()),
+                  updatedAt: new Date(new Date().getUTCDate()),
+                  version: GLOBAL_CONST.AGGREGATE_INITIAL_VERSION
+                }
+              },
+              error: null,
+              pendingOperations: [
+                ...getState().pendingOperations,
+                {
+                  aggregateId: acceptedResponse.aggregateId,
+                  correlationId: acceptedResponse.correlationId,
+                  status: BackendOperationStatus.PENDING
+                }
+              ]
+            });
+            this._matSnackbar.open('Status creation accepted.');
+          }
+        ),
         catchError(err => {
           this._matSnackbar.open('Status creation failure.');
           patchState({
@@ -99,14 +103,16 @@ export class StatusesState implements NgxsOnInit {
         tap(acceptedResponse => {
 
           const currentStatus = getState().entities[id];
-
-          patchState(statusesEntityAdapter.setOne({
-            ...currentStatus,
-            name,
-            processId,
-            version: currentStatus.version + 1
-          }, {
-            ...getState(),
+          patchState({
+            entities: {
+              ...getState().entities,
+              [id]: {
+                ...currentStatus,
+                name,
+                processId,
+                version: currentStatus.version + 1
+              }
+            },
             error: null,
             pendingOperations: [
               ...getState().pendingOperations,
@@ -116,7 +122,7 @@ export class StatusesState implements NgxsOnInit {
                 status: BackendOperationStatus.PENDING
               }
             ]
-          }));
+          });
 
           this._matSnackbar.open('Status update accepted.');
         }),

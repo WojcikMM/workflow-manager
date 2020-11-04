@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProcessEntity, ProcessesFacade, StatusEntity, StatusesFacade } from '@workflow-manager-frontend/shared/states';
+import { Observable } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import { MatVerticalStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'management-statuses-edit-form',
@@ -7,56 +11,66 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./statuses-edit-form.component.scss']
 })
 export class StatusesEditFormComponent {
-  // TODO: Add edit ability ( router select )
+  readonly reactForm: FormGroup;
+  readonly allProcesses$: Observable<ProcessEntity[]>;
+  readonly selectedStatus$: Observable<StatusEntity>;
+  readonly selectedProcessName$: Observable<string>;
 
-  // reactForm: FormGroup;
-  // selectedStatus: StatusesEntity;
-  // allProcesses$: Observable<ProcessesEntity[]>;
-  // selectedProcessName$: Observable<string>;
+  @ViewChild(MatVerticalStepper, {static: true})
+  private readonly _matStepperComponent: MatVerticalStepper;
 
-  // constructor(private readonly _fb: FormBuilder,
-  //             private readonly _router: Router,
-  //             private readonly _statusesFacade: StatusesFacade,
-  //             processesFacade: ProcessesFacade) {
-  //   this.reactForm = this._setupForm();
-  //   this.allProcesses$ = processesFacade.allProcesses$;
-  //   this.selectedProcessName$ = this._createSelectedProcess$();
-  // }
+  constructor(processesFacade: ProcessesFacade,
+              private readonly _statusesFacade: StatusesFacade) {
 
+    this.reactForm = this._setupForm();
 
-  private _createSelectedProcess$() {
-    // return combineLatest([this.allProcesses$, this.reactForm.get('processId').valueChanges])
-    //   .pipe(
-    //     filter(([_, processId]) => !!processId),
-    //     map(([processes, processId]) => {
-    //       const result = processes.filter(process => process.id === processId).map(process => process.name);
-    //       return result.length ? result[0] : null;
-    //     })
-    //   );
+    this.allProcesses$ = processesFacade.allProcesses$;
+    this.selectedStatus$ = _statusesFacade.selectedStatus$
+      .pipe(
+        map(paramFun => paramFun('statusId')),
+        tap(status => {
+          if (status) {
+            this.reactForm.patchValue({
+              name: status.name,
+              processId: status.processId
+            });
+            if (!this._matStepperComponent?.selectedIndex) {
+              setTimeout(() => {
+                this._matStepperComponent.next();
+              }, 1);
+            }
+          }
+        })
+      );
+
+    this.selectedProcessName$ = this.reactForm.get('processId').valueChanges
+      .pipe(
+        mergeMap(processId => processesFacade.getProcessById$.pipe(
+          map(processIdFun => processIdFun(processId)?.name)
+        ))
+      );
+  }
+
+  onUpdateStatus(statusId: string, statusVersion: number): void {
+    const {name, processId} = this.reactForm.value;
+    this._statusesFacade.updateStatus(statusId, name, processId, statusVersion);
+    this.redirectToList();
+  }
+
+  onCreateStatus(): void {
+    const {name, processId} = this.reactForm.value;
+    this._statusesFacade.createStatus(name, processId);
+    this.redirectToList();
+  }
+
+  redirectToList(): void {
+    this._statusesFacade.navigateTo('/management/statuses');
   }
 
   private _setupForm(): FormGroup {
-    // return this._fb.group({
-    //   name: this._fb.control('', Validators.required),
-    //   processId: this._fb.control('', Validators.required)
-    // });
-    return new FormGroup({});
-  }
-
-  onUpdateStatus() {
-    // const {name, processId} = this.reactForm.value;
-    // const {id, version} = this.selectedStatus;
-    // this._statusesFacade.updateStatus(id, name, processId, version);
-    // this.redirectToList();
-  }
-
-  onCreateStatus() {
-    // const {name, processId} = this.reactForm.value;
-    // this._statusesFacade.createStatus(name, processId);
-    // this.redirectToList();
-  }
-
-  redirectToList() {
-    // this._router.navigateByUrl('/management/statuses');
+    return new FormGroup({
+      name: new FormControl('', Validators.required),
+      processId: new FormControl('', Validators.required)
+    });
   }
 }

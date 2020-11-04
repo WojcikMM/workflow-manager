@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {SidebarViewModel} from './sidebar.view-model';
-import { GLOBAL_CONFIG } from '@workflow-manager-frontend/shared';
+import { GLOBAL_CONFIG } from '@workflow-manager-frontend/shared/core';
 
 @Component({
   selector: 'app-sidebar',

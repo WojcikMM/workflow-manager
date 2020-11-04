@@ -1,6 +1,6 @@
 import { BackendOperation } from '../../core';
 
-export interface StatusEntity {
+export interface TransactionsEntity {
   id: string;
   name: string;
   createdAt: Date;
@@ -9,8 +9,8 @@ export interface StatusEntity {
   processId: string;
 }
 
-export interface StatusesStateModel {
-  entities: { [p: string]: StatusEntity };
+export interface TransactionsStateModel {
+  entities: { [p: string]: TransactionsEntity };
   error?: Error;
   pendingOperations: BackendOperation[];
 }

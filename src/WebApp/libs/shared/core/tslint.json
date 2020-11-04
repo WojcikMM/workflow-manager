@@ -4,13 +4,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "workflowManagerFrontend",
+      "shared",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "workflow-manager-frontend",
+      "shared",
       "kebab-case"
     ]
   },

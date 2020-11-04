@@ -22,15 +22,15 @@ export class StatusesFacade {
   readonly lastError$: Observable<Error>;
 
 
-  loadProcesses() {
+  loadStatuses() {
     this.store.dispatch(new fromActions.LoadStatusesAction());
   }
 
-  createProcess(name: string, processId: string) {
+  createStatus(name: string, processId: string) {
     this.store.dispatch(new fromActions.CreateStatusAction(name, processId));
   }
 
-  updateProcess(id: string, newName: string, newProcessId: string, version: number) {
+  updateStatus(id: string, newName: string, newProcessId: string, version: number) {
     this.store.dispatch(new fromActions.UpdateStatusAction(id, newName, newProcessId, version));
   }
 

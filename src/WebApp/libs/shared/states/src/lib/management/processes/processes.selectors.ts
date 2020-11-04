@@ -12,6 +12,11 @@ export class ProcessesSelectors {
   }
 
   @Selector([ProcessesState])
+  static getProcessById({loadedProcesses}: ProcessesStateModel) {
+    return (processId: string) => loadedProcesses[processId];
+  }
+
+  @Selector([ProcessesState])
   static lastError({error}: ProcessesStateModel) {
     return error;
   }

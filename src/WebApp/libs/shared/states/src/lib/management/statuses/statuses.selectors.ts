@@ -1,14 +1,14 @@
 import { Selector } from '@ngxs/store';
 import { RouterState, RouterStateModel } from '@ngxs/router-plugin';
 import { CustomRouterStateModel } from '../../router';
-import { statusesEntityAdapter, StatusesState } from './statuses.state';
+import { StatusesState } from './statuses.state';
 import { StatusesStateModel } from './statuses.models';
 
 export class StatusesSelectors {
 
   @Selector([StatusesState])
   static allStatuses(stateModel: StatusesStateModel) {
-    return statusesEntityAdapter.getSelectors().selectAll(stateModel);
+    return Object.values(stateModel.entities);
   }
 
   @Selector([StatusesState])

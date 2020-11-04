@@ -4,12 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as fromActions from './processes.actions';
-import { createEntityAdapter } from '@ngrx/entity';
 import { ProcessEntity, ProcessesStateModel } from './processes.models';
 import { GLOBAL_CONST, ProcessesClientService } from '@workflow-manager-frontend/shared/core';
 import { BackendOperationStatus } from '../../core';
-
-export const processesEntityAdapter = createEntityAdapter<ProcessEntity>();
 
 @State<ProcessesStateModel>({
   name: GLOBAL_CONST.FEATURE_STATE_NAMES.PROCESSES,

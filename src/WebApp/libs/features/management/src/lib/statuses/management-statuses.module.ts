@@ -16,6 +16,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { StateManagementProcessesModule, StateManagementStatusesModule } from '@workflow-manager-frontend/shared/states';
+import { FlexModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   {
@@ -51,7 +52,8 @@ const routes: Routes = [
     MatStepperModule,
     StateManagementProcessesModule,
     StateManagementStatusesModule,
-    MatSelectModule
+    MatSelectModule,
+    FlexModule
   ]
 })
 export class ManagementStatusesModule {

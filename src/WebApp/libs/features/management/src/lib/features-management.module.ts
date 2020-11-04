@@ -11,15 +11,15 @@ const routes: Routes = [
   },
   {
     path: 'processes',
-    loadChildren: () => import('@workflow-manager-frontend/management/processes').then(mod => mod.ManagementProcessesModule)
+    loadChildren: () => import('./processes/management-processes.module').then(mod => mod.ManagementProcessesModule)
   },
   {
     path: 'statuses',
-    loadChildren: () => import('@workflow-manager-frontend/management/statuses').then(mod => mod.ManagementStatusesModule)
+    loadChildren: () => import('./statuses/management-statuses.module').then(mod => mod.ManagementStatusesModule)
   },
   {
     path: 'transactions',
-    loadChildren: () => import('@workflow-manager-frontend/management/transactions').then(mod => mod.ManagementTransactionsModule)
+    loadChildren: () => import('./transactions/management-transactions.module').then(mod => mod.ManagementTransactionsModule)
   }
 ];
 

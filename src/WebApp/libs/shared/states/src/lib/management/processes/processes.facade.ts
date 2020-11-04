@@ -18,6 +18,9 @@ export class ProcessesFacade {
   @Select(ProcessesSelectors.selectedProcessByRouter)
   readonly selectedProcess$: Observable<(paramName: string) => ProcessEntity>;
 
+  @Select(ProcessesSelectors.getProcessById)
+  readonly getProcessById$: Observable<(processId: string) => ProcessEntity>;
+
   @Select(ProcessesSelectors.lastError)
   readonly lastError$: Observable<Error>;
 
