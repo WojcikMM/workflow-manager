@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {OAuthService} from 'angular-oauth2-oidc';
+import {Observable } from 'rxjs';
+import { AuthService } from '@workflow-manager-frontend/shared/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,13 +11,14 @@ export class ToolbarComponent {
 
   @Output() toggleSidebarEvent: EventEmitter<void> = new EventEmitter<void>();
 
-  isAuthorized$ = of(true);
+  isAuthorized$: Observable<boolean>;
   @Input() isHandset$: Observable<boolean>;
 
-  constructor(private readonly _oauthService: OAuthService) {
+  constructor(private readonly _authService: AuthService) {
+    this.isAuthorized$ = _authService.isLoggedIn$;
   }
 
-  signOut() {
-    this._oauthService.logOut();
-  }
+   signOut() {
+     this._authService.logOut();
+   }
 }

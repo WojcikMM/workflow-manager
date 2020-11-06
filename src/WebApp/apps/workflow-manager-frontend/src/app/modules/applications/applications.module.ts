@@ -10,7 +10,7 @@ const routes: Route[] = [
   },
   {
     path: 'search',
-    loadChildren: () => import('./search/search.module').then(mod => mod.SearchModule)
+    redirectTo: 'registration'
   },
   {
     path: 'registration',

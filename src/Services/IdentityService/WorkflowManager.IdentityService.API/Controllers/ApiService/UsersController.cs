@@ -17,7 +17,6 @@ namespace WorkflowManager.IdentityService.API.Controllers.ApiService
         public UsersController(UserManager<IdentityUser> userManager) =>
             _userManager = userManager;
 
-
         [HttpGet]
         [ProducesResponseType(typeof(IdentityUser), StatusCodes.Status200OK)]
         public IActionResult GetUsers() =>
@@ -32,7 +31,6 @@ namespace WorkflowManager.IdentityService.API.Controllers.ApiService
 
             return Single(user);
         }
-
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -56,7 +54,6 @@ namespace WorkflowManager.IdentityService.API.Controllers.ApiService
             return Created($"api/users/{user.Id}", null);
 
         }
-
 
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -167,7 +164,6 @@ namespace WorkflowManager.IdentityService.API.Controllers.ApiService
 
             return ValidationProblem();
         }
-
 
         private void AddErrorsToModelState(IdentityResult result)
         {

@@ -9,6 +9,7 @@ namespace WorkflowManager.CQRS.ReadModel
         Task<IEnumerable<TReadModel>> GetAllAsync();
         Task<IEnumerable<TReadModel>> SearchAsync(string query);
         Task<TReadModel> GetByIdAsync(Guid id);
+        Task<bool> AnyAsync(Guid id);
 
         Task AddAsync(TReadModel model);
         Task UpdateAsync(TReadModel model);

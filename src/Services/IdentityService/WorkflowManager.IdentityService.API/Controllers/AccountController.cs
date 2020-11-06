@@ -90,7 +90,6 @@ namespace WorkflowManager.IdentityService.API.Controllers
             return View(vm);
         }
 
-
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -112,7 +111,6 @@ namespace WorkflowManager.IdentityService.API.Controllers
         {
             return View();
         }
-
 
         [HttpGet("error")]
         [ApiExplorerSettings(IgnoreApi = true)]

@@ -70,8 +70,6 @@ namespace Microsoft.Extensions.DependencyInjection
                     options.HttpOnly = true;
                     options.SameSite = SameSiteMode.Lax;
                 }
-
-
             }
         }
 

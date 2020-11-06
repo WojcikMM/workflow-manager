@@ -43,8 +43,6 @@ namespace IdentityServerAspNetIdentity
             services.ConfigureNonBreakingSameSiteCookies();
 
             services.AddServiceSwaggerUI();
-
-            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

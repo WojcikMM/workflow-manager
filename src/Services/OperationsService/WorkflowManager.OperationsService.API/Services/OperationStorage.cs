@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using WorkflowManager.CQRS.Domain.Events;
+using WorkflowManager.OperationsService.API;
 using WorkflowManager.OperationsStorage.Api.Dto;
 
 namespace WorkflowManager.OperationsStorage.Api.Services
@@ -21,7 +22,7 @@ namespace WorkflowManager.OperationsStorage.Api.Services
 
         public async Task SetAsync(IEvent @event)
         {
-            var status = @event is IRejectedEvent ? "Rejected" : @event is ICompleteEvent ? "Complete" : "Pending";
+            var status = GetEventType(@event).ToString();
             await _cache.SetStringAsync(@event.CorrelationId.ToString(),
                 JsonConvert.SerializeObject(new OperationDto
                 {
@@ -33,6 +34,16 @@ namespace WorkflowManager.OperationsStorage.Api.Services
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(20),
                     SlidingExpiration = TimeSpan.FromMinutes(5)
                 });
+        }
+
+        private EventType GetEventType(IEvent @event)
+        {
+            return @event switch
+            {
+                IRejectedEvent _ => EventType.REJECTED,
+                ICompleteEvent _ => EventType.COMPLETE,
+                _ => EventType.PENDING
+            };
         }
     }
 }

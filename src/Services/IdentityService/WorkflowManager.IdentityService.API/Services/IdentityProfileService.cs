@@ -20,7 +20,6 @@ namespace WorkflowManager.IdentityService.API.Services
             var user = await _userManager.GetUserAsync(context.Subject);
             var userRoles = await _userManager.GetRolesAsync(user);
 
-
             var userRoleClaims = userRoles
                 .Select(roleName => new Claim(ClaimTypes.Role, roleName))
                 .ToList();

@@ -3,7 +3,7 @@
     <mat-label>Select process</mat-label>
     <mat-select [formControl]="processControl">
       <mat-option *ngFor="let process of processes$ | async"
-                  [value]="process.$key"> {{process.name}}
+                  [value]="process.id"> {{process.name}}
       </mat-option>
     </mat-select>
     <mat-error>Process is required.</mat-error>

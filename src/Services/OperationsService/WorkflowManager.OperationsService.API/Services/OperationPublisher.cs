@@ -11,7 +11,6 @@ namespace WorkflowManager.OperationsStorage.Api.Services
 
         public OperationPublisher(IPublishEndpoint busPublisher) => _busPublisher = busPublisher;
 
-
         public async Task PublishResult(IEvent @event)
         {
             if (@event is IRejectedEvent)

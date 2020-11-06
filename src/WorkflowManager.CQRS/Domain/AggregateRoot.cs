@@ -10,7 +10,6 @@ namespace WorkflowManager.CQRS.Domain.Domain
         private readonly List<IEvent> _changes;
         public Guid AggregateId { get; protected set; }
         public int Version { get; protected set; }
-        public int EventVersion { get; protected set; }
 
         protected AggregateRoot()
         {
@@ -46,7 +45,6 @@ namespace WorkflowManager.CQRS.Domain.Domain
             ApplyEventChanges(@event);
             _changes.Add(@event);
         }
-
 
         private void ApplyEventChanges(IEvent @event)
         {

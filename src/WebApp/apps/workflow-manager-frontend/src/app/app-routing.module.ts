@@ -1,15 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout/layout.component';
-import {AuthGuard, } from '@workflow-manager/shared';
-import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
+import {AuthGuard, UnauthorizedComponent} from '@workflow-manager-frontend/shared/core';
 
 
 const routes: Routes = [
   {
     path: 'unauthorized',
     pathMatch: 'full',
-    component: UnauthorizedComponent,
+    component: UnauthorizedComponent
   },
   {
     path: '',
@@ -18,7 +17,7 @@ const routes: Routes = [
     children: [
       {
         path: 'management',
-        loadChildren: () => import('./modules/management/management.module').then(mod => mod.ManagementModule)
+        loadChildren: () => import('@workflow-manager-frontend/features/management').then(mod => mod.FeaturesManagementModule)
       },
       {
         path: 'applications',

@@ -11,8 +11,5 @@ namespace WorkflowManager.Common.Messages.Events.Processes
         {
             this.Name = Name;
         }
-
     }
-
-
 }

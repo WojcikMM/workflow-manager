@@ -1,0 +1,71 @@
+<div class="process-edit-form">
+  <mat-vertical-stepper [linear]="true">
+    <mat-step [stepControl]="nameFormControl">
+      <ng-template matStepLabel>Definition</ng-template>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="nameFormControl">
+      </mat-form-field>
+      <br>
+      <button mat-button (click)="redirectToList()">Cancel</button>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Preview</ng-template>
+      <mat-card class="process-edit-form__step-two__card">
+        <mat-card-header>
+          <mat-card-title *ngIf="!!selectedProcess">Process</mat-card-title>
+          <mat-card-title *ngIf="!selectedProcess">New Process</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div fxLayout="row" fxLayoutGap="1em">
+            <div>
+              <div class="mat-body">
+                <i>Name:</i>
+              </div>
+              <ng-container *ngIf="selectedProcess">
+                <div class="mat-body">
+                  <i>Created at:</i>
+                </div>
+                <div class="mat-body">
+                  <i>Last updated at:</i>
+                </div>
+              </ng-container>
+            </div>
+            <div>
+              <div class="mat-body">{{nameFormControl.value}}</div>
+              <ng-container *ngIf="selectedProcess">
+                <div class="mat-body">{{selectedProcess.createdAt | date}}</div>
+                <div class="mat-body">{{selectedProcess.updatedAt | date}}</div>
+              </ng-container>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions *ngIf="nameFormControl.untouched">
+          <button mat-button *ngIf="nameFormControl.untouched" (click)="redirectToList()">Back To List</button>
+        </mat-card-actions>
+
+        <mat-card-actions *ngIf="nameFormControl.touched" align="end">
+          <button mat-raised-button (click)="redirectToList()">Cancel</button>
+          <button *ngIf="!!selectedProcess"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="nameFormControl.invalid"
+                  (click)="onUpdateProcess(selectedProcess.id, nameFormControl.value)">
+            Save Process
+          </button>
+          <button *ngIf="!selectedProcess"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="nameFormControl.invalid"
+                  (click)="onCreateProcess(this.nameFormControl.value)">
+            Create Process
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>

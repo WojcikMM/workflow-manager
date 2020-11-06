@@ -1,0 +1,5 @@
+@import 'libs/shared/theme/src/styles/management-common-styles';
+
+.processes-list {
+  @include shared-management-list;
+}

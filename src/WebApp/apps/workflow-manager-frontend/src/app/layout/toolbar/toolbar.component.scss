@@ -17,9 +17,10 @@ $max-mobile-width: 64em;
     }
 
     &--center {
-      text-align: center;
-      margin: auto;
       flex: 2;
+      margin: auto;
+      text-align: center;
+
       img {
         height: 3em;
       }

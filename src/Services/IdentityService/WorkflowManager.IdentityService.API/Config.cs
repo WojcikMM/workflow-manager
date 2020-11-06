@@ -17,20 +17,10 @@ namespace IdentityServerAspNetIdentity
                 new IdentityResources.Profile()
             };
 
-
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new ApiResource("Processes_Service", "Access to Processes Service API"){
-                    UserClaims =
-                    {
-                        IdentityModel.JwtClaimTypes.Name,
-                        IdentityModel.JwtClaimTypes.Profile,
-                        IdentityModel.JwtClaimTypes.Audience
-                    }
-                },
-
-                new ApiResource("Statuses_Service", "Access to Statuses Service API"),
+                new ApiResource("Configuration_Service", "Access to Configuration Service API"),
 
                 new ApiResource("Operations_Service", "Access to Operations Service API"),
 
@@ -45,13 +35,11 @@ namespace IdentityServerAspNetIdentity
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("Processes_Service"),
-                new ApiScope("Statuses_Service"),
+                new ApiScope("Configuration_Service"),
                 new ApiScope("Operations_Service"),
                 new ApiScope("Notifications_Service"),
                 new ApiScope("Identity_Service")
             };
-
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -60,15 +48,16 @@ namespace IdentityServerAspNetIdentity
                 {
                     ClientId = "spa",
                     ClientName = "SPA Code Client",
-                    AccessTokenLifetime = 330,
-                    IdentityTokenLifetime = 60,
+                    //AccessTokenLifetime = 65,
+                    //IdentityTokenLifetime = 60,
 
                     RequireClientSecret = false,
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RedirectUris = new List<string>
                     {
-                        "http://localhost:4200"
+                        "http://localhost:4200",
+                        "http://localhost:4200/callback.html"
                     },
                     PostLogoutRedirectUris = new List<string>
                     {
@@ -82,8 +71,7 @@ namespace IdentityServerAspNetIdentity
                     {
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
-                         "Processes_Service",
-                         "Statuses_Service",
+                         "Configuration_Service",
                          "Operations_Service",
                          "Notifications_Service",
                          "Identity_Service"
@@ -91,7 +79,7 @@ namespace IdentityServerAspNetIdentity
                     RequireConsent = false
 
                 },
-                 new Client
+                new Client
                 {
                     ClientId = "swagger",
                     ClientName = "Swagger Client",
@@ -102,15 +90,17 @@ namespace IdentityServerAspNetIdentity
                     RedirectUris =
                     {
                         "https://workflow-manager-identity-service-api-dev.azurewebsites.net/oauth2-redirect.html",
+                        "http://localhost:8000/swagger/oauth2-redirect.html",
+
                         "http://localhost:5000/oauth2-redirect.html",
                         "http://localhost:8000/oauth2-redirect.html",
-                        "http://localhost:8000/swagger/oauth2-redirect.html",
                         "http://localhost:8001/oauth2-redirect.html",
                         "http://localhost:8002/oauth2-redirect.html",
                         "http://localhost:8003/oauth2-redirect.html"
                     },
                     PostLogoutRedirectUris = {
                         "https://workflow-manager-identity-service-api-dev.azurewebsites.net/index.html",
+
                          "http://localhost:5000/index.html",
                          "http://localhost:8000/index.html",
                          "http://localhost:8001/index.html",
@@ -123,14 +113,12 @@ namespace IdentityServerAspNetIdentity
                          "http://localhost:8000",
                          "http://localhost:8001",
                          "http://localhost:8002",
-                         "http://localhost:8003",
+                         "http://localhost:8003"
                      },
                     AllowedScopes = {
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
-                         "api1",
-                         "Processes_Service",
-                         "Statuses_Service",
+                         "Configuration_Service",
                          "Operations_Service",
                          "Notifications_Service",
                          "Identity_Service"

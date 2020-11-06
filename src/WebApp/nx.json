@@ -12,7 +12,20 @@
   },
   "projects": {
     "workflow-manager-frontend": {
+      "tags": ["app"]
+    },
+    "shared-core": {
       "tags": []
+    },
+    "shared-states": {
+      "tags": []
+    },
+    "shared-theme": {
+      "tags": []
+    },
+    "features-management": {
+      "tags": [],
+      "implicitDependencies": ["shared-theme"]
     }
   }
 }
