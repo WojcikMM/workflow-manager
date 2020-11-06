@@ -9,32 +9,37 @@ using WorkflowManager.ConfigurationService.API.DTO.Commands;
 using WorkflowManager.Common.Controllers;
 using WorkflowManager.Common.ApiResponses;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 using MassTransit;
 using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models;
+using WorkflowManager.ConfigurationService.API.DTO.Query;
 
 namespace WorkflowManager.ConfigurationService.API.Controllers
 {
     [Authorize]
     public class ProcessesController : BaseWithPublisherController
     {
+        private readonly IMapper _mapper;
         private readonly IReadModelRepository<ProcessModel> _readModelRepository;
 
-        public ProcessesController(IReadModelRepository<ProcessModel> readModelRepository, IPublishEndpoint publishEndpoint) : base(publishEndpoint)
+        public ProcessesController(IReadModelRepository<ProcessModel> readModelRepository, IPublishEndpoint publishEndpoint, IMapper mapper) : base(publishEndpoint)
         {
+            this._mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
             _readModelRepository = readModelRepository ??
                 throw new ArgumentNullException(nameof(readModelRepository));
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<ProcessModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProcessDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetProcesses([FromQuery]string name = null) =>
-            Collection(await _readModelRepository.SearchAsync(name));
+            Collection(_mapper.Map<IEnumerable<ProcessDto>>(await _readModelRepository.SearchAsync(name)));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(ProcessModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProcessDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NotFoundResponse), (int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetProcess([FromRoute]Guid id) =>
-            Single(await _readModelRepository.GetByIdAsync(id));
+            Single(_mapper.Map<ProcessDto>(await _readModelRepository.GetByIdAsync(id)));
 
 
         [HttpPost]

@@ -22,6 +22,7 @@ using WorkflowManager.ConfigurationService.ReadModel.EventHandlers.Statuses;
 using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase;
 using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models;
 using WorkflowManager.ConfigurationService.ReadModel.Repositories;
+using AutoMapper;
 
 namespace WorkflowManager.ConfigurationService.API
 {
@@ -45,6 +46,7 @@ namespace WorkflowManager.ConfigurationService.API
             services.AddReadModelRepository<ProcessModel, ProcessReadModelRepository>();
             services.AddReadModelRepository<StatusModel, StatusReadModelRepository>();
 
+            services.AddAutoMapper(typeof(Startup));
 
 
             services.AddMasstransitWithReflection(GetConsumerTypesToRegister());

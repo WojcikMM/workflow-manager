@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,27 +12,34 @@ using WorkflowManager.Common.Messages.Commands.Statuses;
 using WorkflowManager.CQRS.ReadModel;
 using WorkflowManager.ConfigurationService.API.DTO.Commands;
 using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models;
+using WorkflowManager.ConfigurationService.API.DTO.Query;
 
 namespace WorkflowManager.ConfigurationService.API.Controllers
 {
     public class StatusesController : BaseWithPublisherController
     {
+        private readonly IMapper _mapper;
         private readonly IReadModelRepository<StatusModel> _readModelRepository;
 
-        public StatusesController(IPublishEndpoint publishEndpoint, IReadModelRepository<StatusModel> readModelRepository) : base(publishEndpoint) =>
-            _readModelRepository = readModelRepository;
+        public StatusesController(IPublishEndpoint publishEndpoint, IReadModelRepository<StatusModel> readModelRepository, IMapper mapper) : base(publishEndpoint)
+        {
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
+            _readModelRepository = readModelRepository ??
+                throw new ArgumentNullException(nameof(readModelRepository));
+        }
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<StatusModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<StatusDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetStatuses([FromQuery]string name = "") =>
-            Collection(await _readModelRepository.SearchAsync(name));
+            Collection(_mapper.Map<IEnumerable<StatusModel>,IEnumerable<StatusDto>>(await _readModelRepository.SearchAsync(name)));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(StatusModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(StatusDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NotFoundResponse), (int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetStatus([FromRoute]Guid id) =>
-            Single(await _readModelRepository.GetByIdAsync(id));
+            Single(_mapper.Map<StatusDto>(await _readModelRepository.GetByIdAsync(id)));
 
 
         [HttpPost]

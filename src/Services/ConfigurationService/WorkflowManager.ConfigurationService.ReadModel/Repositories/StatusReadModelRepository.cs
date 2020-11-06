@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using WorkflowManager.CQRS.ReadModel;
 using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase;
 using WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models;
-using System.Security.Cryptography.X509Certificates;
 
 namespace WorkflowManager.ConfigurationService.ReadModel.Repositories
 {
@@ -25,14 +24,14 @@ namespace WorkflowManager.ConfigurationService.ReadModel.Repositories
 
         public async Task<IEnumerable<StatusModel>> SearchAsync(string query)
         {
-            IQueryable<StatusModel> processes = _context.Statuses.AsQueryable();
+            IQueryable<StatusModel> statuses = _context.Statuses.AsQueryable().Include(x => x.Process);
             if (!string.IsNullOrWhiteSpace(query))
             {
-                processes = processes
+                statuses = statuses
                     .Where(m => m.Name.ToLower().Contains(query.ToLower()));
             }
 
-            return await processes.ToListAsync();
+            return await statuses.ToListAsync();
         }
 
         public async Task<IEnumerable<StatusModel>> GetAllAsync() =>
@@ -43,17 +42,17 @@ namespace WorkflowManager.ConfigurationService.ReadModel.Repositories
 
         public async Task RemoveAsync(Guid id)
         {
-            StatusModel process = await GetByIdAsync(id);
-            _context.Remove(process);
+            StatusModel status = await GetByIdAsync(id);
+            _context.Remove(status);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(StatusModel model)
         {
-            StatusModel process = await GetByIdAsync(model.Id);
-            process.Name = model.Name;
-            process.Version = model.Version;
-            process.UpdatedAt = DateTime.UtcNow;
+            StatusModel status = await GetByIdAsync(model.Id);
+            status.Name = model.Name;
+            status.Version = model.Version;
+            status.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
         }
 
