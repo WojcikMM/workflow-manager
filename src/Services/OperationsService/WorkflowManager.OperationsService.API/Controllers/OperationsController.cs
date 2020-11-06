@@ -14,7 +14,6 @@ namespace WorkflowManager.OperationsStorage.Controllers
         private readonly IOperationsStorage _operationsStorage;
         public OperationsController(IOperationsStorage operationsStorage) => _operationsStorage = operationsStorage;
 
-
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(OperationDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NotFoundResponse), (int)HttpStatusCode.NotFound)]

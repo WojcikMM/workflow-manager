@@ -46,7 +46,6 @@ namespace WorkflowManager.CQRS.Domain.Domain
             _changes.Add(@event);
         }
 
-
         private void ApplyEventChanges(IEvent @event)
         {
             if (@event is null)

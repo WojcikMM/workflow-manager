@@ -14,7 +14,5 @@ namespace WorkflowManager.Common.Messages.Commands.Processes
         public RemoveProcessCommand(Guid AggregateId, int Version, Guid CorrelationId) : base(AggregateId, Version, CorrelationId)
         {
         }
-
-
     }
 }

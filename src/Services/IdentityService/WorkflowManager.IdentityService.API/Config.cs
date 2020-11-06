@@ -17,7 +17,6 @@ namespace IdentityServerAspNetIdentity
                 new IdentityResources.Profile()
             };
 
-
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
@@ -41,7 +40,6 @@ namespace IdentityServerAspNetIdentity
                 new ApiScope("Notifications_Service"),
                 new ApiScope("Identity_Service")
             };
-
 
         public static IEnumerable<Client> Clients =>
             new Client[]

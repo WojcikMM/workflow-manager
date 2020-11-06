@@ -8,7 +8,6 @@ namespace WorkflowManager.ConfigurationService.Core.Domain.Mementos
         public string Name { get; }
         public Guid ProcessId { get; }
 
-
         public StatusMemento(Guid Id, string Name, Guid ProcessId, int Version) : base(Id, Version)
         {
             this.Name = Name;

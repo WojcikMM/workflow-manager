@@ -21,7 +21,6 @@ namespace WorkflowManager.Common.Controllers
             ServiceVersion = options.Value.ServiceVersion;
         }
 
-
         [HttpGet("")]
         [ProducesResponseType(typeof(VersionResultModel), (int)HttpStatusCode.OK)]
         public IActionResult GetVersion()

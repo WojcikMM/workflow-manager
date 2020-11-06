@@ -28,7 +28,6 @@ namespace WorkflowManager.Common.Swagger
             return app;
         }
 
-
         public static void AddServiceSwaggerUI(this IServiceCollection services, string configurationSectionName = "Swagger")
         {
 

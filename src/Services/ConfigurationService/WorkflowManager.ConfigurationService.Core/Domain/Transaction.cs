@@ -33,7 +33,6 @@ namespace WorkflowManager.ConfigurationService.Core.Domain
 
         //TODO: Add Events and Event handlers for transaction aggregate
 
-
         // Memento
         public BaseMemento GetMemento()
         {

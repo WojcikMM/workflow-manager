@@ -21,7 +21,6 @@ namespace WorkflowManager.ConfigurationService.ReadModel.Repositories
             await _context.SaveChangesAsync();
         }
 
-
         public async Task<IEnumerable<StatusModel>> SearchAsync(string query)
         {
             IQueryable<StatusModel> statuses = _context.Statuses.AsQueryable().Include(x => x.Process);

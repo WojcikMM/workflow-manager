@@ -52,7 +52,6 @@ namespace WorkflowManager.IdentityService.API.Controllers
             return ValidationProblem(ModelState);
         }
 
-
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -96,7 +95,6 @@ namespace WorkflowManager.IdentityService.API.Controllers
             }
             return NotFound();
         }
-
 
         private void AddErrorsToModelState(IdentityResult result)
         {

@@ -18,19 +18,16 @@ namespace WorkflowManager.CQRS.Storage
         protected abstract BaseMemento GetLatestSnapshot(Guid AggregateId);
         protected abstract Task SaveAndPublishEvents(TAggregate Aggregate, IEnumerable<IEvent> UncommitedEvents, Guid CorrelationId);
 
-
         public bool Any(Guid id)
         {
             return GetEventsById(id, DomainConstants.NewAggregateVersion).Any();
         }
-
 
         public TAggregate GetById(Guid AggregateId)
         {
 
             BaseMemento leatestSnapshot = GetLatestSnapshot(AggregateId);
             int leatestSnapshotVersion = leatestSnapshot is null ? DomainConstants.NewAggregateVersion : leatestSnapshot.Version;
-
 
             IEnumerable<IEvent> events = GetEventsById(AggregateId, leatestSnapshotVersion);
 

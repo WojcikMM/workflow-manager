@@ -55,7 +55,6 @@ namespace WorkflowManager.OperationsStorage.Api
                 {typeof(ProcessCreatedEvent), typeof(ProcessesEventHandler) },
                 {typeof(ProcessNameUpdatedEvent), typeof(ProcessesEventHandler) },
 
-
                 {typeof(StatusCreatedEvent), typeof(StatusesEventHandler) },
                 {typeof(StatusNameUpdatedEvent), typeof(StatusesEventHandler) },
                 {typeof(StatusProcessIdUpdatedEvent), typeof(StatusesEventHandler) }

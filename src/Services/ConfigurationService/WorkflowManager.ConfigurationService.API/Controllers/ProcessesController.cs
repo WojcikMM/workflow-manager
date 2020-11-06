@@ -41,7 +41,6 @@ namespace WorkflowManager.ConfigurationService.API.Controllers
         public async Task<IActionResult> GetProcess([FromRoute]Guid id) =>
             Single(_mapper.Map<ProcessDto>(await _readModelRepository.GetByIdAsync(id)));
 
-
         [HttpPost]
         [Authorize(Roles = "processes_manager")]
         public async Task<IActionResult> CreateProcess([FromBody] CreateProcessDTOCommand command) =>

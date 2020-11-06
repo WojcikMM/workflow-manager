@@ -17,7 +17,6 @@ namespace WorkflowManager.Common.MassTransit
         public Type MessageType { get; set; }
     }
 
-
     public static class MassTransitExtension
     {
         public static void AddMasstransitWithReflection(this IServiceCollection services, IDictionary<Type, Type> messageTypeAndClientTypeDictionary)
@@ -46,8 +45,6 @@ namespace WorkflowManager.Common.MassTransit
                 {
                     MassTransitExtension.CreateConfigForRabbitMq(services, config, consumerAssemblyTypes);
                 }
-
-
 
                 services.AddSingleton<IHostedService, MassTransitHostedService>();
             });

@@ -32,7 +32,6 @@ namespace WorkflowManager.ConfigurationService.API
 
         public Startup(IConfiguration configuration) => Configuration = configuration;
 
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -47,7 +46,6 @@ namespace WorkflowManager.ConfigurationService.API
             services.AddReadModelRepository<StatusModel, StatusReadModelRepository>();
 
             services.AddAutoMapper(typeof(Startup));
-
 
             services.AddMasstransitWithReflection(GetConsumerTypesToRegister());
         }

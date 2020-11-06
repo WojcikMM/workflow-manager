@@ -29,7 +29,6 @@ namespace WorkflowManager.ConfigurationService.API.Controllers
                 throw new ArgumentNullException(nameof(readModelRepository));
         }
 
-
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StatusDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetStatuses([FromQuery]string name = "") =>
@@ -40,7 +39,6 @@ namespace WorkflowManager.ConfigurationService.API.Controllers
         [ProducesResponseType(typeof(NotFoundResponse), (int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetStatus([FromRoute]Guid id) =>
             Single(_mapper.Map<StatusDto>(await _readModelRepository.GetByIdAsync(id)));
-
 
         [HttpPost]
         [Authorize(Roles = "statuses_manager")]

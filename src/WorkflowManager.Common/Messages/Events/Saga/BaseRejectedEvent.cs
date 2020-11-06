@@ -17,7 +17,6 @@ namespace WorkflowManager.Common.Messages.Events.Saga
             this.BusinessResponse = businessResponse;
         }
 
-
         public IRejectedEvent Initialize(IEvent @event, Exception exception, Guid correlationId)
         {
             this.AggregateId = @event.AggregateId;

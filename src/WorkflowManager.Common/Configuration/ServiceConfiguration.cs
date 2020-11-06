@@ -51,7 +51,6 @@ namespace WorkflowManager.Common.ApplicationInitializer
             }
         }
 
-
         /// <summary>
         /// Gets data from "Service" section and Service version form service assembly
         /// </summary>
