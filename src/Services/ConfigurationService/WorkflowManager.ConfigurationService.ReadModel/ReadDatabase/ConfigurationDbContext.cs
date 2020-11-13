@@ -12,6 +12,7 @@ namespace WorkflowManager.ConfigurationService.ReadModel.ReadDatabase
 
         public DbSet<ProcessModel> Processes { get; set; }
         public DbSet<StatusModel> Statuses { get; set; }
+        public DbSet<TransactionModel> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -8,8 +8,4 @@
     <ProjectReference Include="..\..\..\WorkflowManager.Common\WorkflowManager.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CommandHandlers\Transactions\" />
-  </ItemGroup>
-
 </Project>
