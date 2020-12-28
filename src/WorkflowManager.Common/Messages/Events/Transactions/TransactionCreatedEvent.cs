@@ -1,16 +1,16 @@
 ﻿using System;
-using WorkflowManager.CQRS.Domain.Domain.Mementos;
+using WorkflowManager.CQRS.Domain.Events;
 
-namespace WorkflowManager.ConfigurationService.Core.Domain.Mementos
+namespace WorkflowManager.Common.Messages.Events.Transactions
 {
-    public class TransactionMemento : BaseMemento
+    public class TransactionCreatedEvent : BaseEvent
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public Guid StatusId { get; set; }
         public Guid OutgoingStatusId { get; set; }
 
-        public TransactionMemento(Guid Id, string Name, string Description, Guid StatusId, Guid OutgoingStatusId, int Version) : base(Id, Version)
+        public TransactionCreatedEvent(Guid AggregateId, string Name, string Description, Guid StatusId, Guid OutgoingStatusId) : base(AggregateId)
         {
             this.Name = Name;
             this.Description = Description;

@@ -1,6 +1,6 @@
 ﻿namespace WorkflowManager.ConfigurationService.API.DTO.Commands
 {
-    public class CreateProcessDTOCommand
+    public class CreateProcessCommandDto
     {
         public string Name { get; set; }
     }

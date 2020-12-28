@@ -43,12 +43,12 @@ namespace WorkflowManager.ConfigurationService.API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "processes_manager")]
-        public async Task<IActionResult> CreateProcess([FromBody] CreateProcessDTOCommand command) =>
+        public async Task<IActionResult> CreateProcess([FromBody] CreateProcessCommandDto command) =>
             await SendAsync(new CreateProcessCommand(command.Name));
 
         [HttpPatch("{id}")]
         [Authorize(Roles = "processes_manager")]
-        public async Task<IActionResult> UpdateProcess([FromRoute]Guid id, UpdateProcessDTOCommand command) =>
+        public async Task<IActionResult> UpdateProcess([FromRoute]Guid id, UpdateProcessCommandDto command) =>
            await SendAsync(new UpdateProcessCommand(id, command.Name, command.Version));
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using WorkflowManager.CQRS.ReadModel;
 
@@ -16,5 +16,9 @@ namespace WorkflowManager.ConfigurationService.ReadModel.ReadDatabase.Models
 
         public Guid ProcessId { get; set; }
         public ProcessModel Process { get; set; }
+
+        //TODO: CHECK IF IT WILL WORK WITHOUT DEFINE FOREIGN KEYS IMPLICIT
+        public ICollection<TransactionModel> Transactions { get; set; }
+        public ICollection<TransactionModel> OutgoingTransactions { get; set; }
     }
 }

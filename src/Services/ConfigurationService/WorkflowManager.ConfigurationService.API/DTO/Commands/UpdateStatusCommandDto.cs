@@ -2,7 +2,7 @@
 
 namespace WorkflowManager.ConfigurationService.API.DTO.Commands
 {
-    public class UpdateStatusDTOCommand
+    public class UpdateStatusCommandDto
     {
         public string Name { get; set; }
         public Guid? ProcessId { get; set; }

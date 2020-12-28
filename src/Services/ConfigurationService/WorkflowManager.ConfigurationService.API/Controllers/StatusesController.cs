@@ -43,13 +43,13 @@ namespace WorkflowManager.ConfigurationService.API.Controllers
         [HttpPost]
         [Authorize(Roles = "statuses_manager")]
         [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.Accepted)]
-        public async Task<IActionResult> CreateStatus([FromBody] CreateStatusDTOCommand command) =>
+        public async Task<IActionResult> CreateStatus([FromBody] CreateStatusCommandDto command) =>
             await SendAsync(new CreateStatusCommand(command.Name, command.ProcessId));
 
         [HttpPatch("{id}")]
         [Authorize(Roles = "statuses_manager")]
         [ProducesResponseType(typeof(AcceptedResponse), (int)HttpStatusCode.Accepted)]
-        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusDTOCommand command) =>
+        public async Task<IActionResult> UpdateStatus([FromRoute]Guid id, UpdateStatusCommandDto command) =>
             await SendAsync(new UpdateStatusCommand(id, command.Name, command.ProcessId, command.Version));
     }
 }
