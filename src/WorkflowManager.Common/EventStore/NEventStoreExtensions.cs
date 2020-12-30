@@ -14,7 +14,7 @@ namespace WorkflowManager.Common.EventStore
         {
             var connectionString = serviceCollection.GetConnectionString(connectionStringName);
 
-            serviceCollection.AddTransient(typeof(IRepository<>), typeof(AggregateRespository<>));
+            serviceCollection.AddTransient(typeof(IRepository<>), typeof(AggregateRepository<>));
 
             serviceCollection.AddTransient<IStoreEvents>(service => Wireup
                 .Init()
@@ -29,7 +29,7 @@ namespace WorkflowManager.Common.EventStore
 
         public static void AddInMemoryEventStore(this IServiceCollection serviceCollection, LogLevel logLevel = LogLevel.Info)
         {
-            serviceCollection.AddTransient(typeof(IRepository<>), typeof(AggregateRespository<>));
+            serviceCollection.AddTransient(typeof(IRepository<>), typeof(AggregateRepository<>));
             serviceCollection.AddTransient(service => Wireup
                 .Init()
                 .LogToConsoleWindow(logLevel)
