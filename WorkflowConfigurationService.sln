@@ -37,7 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManager.Configurati
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monolith", "Monolith", "{B793DD14-43D1-4764-99C7-8CEB4C08F3E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Core", "src\Monolith\WorkflowManagerMonolith.Core\WorkflowManagerMonolith.Core.csproj", "{AA27EC84-9FA3-44A1-827F-E3D8CC0C6405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.Core", "src\Monolith\WorkflowManagerMonolith.Core\WorkflowManagerMonolith.Core.csproj", "{AA27EC84-9FA3-44A1-827F-E3D8CC0C6405}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Infrastructure", "src\Monolith\WorkflowManagerMonolith.Infrastructure\WorkflowManagerMonolith.Infrastructure.csproj", "{F9950FBD-625D-4DC2-8234-50D4B5130479}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.Application", "src\Monolith\WorkflowManagerMonolith.Application\WorkflowManagerMonolith.Application.csproj", "{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +93,14 @@ Global
 		{AA27EC84-9FA3-44A1-827F-E3D8CC0C6405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA27EC84-9FA3-44A1-827F-E3D8CC0C6405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA27EC84-9FA3-44A1-827F-E3D8CC0C6405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9950FBD-625D-4DC2-8234-50D4B5130479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9950FBD-625D-4DC2-8234-50D4B5130479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9950FBD-625D-4DC2-8234-50D4B5130479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9950FBD-625D-4DC2-8234-50D4B5130479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,6 +119,8 @@ Global
 		{814ED763-B5FC-468E-BEB0-0CF3E2C389FA} = {D7747E7F-DFC7-4D2E-8FD5-0E0CF3DAF1A0}
 		{CAA88803-919A-4884-AE1B-F2ED2E5DD9B3} = {D7747E7F-DFC7-4D2E-8FD5-0E0CF3DAF1A0}
 		{AA27EC84-9FA3-44A1-827F-E3D8CC0C6405} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
+		{F9950FBD-625D-4DC2-8234-50D4B5130479} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
+		{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

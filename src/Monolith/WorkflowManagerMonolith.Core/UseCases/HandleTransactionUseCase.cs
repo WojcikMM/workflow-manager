@@ -1,39 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkflowManagerMonolith.Core.Entities;
-using WorkflowManagerMonolith.Core.Repository;
+using System.Threading.Tasks;
+using WorkflowManagerMonolith.Core.Abstractions.UseCases;
+using WorkflowManagerMonolith.Core.Commands;
+using WorkflowManagerMonolith.Core.Repositories;
 
 namespace WorkflowManagerMonolith.Core.UseCases
 {
-    internal interface IUseCaseHandler<in TRequest, out TResponse>
+    public class HandleTransactionUseCase : IHandleTransactionUseCase
     {
-        TResponse Handle(TRequest data);
-    }
+        private readonly ITransactionRepository transactionRepository;
+        private readonly IApplicationRepository applicationRepository;
 
-
-    public class GetApplicationUseCase : IUseCaseHandler<Guid, ApplicationEntity>
-    {
-        private readonly IRepository<ApplicationEntity> repository;
-
-        public GetApplicationUseCase(IRepository<ApplicationEntity> repository)
+        public HandleTransactionUseCase(ITransactionRepository transactionRepository, IApplicationRepository applicationRepository)
         {
-            this.repository = repository;
+            this.transactionRepository = transactionRepository;
+            this.applicationRepository = applicationRepository;
         }
-        public ApplicationEntity Handle(Guid applicationId)
+
+        public async Task HandleAsync(HandleTransactionCommand command)
         {
-            var application = repository.Get(applicationId);
-            if(application is null)
+            var application = await applicationRepository.GetAsync(command.ApplicationId);
+            if (application == null)
             {
-                throw new NullReferenceException("Application not exists");
+                throw new Exception("Application with given id not found.");
             }
-            return application;
+
+            var transaction = await transactionRepository.GetAsync(command.TransactionId);
+            if (transaction == null)
+            {
+                throw new Exception("Transaction with given id not found.");
+            }
+
+            application.ApplyTransaction(transaction, command.UserId);
+
+            await applicationRepository.UpdateAsync(application);
         }
-    }
-
-
-
-    public class HandleTransactionUseCase : IUseCaseHandler<>
-    {
     }
 }
