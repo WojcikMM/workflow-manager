@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using WorkflowManagerMonolith.Application.Transactions.DTOs;
 using WorkflowManagerMonolith.Core.Domain;
-using WorkflowManagerMonolith.Application.Models;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework.Models;
 
 namespace WorkflowManagerMonolith.Application.Mapper
 {
@@ -21,6 +22,8 @@ namespace WorkflowManagerMonolith.Application.Mapper
                 .ForMember(x=> x.Description, x=>x.MapFrom(dist => dist.Description))
                 .ForMember(x=> x.IncomingStatusId, x=>x.MapFrom(dist => dist.IncomingStatusId))
                 .ForMember(x=> x.OutgoingStatusId, x=>x.MapFrom(dist => dist.OutgoingStatusId));
+
+            CreateMap<TransactionEntity, TransactionDto>(); // TODO: Fill DTO mapping
         }
     }
 }

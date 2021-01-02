@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework.Models;
 
 namespace WorkflowManagerMonolith.Infrastructure.EntityFramework
 {

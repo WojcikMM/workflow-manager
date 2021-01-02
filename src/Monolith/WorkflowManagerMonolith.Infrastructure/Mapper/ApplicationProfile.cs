@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using WorkflowManagerMonolith.Application.Applications.DTOs;
 using WorkflowManagerMonolith.Core.Domain;
-using WorkflowManagerMonolith.Infrastructure.EntityFramework;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework.Models;
 
 namespace WorkflowManagerMonolith.Infrastructure.Mapper
 {
@@ -37,6 +38,9 @@ namespace WorkflowManagerMonolith.Infrastructure.Mapper
                 .ForMember(x => x.CreatedAt, x => x.MapFrom(dist => dist.CreatedAt))
                 .ForMember(x => x.StatusId, x => x.MapFrom(dist => dist.StatusId))
                 .ForMember(x => x.UpdatedAt, x => x.MapFrom(dist => dist.UpdatedAt));
+
+
+            CreateMap<ApplicationEntity, ApplicationDto>(); //TODO: Fill DTO mapping
         }
     }
 }

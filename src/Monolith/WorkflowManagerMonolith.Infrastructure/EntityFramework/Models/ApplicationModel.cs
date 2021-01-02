@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WorkflowManagerMonolith.Infrastructure.EntityFramework
+namespace WorkflowManagerMonolith.Infrastructure.EntityFramework.Models
 {
     public class ApplicationModel
     {

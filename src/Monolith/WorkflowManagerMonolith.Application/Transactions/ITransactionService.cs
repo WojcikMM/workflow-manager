@@ -9,8 +9,7 @@ namespace WorkflowManagerMonolith.Transaction.Transactions
     {
         Task<IEnumerable<TransactionDto>> BrowseTransactionsAsync(GetTransactionsQuery query);
         Task<TransactionDto> GetTransactionByIdAsync(Guid id);
-        Task<TransactionDto> CreateTransactionAsync(CreateTransactionCommand command);
-        Task<TransactionDto> UpdateTransactionAsync(UpdateTransactionCommand command);
-
+        Task CreateTransactionAsync(CreateTransactionCommand command);
+        Task UpdateTransactionAsync(UpdateTransactionCommand command);
     }
 }

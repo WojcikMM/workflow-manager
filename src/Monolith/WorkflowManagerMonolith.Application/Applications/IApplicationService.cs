@@ -10,6 +10,8 @@ namespace WorkflowManagerMonolith.Application.Applications
         Task<IEnumerable<ApplicationDto>> BrowseApplicationsAsync(GetApplicationsQuery query);
         Task<ApplicationDto> GetApplicationByIdAsync(Guid id);
         Task CreateApplicationAsync(CreateApplicationCommand command);
-        Task UpdateApplicationAsync(UpdateApplicationCommand command);
-    }    
+        Task ApplyTransaction(ApplyTransactionCommand command);
+        Task AssignUserHandling(AssignUserHandlingCommand command);
+        Task ReleaseUserHandling(ReleaseUserHandlingCommand command);
+    }
 }

@@ -14,7 +14,7 @@ namespace WorkflowManager.ConfigurationService.Core.CommandHandlers
 
         public override void HandleCommand(RemoveProcessCommand command, ConsumeContext<RemoveProcessCommand> context)
         {
-            aggregate = _repository.GetById(command.AggregateId);
+            aggregate = _repository.GetByIdAsync(command.AggregateId).GetAwaiter().GetResult();
             aggregate.Delete();
         }
     }

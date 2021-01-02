@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManagerMonolith.Infrastructure.EntityFramework
+namespace WorkflowManagerMonolith.Infrastructure.EntityFramework.Models
 {
     public class TransactionItemModel
     {

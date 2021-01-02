@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework.Models;
 
 namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
 {
@@ -41,12 +42,6 @@ namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
             var application = mapper.Map<ApplicationEntity>(applicationModel);
             return await Task.FromResult(application);
 
-        }
-
-        public async Task<IEnumerable<ApplicationEntity>> SearchAsync(Func<ApplicationEntity, bool> predicate)
-        {
-            var applications = await unitOfWork.Applications.Where(x => predicate(x)).ToListAsync();
-            return mapper.Map<IEnumerable<ApplicationEntity>>(applications);
         }
 
         public async Task UpdateAsync(ApplicationEntity entity)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework.Models;
 
 namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
 {
@@ -48,6 +49,8 @@ namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
             transaction.Description = entity.Description;
             transaction.IncomingStatusId = entity.IncomingStatusId;
             transaction.OutgoingStatusId = entity.OutgoingStatusId;
+
+            unitOfWork.Update(transaction);
 
             await unitOfWork.SaveChangesAsync();
         }
