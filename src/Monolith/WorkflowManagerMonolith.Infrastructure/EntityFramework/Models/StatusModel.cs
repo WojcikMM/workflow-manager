@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WorkflowManagerMonolith.Infrastructure.EntityFramework.Models
 {
@@ -6,11 +7,12 @@ namespace WorkflowManagerMonolith.Infrastructure.EntityFramework.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid IncomingTransactionId { get; set; }
-        public Guid OutgoingTransactionId { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
-        public virtual TransactionModel IncomingTransaction { get; set; }
-        public virtual TransactionModel OutgoingTransaction { get; set; }
+        public IEnumerable<TransactionModel> AvailableTransactions { get; set; }
+        public IEnumerable<TransactionModel> IncomingTransactions { get; set; }
+        public IEnumerable<ApplicationModel> ApplicationsWithStatus { get; set; }
     }
 }
 

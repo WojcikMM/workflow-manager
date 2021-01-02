@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Transactions.DTOs;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
-using WorkflowManagerMonolith.Transaction.Transactions;
+using WorkflowManagerMonolith.Application.Transactions;
 
 namespace WorkflowManagerMonolith.Infrastructure.Services
 {
@@ -45,9 +45,9 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             return mapper.Map<TransactionDto>(transaction);
         }
 
-        public async Task UpdateTransactionAsync(UpdateTransactionCommand command)
+        public async Task UpdateTransactionAsync(Guid Id, UpdateTransactionCommand command)
         {
-            var transaction = await GetByIdAsync(command.Id);
+            var transaction = await GetByIdAsync(Id);
 
             if (!string.IsNullOrWhiteSpace(command.Name))
             {

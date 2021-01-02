@@ -17,7 +17,10 @@ namespace WorkflowManager.Common.Swagger
 
             var serviceInfomations = ServiceConfiguration.GetServiceInformations();
 
-            app.UseSwagger();
+            app.UseSwagger(cfg =>
+            {
+                cfg.SerializeAsV2 = true;
+            });
             app.UseSwaggerUI(cfg =>
             {
                 cfg.SwaggerEndpoint("/swagger/v1/swagger.json",
@@ -44,7 +47,7 @@ namespace WorkflowManager.Common.Swagger
                                 {
                                     Id = "OpenId",
                                     Type = ReferenceType.SecurityScheme
-                                }                               
+                                }
                             }, new[] { "readAccess" }
                         }
                 });

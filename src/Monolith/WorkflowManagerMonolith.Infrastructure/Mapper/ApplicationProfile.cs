@@ -40,7 +40,14 @@ namespace WorkflowManagerMonolith.Infrastructure.Mapper
                 .ForMember(x => x.UpdatedAt, x => x.MapFrom(dist => dist.UpdatedAt));
 
 
-            CreateMap<ApplicationEntity, ApplicationDto>(); //TODO: Fill DTO mapping
+            CreateMap<ApplicationEntity, ApplicationDto>()
+                .ForMember(x => x.Id, x => x.MapFrom(dist => dist.Id))
+                .ForMember(x => x.AssignedUserId, x => x.MapFrom(dist => dist.AssignedUserId))
+                .ForMember(x => x.AssignedUserName, x => x.Ignore())
+                .ForMember(x => x.CreatedAt, x => x.MapFrom(dist => dist.CreatedAt))
+                .ForMember(x => x.LastUpdatedAt, x => x.MapFrom(dist => dist.UpdatedAt))
+                .ForMember(x => x.StatusId, x => x.MapFrom(dist => dist.StatusId))
+                .ForMember(x => x.StatusName, x => x.Ignore());
         }
     }
 }

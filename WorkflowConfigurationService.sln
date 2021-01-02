@@ -45,7 +45,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.App
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{48236B55-F491-4F8D-B551-5E8D43F92455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Core.Tests", "src\Monolith\Tests\WorkflowManagerMonolith.Core.Tests\WorkflowManagerMonolith.Core.Tests.csproj", "{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.Core.Tests", "src\Monolith\Tests\WorkflowManagerMonolith.Core.Tests\WorkflowManagerMonolith.Core.Tests.csproj", "{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Web.Server", "src\Monolith\WorkflowManagerMonolith.Web\Server\WorkflowManagerMonolith.Web.Server.csproj", "{822F2A38-5632-4807-9A93-7EA9BA09A42C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Web.Client", "src\Monolith\WorkflowManagerMonolith.Web\Client\WorkflowManagerMonolith.Web.Client.csproj", "{7E99FFB2-7BFE-4787-831D-F46F818026BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +113,14 @@ Global
 		{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822F2A38-5632-4807-9A93-7EA9BA09A42C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822F2A38-5632-4807-9A93-7EA9BA09A42C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822F2A38-5632-4807-9A93-7EA9BA09A42C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822F2A38-5632-4807-9A93-7EA9BA09A42C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E99FFB2-7BFE-4787-831D-F46F818026BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E99FFB2-7BFE-4787-831D-F46F818026BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E99FFB2-7BFE-4787-831D-F46F818026BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E99FFB2-7BFE-4787-831D-F46F818026BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +143,8 @@ Global
 		{BA4627B0-B108-4AC4-BFFD-903F5B14C8AB} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
 		{48236B55-F491-4F8D-B551-5E8D43F92455} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
 		{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18} = {48236B55-F491-4F8D-B551-5E8D43F92455}
+		{822F2A38-5632-4807-9A93-7EA9BA09A42C} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
+		{7E99FFB2-7BFE-4787-831D-F46F818026BF} = {B793DD14-43D1-4764-99C7-8CEB4C08F3E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BC8110BC-EEB3-4A5D-9494-0A1430BCD966}

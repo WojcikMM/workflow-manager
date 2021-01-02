@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using WorkflowManagerMonolith.Core.Abstractions;
+﻿using WorkflowManagerMonolith.Core.Abstractions;
 using WorkflowManagerMonolith.Core.Domain;
 
 namespace WorkflowManagerMonolith.Core.Repositories
