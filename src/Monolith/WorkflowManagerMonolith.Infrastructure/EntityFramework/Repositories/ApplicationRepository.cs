@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
-using WorkflowManagerMonolith.Application.Models;
-using WorkflowManagerMonolith.Application.UnitOfWork;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 
-namespace WorkflowManagerMonolith.Application.Repositories
+namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
 {
     public class ApplicationRepository : IApplicationRepository
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly WorkflowManagerDbContext unitOfWork;
         private readonly IMapper mapper;
 
-        public ApplicationRepository(IUnitOfWork unitOfWork, IMapper mapper)
+        public ApplicationRepository(WorkflowManagerDbContext unitOfWork, IMapper mapper)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -29,12 +29,24 @@ namespace WorkflowManagerMonolith.Application.Repositories
             await unitOfWork.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<ApplicationEntity>> GetAllAsync()
+        {
+            var applications = await unitOfWork.Applications.ToListAsync();
+            return mapper.Map<IEnumerable<ApplicationEntity>>(applications);
+        }
+
         public async Task<ApplicationEntity> GetAsync(Guid id)
         {
             var applicationModel = GetModelById(id);
             var application = mapper.Map<ApplicationEntity>(applicationModel);
             return await Task.FromResult(application);
 
+        }
+
+        public async Task<IEnumerable<ApplicationEntity>> SearchAsync(Func<ApplicationEntity, bool> predicate)
+        {
+            var applications = await unitOfWork.Applications.Where(x => predicate(x)).ToListAsync();
+            return mapper.Map<IEnumerable<ApplicationEntity>>(applications);
         }
 
         public async Task UpdateAsync(ApplicationEntity entity)

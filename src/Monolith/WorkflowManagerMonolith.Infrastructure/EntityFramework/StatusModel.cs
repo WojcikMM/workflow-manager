@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManagerMonolith.Application.Models
+namespace WorkflowManagerMonolith.Infrastructure.EntityFramework
 {
     public class StatusModel
     {

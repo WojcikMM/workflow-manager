@@ -1,25 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using WorkflowManagerMonolith.Application.Models;
-using WorkflowManagerMonolith.Application.UnitOfWork;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace WorkflowManagerMonolith.Infrastructure.EntityFramework
 {
-    public class WorkflowManagerDbContext : IUnitOfWork
+    public class WorkflowManagerDbContext : DbContext
     {
-        public ISet<ApplicationModel> Applications { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ISet<TransactionItemModel> TransactionItems { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ISet<TransactionModel> Transactions { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ISet<StatusModel> Statuses { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-        public void SaveChanges()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task SaveChangesAsync()
-        {
-            throw new System.NotImplementedException();
-        }
+        public DbSet<ApplicationModel> Applications { get; set; }
+        public DbSet<TransactionItemModel> TransactionItems { get; set; }
+        public DbSet<TransactionModel> Transactions { get; set; }
+        public DbSet<StatusModel> Statuses { get; set; }
     }
 }

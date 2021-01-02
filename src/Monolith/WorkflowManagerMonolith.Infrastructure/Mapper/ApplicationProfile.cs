@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using WorkflowManagerMonolith.Core.Domain;
-using WorkflowManagerMonolith.Application.Models;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 
-namespace WorkflowManagerMonolith.Application.Mapper
+namespace WorkflowManagerMonolith.Infrastructure.Mapper
 {
     public class ApplicationProfile : Profile
     {
