@@ -11,6 +11,7 @@ using WorkflowManagerMonolith.Infrastructure.Services;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Transactions;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework;
+using WorkflowManagerMonolith.Infrastructure.Mapper;
 
 namespace WorkflowManagerMonolith.Web.Server
 {
@@ -31,14 +32,14 @@ namespace WorkflowManagerMonolith.Web.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(ApplicationProfile), typeof(TransactionProfile));
 
             services.AddDbContext<WorkflowManagerDbContext>(options =>
                     options.UseInMemoryDatabase("Database"));
 
             services.AddEntityFrameworkInMemoryDatabase();
 
-           services.AddSwaggerGen();
+            services.AddSwaggerGen();
 
             services.AddTransient<IApplicationRepository, ApplicationRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();

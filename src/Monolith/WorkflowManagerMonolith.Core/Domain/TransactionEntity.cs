@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using WorkflowManagerMonolith.Core.Abstractions;
 
 namespace WorkflowManagerMonolith.Core.Domain
@@ -10,6 +11,9 @@ namespace WorkflowManagerMonolith.Core.Domain
         public Guid IncomingStatusId { get; protected set; }
         public Guid OutgoingStatusId { get; protected set; }
 
+        public virtual StatusEntity IncomingStatus { get; protected set; }
+        public virtual StatusEntity OutgoingStatus { get; protected set; }
+        public virtual IEnumerable<TransactionItem> TransactionItems { get; protected set; }
 
         public TransactionEntity(Guid id, string name, string description, Guid incomingStatusId, Guid outgoingStatusId)
         {

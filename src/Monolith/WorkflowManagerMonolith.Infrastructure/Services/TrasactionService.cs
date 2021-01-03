@@ -68,6 +68,8 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             {
                 transaction.SetOutgoingStatus(command.OutgoingStatusId.Value);
             }
+
+            await transactionRepository.UpdateAsync(transaction);
         }
 
         private async Task<TransactionEntity> GetByIdAsync(Guid Id)

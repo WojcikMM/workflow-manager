@@ -28,6 +28,10 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid Id)
         {
             var result = await transactionService.GetTransactionByIdAsync(Id);
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 
@@ -35,7 +39,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         public async Task<IActionResult> Create([FromBody] CreateTransactionCommand command)
         {
             await transactionService.CreateTransactionAsync(command);
-            return CreatedAtAction(nameof(this.GetById), new { Id = command.Id });
+            return Created($"/api/transactions/{command.Id}", new { command.Id });
         }
 
         [HttpPatch("{Id}")]

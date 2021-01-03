@@ -8,19 +8,17 @@ namespace WorkflowManagerMonolith.Core.Domain
 
     public class ApplicationEntity : Entity
     {
-
-        private ISet<TransactionItem> _transactionItems = new HashSet<TransactionItem>();
-
-        public IEnumerable<TransactionItem> TransactionItems => _transactionItems;
-
         public Guid? StatusId
         {
             get
             {
-                return _transactionItems?.ToList()?.LastOrDefault()?.OutgoingStatusId;
+                return TransactionItems?.ToList()?.LastOrDefault()?.OutgoingStatusId;
             }
         }
         public Guid? AssignedUserId { get; protected set; }
+
+        public virtual UserEntity User { get; protected set; }
+        public virtual IList<TransactionItem> TransactionItems { get; protected set; }
 
 
         public ApplicationEntity(Guid Id)
@@ -31,7 +29,7 @@ namespace WorkflowManagerMonolith.Core.Domain
         {
             this.Id = Id;
             this.AssignedUserId = AssignedUserId;
-            _transactionItems = transactionItems.ToHashSet();
+            TransactionItems = transactionItems.ToList();
         }
 
 
@@ -47,7 +45,7 @@ namespace WorkflowManagerMonolith.Core.Domain
                 throw new Exception("Wrong user id.");
             }
 
-            _transactionItems.Add(TransactionItem.Create(transaction, userId));
+            TransactionItems.Add(TransactionItem.Create(transaction, userId));
             UpdatedAt = DateTime.UtcNow;
         }
 
