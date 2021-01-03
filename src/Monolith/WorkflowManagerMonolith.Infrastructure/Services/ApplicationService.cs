@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Applications.DTOs;
 using WorkflowManagerMonolith.Core.Domain;
+using WorkflowManagerMonolith.Core.Exceptions;
 using WorkflowManagerMonolith.Core.Repositories;
 
 namespace WorkflowManagerMonolith.Infrastructure.Services
@@ -30,12 +31,7 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
 
             if (transaction == null || command.TransactionId == Guid.Empty)
             {
-                throw new Exception("Invalid transaction Id");
-            }
-
-            if (command.UserId == Guid.Empty)
-            {
-                throw new Exception("Invalid User Id");
+                throw new AggregateIllegalLogicException("Invalid transaction Id");
             }
 
             application.ApplyTransaction(transaction, command.UserId);
@@ -58,7 +54,7 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
         {
             if (command.ApplicationId == Guid.Empty)
             {
-                throw new Exception("Invalid application Id");
+                throw new AggregateValidationException("Invalid application Id");
             }
             await applicationRepository.CreateAsync(new ApplicationEntity(command.ApplicationId));
         }
@@ -81,13 +77,13 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
         {
             if (applicationId == Guid.Empty)
             {
-                throw new Exception("Invalid application Id");
+                throw new AggregateValidationException("Invalid application Id");
             }
 
             var application = await applicationRepository.GetAsync(applicationId);
             if (application == null)
             {
-                throw new Exception("Application with given Id not exists.");
+                throw new AggregateNotFoundException("Application with given Id not exists.");
             }
 
             return application;

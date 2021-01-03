@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WorkflowManagerMonolith.Core.Abstractions;
+using WorkflowManagerMonolith.Core.Exceptions;
 
 namespace WorkflowManagerMonolith.Core.Domain
 {
@@ -37,12 +38,12 @@ namespace WorkflowManagerMonolith.Core.Domain
         {
             if (StatusId != null && transaction.IncomingStatusId != StatusId)
             {
-                throw new Exception("Wrong transaction. Check configuration.");
+                throw new AggregateIllegalLogicException("Wrong transaction. Check configuration.");
             }
 
             if (userId == Guid.Empty)
             {
-                throw new Exception("Wrong user id.");
+                throw new AggregateValidationException("Invalid user id.");
             }
 
             TransactionItems.Add(TransactionItem.Create(transaction, userId));
@@ -51,9 +52,13 @@ namespace WorkflowManagerMonolith.Core.Domain
 
         public void AssingnToHandling(Guid userId)
         {
+            if (userId == Guid.Empty)
+            {
+                throw new AggregateValidationException("Invalid user id");
+            }
             if (AssignedUserId != null && AssignedUserId != userId)
             {
-                throw new Exception("Application assigned to another user. Need to release one first.");
+                throw new AggregateIllegalLogicException("Application assigned to another user. Need to release one first.");
             }
 
             AssignedUserId = userId;

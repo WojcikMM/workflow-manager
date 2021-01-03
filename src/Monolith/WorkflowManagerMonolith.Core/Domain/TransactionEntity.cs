@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WorkflowManagerMonolith.Core.Abstractions;
+using WorkflowManagerMonolith.Core.Exceptions;
 
 namespace WorkflowManagerMonolith.Core.Domain
 {
@@ -30,7 +31,7 @@ namespace WorkflowManagerMonolith.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new Exception("Name cannot be empty or only whitespaced.");
+                throw new AggregateValidationException("Name cannot be empty or only whitespaced.");
             }
             Name = name;
             UpdatedAt = DateTime.UtcNow;
@@ -46,7 +47,7 @@ namespace WorkflowManagerMonolith.Core.Domain
         {
             if (statusId == Guid.Empty)
             {
-                throw new Exception("Cannot assign empty status as incoming.");
+                throw new AggregateValidationException("Cannot assign empty status as incoming.");
             }
             IncomingStatusId = statusId;
             UpdatedAt = DateTime.UtcNow;
@@ -56,7 +57,7 @@ namespace WorkflowManagerMonolith.Core.Domain
         {
             if (statusId == Guid.Empty)
             {
-                throw new Exception("Cannot assign empty status as incoming.");
+                throw new AggregateValidationException("Cannot assign empty status as incoming.");
             }
             OutgoingStatusId = statusId;
             UpdatedAt = DateTime.UtcNow;

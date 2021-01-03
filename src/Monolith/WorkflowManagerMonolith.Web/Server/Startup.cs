@@ -12,6 +12,12 @@ using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Transactions;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 using WorkflowManagerMonolith.Infrastructure.Mapper;
+using Microsoft.AspNetCore.Diagnostics;
+using WorkflowManagerMonolith.Core.Exceptions;
+using System.Net;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using WorkflowManagerMonolith.Web.Server.Dtos;
 
 namespace WorkflowManagerMonolith.Web.Server
 {
@@ -51,17 +57,53 @@ namespace WorkflowManagerMonolith.Web.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseWebAssemblyDebugging();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // TODO: Extract to separate class
+            app.UseExceptionHandler(x =>
+               {
+                   x.Run(async context =>
+                   {
+                       if (context.Request.Path.HasValue && context.Request.Path.Value.StartsWith(@"/api/"))
+                       {
+                           var errorHandler = context.Features.Get<IExceptionHandlerPathFeature>();
+
+                           context.Response.ContentType = "application/json";
+
+                           switch (errorHandler.Error)
+                           {
+                               case AggregateValidationException _:
+                                   context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                                   break;
+                               case AggregateNotFoundException _:
+                                   context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                                   break;
+                               case AggregateIllegalLogicException _:
+                                   break;
+                               default:
+                                   context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                   break;
+                           }
+                           await context.Response.WriteAsync(JsonConvert.SerializeObject(new ExceptionDto()
+                           {
+                               Message = errorHandler.Error.Message
+                           }));
+                       }
+                       else if (env.IsDevelopment())
+                       {
+                           app.UseDeveloperExceptionPage();
+                           app.UseWebAssemblyDebugging();
+                       }
+                       else
+                       {
+                           x.UseExceptionHandler("/Error");
+                       }
+                   });
+               });
 
             app.UseSwagger();
             app.UseSwaggerUI(cfg =>

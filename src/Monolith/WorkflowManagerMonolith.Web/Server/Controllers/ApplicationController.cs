@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Applications.DTOs;
@@ -38,7 +35,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         public async Task<IActionResult> Create([FromBody] CreateApplicationCommand command)
         {
             await applicationService.CreateApplicationAsync(command);
-            return CreatedAtAction(nameof(this.GetById), new { Id = command.ApplicationId });
+            return Created($"/api/applications/{command.ApplicationId}", new { Id = command.ApplicationId });
         }
 
         [HttpPatch("{Id}/assign/{UserId}")]
