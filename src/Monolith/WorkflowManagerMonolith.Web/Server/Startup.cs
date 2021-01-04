@@ -37,6 +37,7 @@ namespace WorkflowManagerMonolith.Web.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+          //  services.AddServerSideBlazor();
 
             services.AddAutoMapper(typeof(ApplicationProfile), typeof(TransactionProfile));
 
@@ -109,7 +110,7 @@ namespace WorkflowManagerMonolith.Web.Server
             app.UseSwaggerUI(cfg =>
            {
                cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "WorkflowManager.Monolith");
-               cfg.RoutePrefix = ""; // TODO: Use "swagger" when go to prod
+               cfg.RoutePrefix = "swagger"; // TODO: Use "swagger" when go to prod
            });
 
             app.UseHttpsRedirection();

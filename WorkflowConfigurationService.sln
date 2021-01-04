@@ -47,9 +47,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{48236B55
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.Core.Tests", "src\Monolith\Tests\WorkflowManagerMonolith.Core.Tests\WorkflowManagerMonolith.Core.Tests.csproj", "{EBB77F29-3DD6-423A-A3BD-724ECEDC3D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Web.Server", "src\Monolith\WorkflowManagerMonolith.Web\Server\WorkflowManagerMonolith.Web.Server.csproj", "{822F2A38-5632-4807-9A93-7EA9BA09A42C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.Web.Server", "src\Monolith\WorkflowManagerMonolith.Web\Server\WorkflowManagerMonolith.Web.Server.csproj", "{822F2A38-5632-4807-9A93-7EA9BA09A42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowManagerMonolith.Web.Client", "src\Monolith\WorkflowManagerMonolith.Web\Client\WorkflowManagerMonolith.Web.Client.csproj", "{7E99FFB2-7BFE-4787-831D-F46F818026BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkflowManagerMonolith.Web.Client", "src\Monolith\WorkflowManagerMonolith.Web\Client\WorkflowManagerMonolith.Web.Client.csproj", "{7E99FFB2-7BFE-4787-831D-F46F818026BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
