@@ -20,8 +20,6 @@ namespace WorkflowManagerMonolith.Core.Domain
         public virtual UserEntity User { get; protected set; }
         public virtual ApplicationEntity Application { get; protected set; }
 
-        protected TransactionItem() { }
-
         protected TransactionItem(TransactionEntity transaction, Guid userId)
         {
             TransactionId = transaction.Id;

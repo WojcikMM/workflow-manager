@@ -14,9 +14,9 @@ namespace WorkflowManagerMonolith.Core.Domain
 
         public string Name { get; protected set; }
 
-        public IEnumerable<TransactionEntity> AvailableTransactions { get; protected set; }
-        public IEnumerable<TransactionEntity> IncomingTransactions { get; protected set; }
-        public IEnumerable<ApplicationEntity> ApplicationsWithStatus { get; protected set; }
+        public virtual IEnumerable<TransactionEntity> AvailableTransactions { get; protected set; }
+        public virtual IEnumerable<TransactionEntity> IncomingTransactions { get; protected set; }
+        public virtual IEnumerable<ApplicationEntity> ApplicationsWithStatus { get; protected set; }
 
     }
 }
