@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WorkflowManagerMonolith.Core.Repositories;
-using WorkflowManagerMonolith.Application.EntityFramework.Repositories;
 using WorkflowManagerMonolith.Infrastructure.Services;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Transactions;
@@ -18,6 +17,8 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using WorkflowManagerMonolith.Web.Server.Dtos;
+using WorkflowManagerMonolith.Application.Statuses;
+using WorkflowManagerMonolith.Infrastructure.EntityFramework.Repositories;
 
 namespace WorkflowManagerMonolith.Web.Server
 {
@@ -44,15 +45,15 @@ namespace WorkflowManagerMonolith.Web.Server
             services.AddDbContext<WorkflowManagerDbContext>(options =>
                     options.UseInMemoryDatabase("Database"));
 
-            services.AddEntityFrameworkInMemoryDatabase();
-
             services.AddSwaggerGen();
 
             services.AddTransient<IApplicationRepository, ApplicationRepository>();
             services.AddTransient<ITransactionRepository, TransactionRepository>();
+            services.AddTransient<IStatusesRepository, StatusesRepository>();
 
             services.AddTransient<IApplicationService, ApplicationService>();
             services.AddTransient<ITransactionService, TrasactionService>();
+            services.AddTransient<IStatusesService, StatusesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,9 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
-using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 
-namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
+namespace WorkflowManagerMonolith.Infrastructure.EntityFramework.Repositories
 {
     public class ApplicationRepository : IApplicationRepository
     {

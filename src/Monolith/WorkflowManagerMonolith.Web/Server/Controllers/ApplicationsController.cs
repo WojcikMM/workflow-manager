@@ -9,11 +9,11 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationController : BaseController
+    public class ApplicationsController : BaseController
     {
         private readonly IApplicationService applicationService;
 
-        public ApplicationController(IApplicationService applicationService)
+        public ApplicationsController(IApplicationService applicationService)
         {
             this.applicationService = applicationService;
         }
@@ -37,6 +37,13 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         {
             await applicationService.CreateApplicationAsync(command);
             return Created($"/api/applications/{command.ApplicationId}", new EntityCreatedDto { Id = command.ApplicationId });
+        }
+
+        [HttpPatch("{Id}/assign")]
+        public async Task<IActionResult> AssignCurrentUser([FromRoute] Guid Id)
+        {
+            var userId = new Guid("E4BF0C15-A506-44F8-AB1C-6CD76CE93D9A");
+            return await AssignApplication(Id, userId);
         }
 
         [HttpPatch("{Id}/assign/{UserId}")]

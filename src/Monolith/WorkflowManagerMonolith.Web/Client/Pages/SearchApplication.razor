@@ -1,4 +1,6 @@
 ﻿@page "/search"
+@inject HttpClient http
+@inject NavigationManager navigator
 <h3>SearchApplication</h3>
 
 <div class="container">
@@ -17,9 +19,10 @@
                 <label for="status-id" class="col-form-label">Status</label>
                 <label for="status-id">Status</label>
                 <InputSelect id="status-id" class="form-control" @bind-Value="model.StatusId">
+                    <option></option>
                     @foreach (var item in statuses)
                     {
-                        <option value="@item">item</option>
+                        <option value="@item.Id">@item.Name</option>
                     }
                 </InputSelect>
                 <ValidationMessage For="() => model.StatusId" />
@@ -36,38 +39,85 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Status</th>
                     <th scope="col">Created At</th>
                     <th scope="col">Operations</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in applications)
+                @if (applications != null && applications.Any())
                 {
-                    <tr>
-                        <td>@item</td>
-                        <td>Status 1</td>
-                        <td>@DateTime.UtcNow.ToString()</td>
-                        <td>
-                            <button class="btn btn-primary">Handle</button>
-                            <button disabled class="btn btn-warning">Release</button>
-                        </td>
-                    </tr>
+                    @foreach (var item in applications)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.StatusName</td>
+                            <td>@item.CreatedAt.ToString()</td>
+                            <td>
+                                <button class="btn btn-primary" @onclick="() =>StartHandlingApplication(item.Id)">Handle</button>
+                                <button disabled class="btn btn-warning">Release</button>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
+
+        @if (applications != null && !applications.Any())
+        {
+            <div class="alert alert-warning col-md-12">There is no applications met your criteria.</div>
+        }
     </div>
 
 </div>
 @code {
     SearchModel model = new SearchModel();
-    string[] statuses = new string[] { "Adin", "Dwa", "Tri" };
-    string[] applications = new string[] { "x" };
+    IEnumerable<StatusDto> statuses = new List<StatusDto>();
+    IEnumerable<ApplicationDto> applications = null;
 
-    private void HandleValidSubmit()
+    protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
 
+        var result = await http.GetAsync("/api/statuses");
+        if (result.IsSuccessStatusCode)
+        {
+            statuses = await result.Content.ReadFromJsonAsync<IEnumerable<StatusDto>>();
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        string baseUrl = "/api/applications";
+        string url = baseUrl;
+
+        if (Guid.TryParse(model.ApplicationId, out var applicationId))
+        {
+            url += $"?applicationId={applicationId.ToString()}";
+        }
+
+        if (Guid.TryParse(model.StatusId, out var statusId))
+        {
+            url += url != baseUrl ? "&" : "";
+            url += $"statusId=${statusId.ToString()}";
+        }
+
+
+
+        var result = await http.GetAsync(url);
+
+        applications = !result.IsSuccessStatusCode ? null :
+            await result.Content.ReadFromJsonAsync<IEnumerable<ApplicationDto>>();
+    }
+
+    private async Task StartHandlingApplication(Guid applicationId)
+    {
+        var request = await http.PatchAsync($"/api/applications/{applicationId}/assign", new StringContent(""));
+        if (request.IsSuccessStatusCode)
+        {
+            navigator.NavigateTo("/handling");
+        }
     }
 
 }

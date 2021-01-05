@@ -46,7 +46,7 @@ namespace WorkflowManagerMonolith.Core.Domain
                 throw new AggregateValidationException("Invalid user id.");
             }
 
-            TransactionItems.Add(TransactionItem.Create(transaction, userId));
+            TransactionItems.Add(TransactionItem.Create(transaction, userId, Id));
             UpdatedAt = DateTime.UtcNow;
         }
 

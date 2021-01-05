@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Applications.DTOs;
@@ -16,12 +17,17 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
         private readonly IMapper mapper;
         private readonly IApplicationRepository applicationRepository;
         private readonly ITransactionRepository transactionRepository;
+        private readonly IStatusesRepository statusesRepository;
 
-        public ApplicationService(IMapper mapper, IApplicationRepository applicationRepository, ITransactionRepository transactionRepository)
+        public ApplicationService(IMapper mapper,
+            IApplicationRepository applicationRepository,
+            ITransactionRepository transactionRepository,
+            IStatusesRepository statusesRepository)
         {
             this.mapper = mapper;
             this.applicationRepository = applicationRepository;
             this.transactionRepository = transactionRepository;
+            this.statusesRepository = statusesRepository;
         }
 
         public async Task ApplyTransaction(ApplyTransactionCommand command)
@@ -48,7 +54,19 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
         public async Task<IEnumerable<ApplicationDto>> BrowseApplicationsAsync(GetApplicationsQuery query)
         {
             var applications = await applicationRepository.GetAllAsync();
-            return mapper.Map<IEnumerable<ApplicationDto>>(applications);
+            var applicationsDtos = mapper.Map<IEnumerable<ApplicationDto>>(applications);
+
+            var results = applicationsDtos.Select(async app =>
+            {
+                var status = await statusesRepository.GetAsync(app.StatusId);
+                if (status != null)
+                {
+                    app.StatusName = status.Name;
+                }
+                return app;
+            });
+
+            return await Task.WhenAll(results);
         }
 
         public async Task CreateApplicationAsync(CreateApplicationCommand command)
