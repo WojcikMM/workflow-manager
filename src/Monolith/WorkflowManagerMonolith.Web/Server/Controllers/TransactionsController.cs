@@ -3,12 +3,13 @@ using System;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Transactions;
 using WorkflowManagerMonolith.Application.Transactions.DTOs;
+using WorkflowManagerMonolith.Web.Server.Dtos;
 
 namespace WorkflowManagerMonolith.Web.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionsController : ControllerBase
+    public class TransactionsController : BaseController
     {
         private readonly ITransactionService transactionService;
 
@@ -28,18 +29,14 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid Id)
         {
             var result = await transactionService.GetTransactionByIdAsync(Id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
+            return Single(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTransactionCommand command)
         {
             await transactionService.CreateTransactionAsync(command);
-            return Created($"/api/transactions/{command.Id}", new { command.Id });
+            return Created($"/api/transactions/{command.Id}", new EntityCreatedDto { Id = command.Id });
         }
 
         [HttpPatch("{Id}")]

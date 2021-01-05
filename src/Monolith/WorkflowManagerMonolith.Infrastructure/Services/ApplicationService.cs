@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Applications.DTOs;
+using WorkflowManagerMonolith.Application.Transactions.DTOs;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Exceptions;
 using WorkflowManagerMonolith.Core.Repositories;
@@ -56,7 +57,25 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             {
                 throw new AggregateValidationException("Invalid application Id");
             }
+
+            var application = await applicationRepository.GetAsync(command.ApplicationId);
+            if (application != null)
+            {
+                throw new AggregateIllegalLogicException("Cannot create status with given id. Status exists.");
+            }
+
             await applicationRepository.CreateAsync(new ApplicationEntity(command.ApplicationId));
+        }
+
+        public async Task<IEnumerable<TransactionDto>> GetAllowedTransactionsAsync(Guid applicationId)
+        {
+            var application = await GetApplication(applicationId);
+
+            var avaliableTransactions = application.StatusId.HasValue ?
+                await transactionRepository.GetByIncomingStatusAsync(application.StatusId.Value) :
+                await transactionRepository.GetStartingTransactions();
+
+            return mapper.Map<IEnumerable<TransactionDto>>(avaliableTransactions);
         }
 
         public async Task<ApplicationDto> GetApplicationByIdAsync(Guid Id)
