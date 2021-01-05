@@ -3,12 +3,13 @@ using System;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Applications.DTOs;
+using WorkflowManagerMonolith.Web.Server.Dtos;
 
 namespace WorkflowManagerMonolith.Web.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationController : ControllerBase
+    public class ApplicationController : BaseController
     {
         private readonly IApplicationService applicationService;
 
@@ -28,14 +29,14 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid Id)
         {
             var result = await applicationService.GetApplicationByIdAsync(Id);
-            return Ok(result);
+            return Single(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateApplicationCommand command)
         {
             await applicationService.CreateApplicationAsync(command);
-            return Created($"/api/applications/{command.ApplicationId}", new { Id = command.ApplicationId });
+            return Created($"/api/applications/{command.ApplicationId}", new EntityCreatedDto { Id = command.ApplicationId });
         }
 
         [HttpPatch("{Id}/assign/{UserId}")]
@@ -75,6 +76,13 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
             await applicationService.ApplyTransaction(command);
 
             return NoContent();
+        }
+
+        [HttpPost("{Id}/transactions")]
+        public async Task<IActionResult> GetAvaliableTransactions([FromRoute] Guid Id)
+        {
+            var transactions = await applicationService.GetAllowedTransactionsAsync(Id);
+            return Ok(transactions);
         }
     }
 }

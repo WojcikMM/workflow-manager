@@ -6,6 +6,7 @@ using WorkflowManagerMonolith.Application.Transactions.DTOs;
 using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
 using WorkflowManagerMonolith.Application.Transactions;
+using WorkflowManagerMonolith.Core.Exceptions;
 
 namespace WorkflowManagerMonolith.Infrastructure.Services
 {
@@ -29,6 +30,18 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
 
         public async Task CreateTransactionAsync(CreateTransactionCommand command)
         {
+            if (command.Id == Guid.Empty)
+            {
+                throw new AggregateValidationException("Invalid transaction id");
+            }
+
+            var transaction = await transactionRepository.GetAsync(command.Id);
+
+            if (transaction != null)
+            {
+                throw new AggregateIllegalLogicException("Cannot create transaciton with given id. Transaction exists.");
+            }
+
             var application = new TransactionEntity(
                 command.Id,
                 command.Name,
@@ -59,9 +72,19 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
                 transaction.SetDescription(command.Description);
             }
 
+            if (command.IncomingStatusId.HasValue && command.IsStartingTransaction.HasValue && command.IsStartingTransaction.Value == true)
+            {
+                throw new AggregateIllegalLogicException("Cannot update status. You specify incoming status and \"IsStartingTransaction\" value. There is no logic.");
+            }
+
             if (command.IncomingStatusId.HasValue)
             {
                 transaction.SetIncomingStatus(command.IncomingStatusId.Value);
+            }
+
+            if (command.IsStartingTransaction == true)
+            {
+                transaction.SetIncomingStatus(null);
             }
 
             if (command.OutgoingStatusId.HasValue)

@@ -8,5 +8,6 @@ namespace WorkflowManagerMonolith.Application.Transactions.DTOs
         public string Description { get; set; }
         public Guid? IncomingStatusId { get; set; }
         public Guid? OutgoingStatusId { get; set; }
+        public bool? IsStartingTransaction { get; set; }
     }
 }

@@ -34,6 +34,20 @@ namespace WorkflowManagerMonolith.Application.EntityFramework.Repositories
             return await AllEntities().FirstOrDefaultAsync(transaction => transaction.Id == id);
         }
 
+        public async Task<IEnumerable<TransactionEntity>> GetByIncomingStatusAsync(Guid statusId)
+        {
+            return await AllEntities()
+                .Where(transaction => transaction.IncomingStatusId == statusId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TransactionEntity>> GetStartingTransactions()
+        {
+            return await AllEntities()
+                .Where(transaction => transaction.IncomingStatusId == null)
+                .ToListAsync();
+        }
+
         public async Task UpdateAsync(TransactionEntity entity)
         {
             unitOfWork.Update(entity);

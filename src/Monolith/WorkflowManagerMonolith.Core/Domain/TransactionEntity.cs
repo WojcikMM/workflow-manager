@@ -9,14 +9,14 @@ namespace WorkflowManagerMonolith.Core.Domain
     {
         public string Name { get; protected set; }
         public string Description { get; protected set; }
-        public Guid IncomingStatusId { get; protected set; }
+        public Guid? IncomingStatusId { get; protected set; }
         public Guid OutgoingStatusId { get; protected set; }
 
         public virtual StatusEntity IncomingStatus { get; protected set; }
         public virtual StatusEntity OutgoingStatus { get; protected set; }
         public virtual IEnumerable<TransactionItem> TransactionItems { get; protected set; }
 
-        public TransactionEntity(Guid id, string name, string description, Guid incomingStatusId, Guid outgoingStatusId)
+        public TransactionEntity(Guid id, string name, string description, Guid? incomingStatusId, Guid outgoingStatusId)
         {
             Id = id;
             CreatedAt = DateTime.UtcNow;
@@ -43,12 +43,8 @@ namespace WorkflowManagerMonolith.Core.Domain
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void SetIncomingStatus(Guid statusId)
+        public void SetIncomingStatus(Guid? statusId)
         {
-            if (statusId == Guid.Empty)
-            {
-                throw new AggregateValidationException("Cannot assign empty status as incoming.");
-            }
             IncomingStatusId = statusId;
             UpdatedAt = DateTime.UtcNow;
         }
