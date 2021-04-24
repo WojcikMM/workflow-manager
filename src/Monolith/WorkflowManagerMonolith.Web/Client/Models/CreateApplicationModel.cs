@@ -9,6 +9,6 @@ namespace WorkflowManagerMonolith.Web.Client.Models
         public string ApplicationNumber { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
-        public Guid InitialTransaction { get; set; }
+        public Guid? InitialTransaction { get; set; }
     }
 }

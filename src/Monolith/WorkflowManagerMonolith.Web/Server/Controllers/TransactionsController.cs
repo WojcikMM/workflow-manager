@@ -25,7 +25,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("initial")]
+        [HttpGet("initials")]
         public async Task<IActionResult> GetIntialTransactions()
         {
             var result = await transactionService.GetInitialTransactionsAsync();

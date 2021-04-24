@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WorkflowManagerMonolith.Core.Repositories;
@@ -59,13 +62,19 @@ namespace WorkflowManagerMonolith.Web.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             // TODO: Extract to separate class
+            /*
             app.UseExceptionHandler(x =>
                {
                    x.Run(async context =>
@@ -106,6 +115,7 @@ namespace WorkflowManagerMonolith.Web.Server
                        }
                    });
                });
+            */
 
             app.UseSwagger();
             app.UseSwaggerUI(cfg =>
