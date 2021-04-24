@@ -8,7 +8,7 @@ namespace WorkflowManagerMonolith.Core.Repositories
 {
     public interface ITransactionRepository : IRepository<TransactionEntity>
     {
-        Task<IEnumerable<TransactionEntity>> GetByIncomingStatusAsync(Guid statusId);
+        Task<IEnumerable<TransactionEntity>> GetByIncomingStatusAsync(Guid? statusId);
         Task<IEnumerable<TransactionEntity>> GetStartingTransactions();
     }
 }

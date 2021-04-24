@@ -1,0 +1,80 @@
+﻿@page "/register"
+@inject HttpClient http
+@inject NavigationManager navigator
+<h3>Registration</h3>
+
+<div class="container">
+    <EditForm class="mb-5" Model="@model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="row">
+            <div class="col-md-5 col-xs-12 mb-3">
+                <label for="application-number" class="col-form-label">Application Number</label>
+                <InputText id="application-number" class="form-control" @bind-Value="model.ApplicationNumber" />
+                <ValidationMessage For="() => model.ApplicationNumber" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-xs-12 mb-3">
+                <label for="step-id" class="col-form-label">Select Step</label>
+                <InputSelect id="step-id" class="form-control" @bind-Value="model.InitialTransaction">
+                    <option></option>
+                    @foreach (var item in initialTransactions)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => model.InitialTransaction" />
+            </div>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </EditForm>
+</div>
+
+
+@code {
+    CreateApplicationModel model = new CreateApplicationModel();
+    IEnumerable<TransactionDto> initialTransactions = new List<TransactionDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var result = await http.GetAsync("/api/transactions/initials");
+        if (result.IsSuccessStatusCode)
+        {
+            initialTransactions = await result.Content.ReadFromJsonAsync<IEnumerable<TransactionDto>>();
+        }
+    }
+
+
+    private async Task HandleValidSubmit()
+    {
+        //string baseUrl = "/api/applications";
+        //string url = baseUrl;
+
+        //if (Guid.TryParse(model.ApplicationId, out var applicationId))
+        //{
+        //    url += $"?applicationId={applicationId.ToString()}";
+        //}
+
+        //if (Guid.TryParse(model.StatusId, out var statusId))
+        //{
+        //    url += url != baseUrl ? "&" : "";
+        //    url += $"statusId=${statusId.ToString()}";
+        //}
+
+
+
+        //var result = await http.GetAsync(url);
+
+        //applications = !result.IsSuccessStatusCode ? null :
+        //    await result.Content.ReadFromJsonAsync<IEnumerable<ApplicationDto>>();
+    }
+
+}

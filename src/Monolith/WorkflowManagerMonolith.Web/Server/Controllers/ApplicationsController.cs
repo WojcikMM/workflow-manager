@@ -12,6 +12,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
     public class ApplicationsController : BaseController
     {
         private readonly IApplicationService applicationService;
+        private readonly Guid userId = new Guid("E4BF0C15-A506-44F8-AB1C-6CD76CE93D9A");
 
         public ApplicationsController(IApplicationService applicationService)
         {
@@ -42,7 +43,6 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         [HttpPatch("{Id}/assign")]
         public async Task<IActionResult> AssignCurrentUser([FromRoute] Guid Id)
         {
-            var userId = new Guid("E4BF0C15-A506-44F8-AB1C-6CD76CE93D9A");
             return await AssignApplication(Id, userId);
         }
 
@@ -77,7 +77,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
             {
                 ApplicationId = Id,
                 TransactionId = TransactionId,
-                UserId = new Guid()
+                UserId = userId
             };
 
             await applicationService.ApplyTransaction(command);

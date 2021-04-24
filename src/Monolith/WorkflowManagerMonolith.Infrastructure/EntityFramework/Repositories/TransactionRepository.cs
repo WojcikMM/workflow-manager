@@ -33,7 +33,7 @@ namespace WorkflowManagerMonolith.Infrastructure.EntityFramework.Repositories
             return await AllEntities().FirstOrDefaultAsync(transaction => transaction.Id == id);
         }
 
-        public async Task<IEnumerable<TransactionEntity>> GetByIncomingStatusAsync(Guid statusId)
+        public async Task<IEnumerable<TransactionEntity>> GetByIncomingStatusAsync(Guid? statusId)
         {
             return await AllEntities()
                 .Where(transaction => transaction.IncomingStatusId == statusId)

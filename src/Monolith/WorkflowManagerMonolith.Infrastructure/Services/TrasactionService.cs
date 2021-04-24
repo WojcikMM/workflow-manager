@@ -52,6 +52,12 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             await transactionRepository.CreateAsync(application);
         }
 
+        public async Task<IEnumerable<TransactionDto>> GetInitialTransactionsAsync()
+        {
+            var result = await transactionRepository.GetByIncomingStatusAsync(null);
+            return mapper.Map<IEnumerable<TransactionDto>>(result);
+        }
+
         public async Task<TransactionDto> GetTransactionByIdAsync(Guid id)
         {
             var transaction = await GetByIdAsync(id);

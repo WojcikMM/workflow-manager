@@ -25,6 +25,15 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
             return Ok(result);
         }
 
+        [HttpGet("initial")]
+        public async Task<IActionResult> GetIntialTransactions()
+        {
+            var result = await transactionService.GetInitialTransactionsAsync();
+            return Ok(result);
+        }
+
+
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid Id)
         {
