@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WorkflowManagerMonolith.Core.Repositories;
@@ -14,12 +11,6 @@ using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Transactions;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 using WorkflowManagerMonolith.Infrastructure.Mapper;
-using Microsoft.AspNetCore.Diagnostics;
-using WorkflowManagerMonolith.Core.Exceptions;
-using System.Net;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using WorkflowManagerMonolith.Web.Server.Dtos;
 using WorkflowManagerMonolith.Application.Statuses;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework.Repositories;
 

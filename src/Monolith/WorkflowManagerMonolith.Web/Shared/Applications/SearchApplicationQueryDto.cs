@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkflowManagerMonolith.Web.Client.Models
+namespace WorkflowManagerMonolith.Web.Shared.Applications
 {
-    public class SearchModel
+  public class SearchApplicationQueryDto
     {
         [RegularExpression(@"\w{8}(\-\w{4}){4}\w{8}", ErrorMessage = "Wrong application id.")]
         public string ApplicationId { get; set; }

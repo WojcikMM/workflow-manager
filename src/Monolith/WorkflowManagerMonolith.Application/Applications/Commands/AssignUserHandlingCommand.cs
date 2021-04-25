@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManagerMonolith.Application.Applications.DTOs
+namespace WorkflowManagerMonolith.Application.Applications.Commands
 {
     public class AssignUserHandlingCommand
     {

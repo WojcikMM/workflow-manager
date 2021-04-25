@@ -2,10 +2,11 @@
 using System;
 using System.Threading.Tasks;
 using WorkflowManagerMonolith.Application.Transactions;
-using WorkflowManagerMonolith.Application.Transactions.DTOs;
-using WorkflowManagerMonolith.Web.Server.Dtos;
+using WorkflowManagerMonolith.Application.Transactions.Commands;
+using WorkflowManagerMonolith.Web.Server.Controllers;
+using WorkflowManagerMonolith.Web.Shared.Common;
 
-namespace WorkflowManagerMonolith.Web.Server.Controllers
+namespace WorkflowManagerMonolith.Web.Server.Domains.Transactions
 {
     [Route("api/[controller]")]
     [ApiController]

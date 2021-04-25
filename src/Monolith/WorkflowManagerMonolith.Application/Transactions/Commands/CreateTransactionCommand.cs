@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManagerMonolith.Application.Transactions.DTOs
+namespace WorkflowManagerMonolith.Application.Transactions.Commands
 {
     public class CreateTransactionCommand
     {

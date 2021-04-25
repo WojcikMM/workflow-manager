@@ -44,7 +44,7 @@ namespace WorkflowManagerMonolith.Infrastructure.EntityFramework
                 .HasMany(status => status.AvailableTransactions)
                 .WithOne(transaction => transaction.IncomingStatus)
                 .HasForeignKey(transaction => transaction.IncomingStatusId)
-                .IsRequired();
+                .IsRequired(false);
 
             modelBuilder.Entity<StatusEntity>()
                 .HasMany(status => status.IncomingTransactions)

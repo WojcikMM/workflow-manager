@@ -1,14 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace WorkflowManagerMonolith.Web.Client.Models
+namespace WorkflowManagerMonolith.Web.Shared.Applications
 {
-    public class CreateApplicationModel
+    public class RegisterApplicationDto
     {
         [Required(ErrorMessage = "This field is required.")]
         public string ApplicationNumber { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
-        public Guid? InitialTransaction { get; set; }
+        public Guid? InitialTransactionId { get; set; }
     }
 }

@@ -17,15 +17,16 @@
 
         <div class="row">
             <div class="col-md-5 col-xs-12 mb-3">
+
                 <label for="step-id" class="col-form-label">Select Step</label>
-                <InputSelect id="step-id" class="form-control" @bind-Value="model.InitialTransaction">
+                <InputSelect id="step-id" class="form-control" @bind-Value="model.InitialTransactionId">
                     <option></option>
                     @foreach (var item in initialTransactions)
                     {
                         <option value="@item.Id">@item.Name</option>
                     }
                 </InputSelect>
-                <ValidationMessage For="() => model.InitialTransaction" />
+                <ValidationMessage For="() => model.InitialTransactionId" />
             </div>
         </div>
 
@@ -38,7 +39,7 @@
 
 
 @code {
-    CreateApplicationModel model = new CreateApplicationModel();
+    RegisterApplicationDto model = new RegisterApplicationDto();
     IEnumerable<TransactionDto> initialTransactions = new List<TransactionDto>();
 
     protected override async Task OnInitializedAsync()
@@ -56,26 +57,11 @@
     private async Task HandleValidSubmit()
     {
 
-        //string baseUrl = "/api/applications";
-        //string url = baseUrl;
-
-        //if (Guid.TryParse(model.ApplicationId, out var applicationId))
-        //{
-        //    url += $"?applicationId={applicationId.ToString()}";
-        //}
-
-        //if (Guid.TryParse(model.StatusId, out var statusId))
-        //{
-        //    url += url != baseUrl ? "&" : "";
-        //    url += $"statusId=${statusId.ToString()}";
-        //}
-
-
-
-        //var result = await http.GetAsync(url);
-
-        //applications = !result.IsSuccessStatusCode ? null :
-        //    await result.Content.ReadFromJsonAsync<IEnumerable<ApplicationDto>>();
+        var result = await http.PostAsJsonAsync("/api/applications", model);
+        if (!result.IsSuccessStatusCode)
+        {
+            // TODO: Add handle for create application failed
+        }
     }
 
 }

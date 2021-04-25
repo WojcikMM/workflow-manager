@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WorkflowManagerMonolith.Web.Server.Dtos
+namespace WorkflowManagerMonolith.Web.Shared.Common
 {
     public class EntityCreatedDto
     {

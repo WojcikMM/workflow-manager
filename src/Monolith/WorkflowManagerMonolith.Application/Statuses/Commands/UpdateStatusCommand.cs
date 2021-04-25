@@ -1,4 +1,4 @@
-﻿namespace WorkflowManagerMonolith.Application.Statuses.DTOs
+﻿namespace WorkflowManagerMonolith.Application.Statuses.Commands
 {
     public class UpdateStatusCommand
     {

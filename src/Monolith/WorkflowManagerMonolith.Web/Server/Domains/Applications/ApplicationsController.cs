@@ -1,27 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using WorkflowManagerMonolith.Application.Applications;
-using WorkflowManagerMonolith.Application.Applications.DTOs;
-using WorkflowManagerMonolith.Web.Server.Dtos;
+using WorkflowManagerMonolith.Application.Applications.Commands;
+using WorkflowManagerMonolith.Application.Applications.Queries;
+using WorkflowManagerMonolith.Web.Shared.Common;
+using WorkflowManagerMonolith.Web.Shared.Applications;
+using WorkflowManagerMonolith.Web.Server.Controllers;
 
-namespace WorkflowManagerMonolith.Web.Server.Controllers
+namespace WorkflowManagerMonolith.Web.Server.Domains.Applications
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ApplicationsController : BaseController
     {
         private readonly IApplicationService applicationService;
-        private readonly Guid userId = new Guid("E4BF0C15-A506-44F8-AB1C-6CD76CE93D9A");
+        private readonly IMapper mapper;
+        private readonly Guid _userId = Infrastructure.EntityFramework.DataSeeder.TestUser1Id; //TODO: Remove after identity implementation
 
-        public ApplicationsController(IApplicationService applicationService)
+        public ApplicationsController(IApplicationService applicationService, IMapper mapper)
         {
             this.applicationService = applicationService;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetApplicationsQuery query)
+        public async Task<IActionResult> GetAll([FromQuery] GetApplicationQueryDto getApplicationQuery)
         {
+            var query = mapper.Map<GetApplicationsQuery>(getApplicationQuery);
             var result = await applicationService.BrowseApplicationsAsync(query);
             return Ok(result);
         }
@@ -34,8 +41,11 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateApplicationCommand command)
+        public async Task<IActionResult> Create([FromBody] RegisterApplicationDto registerApplicationDto)
         {
+            var command = mapper.Map<CreateApplicationCommand>(registerApplicationDto);
+            command.RegistrationUser = _userId;
+
             await applicationService.CreateApplicationAsync(command);
             return Created($"/api/applications/{command.ApplicationId}", new EntityCreatedDto { Id = command.ApplicationId });
         }
@@ -43,7 +53,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
         [HttpPatch("{Id}/assign")]
         public async Task<IActionResult> AssignCurrentUser([FromRoute] Guid Id)
         {
-            return await AssignApplication(Id, userId);
+            return await AssignApplication(Id, _userId);
         }
 
         [HttpPatch("{Id}/assign/{UserId}")]
@@ -77,7 +87,7 @@ namespace WorkflowManagerMonolith.Web.Server.Controllers
             {
                 ApplicationId = Id,
                 TransactionId = TransactionId,
-                UserId = userId
+                UserId = _userId
             };
 
             await applicationService.ApplyTransaction(command);
