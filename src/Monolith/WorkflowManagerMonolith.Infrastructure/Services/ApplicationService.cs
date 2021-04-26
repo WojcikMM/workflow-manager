@@ -78,13 +78,35 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
                 throw new AggregateValidationException("Invalid application Id");
             }
 
+            if (command.RegistrationUser == Guid.Empty)
+            {
+                throw new AggregateValidationException("Invalid user Id");
+            }
+
+            if (command.InitialTransactionId == Guid.Empty)
+            {
+                throw new AggregateValidationException("Invalid transaction Id");
+            }
+
             var application = await applicationRepository.GetAsync(command.ApplicationId);
             if (application != null)
             {
-                throw new AggregateIllegalLogicException("Cannot create status with given id. Status exists.");
+                throw new AggregateIllegalLogicException("Cannot create application with given id. Application exists.");
             }
 
-            await applicationRepository.CreateAsync(new ApplicationEntity(command.ApplicationId));
+            var transaction = await transactionRepository.GetAsync(command.InitialTransactionId);
+            if (transaction == null)
+            {
+                throw new AggregateValidationException("Transaction with given Id not exists.");
+            }
+
+            application = new ApplicationEntity(command.ApplicationId);
+
+
+            application.ApplyTransaction(transaction, command.RegistrationUser);
+
+
+            await applicationRepository.CreateAsync(application);
         }
 
         public async Task<IEnumerable<TransactionDto>> GetAllowedTransactionsAsync(Guid applicationId)

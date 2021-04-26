@@ -6,9 +6,9 @@ using WorkflowManagerMonolith.Web.Shared.Applications;
 
 namespace orkflowManagerMonolith.Web.Server.Domains.Applications
 {
-    public class ApplicationProfile : Profile
+    public class ApplicationsProfile : Profile
     {
-        public ApplicationProfile()
+        public ApplicationsProfile()
         {
             CreateMap<RegisterApplicationDto, CreateApplicationCommand>()
                 .ForMember(dest => dest.ApplicationId, ctx => ctx.MapFrom(src => Guid.NewGuid()))

@@ -13,6 +13,15 @@ using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 using WorkflowManagerMonolith.Infrastructure.Mapper;
 using WorkflowManagerMonolith.Application.Statuses;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework.Repositories;
+using Microsoft.AspNetCore.Http;
+using WorkflowManagerMonolith.Core.Exceptions;
+using System.Net;
+using Newtonsoft.Json;
+using WorkflowManagerMonolith.Web.Shared.Common;
+using Microsoft.AspNetCore.Diagnostics;
+using orkflowManagerMonolith.Web.Server.Domains.Applications;
+using WorkflowManagerMonolith.Web.Server.Domains.Statuses;
+using WorkflowManagerMonolith.Web.Server.Domains.Transactions;
 
 namespace WorkflowManagerMonolith.Web.Server
 {
@@ -34,7 +43,7 @@ namespace WorkflowManagerMonolith.Web.Server
             services.AddRazorPages();
           //  services.AddServerSideBlazor();
 
-            services.AddAutoMapper(typeof(ApplicationProfile), typeof(TransactionProfile));
+            services.AddAutoMapper(typeof(ApplicationProfile), typeof(TransactionProfile), typeof(StatusProfile), typeof(ApplicationsProfile), typeof(StatusesProfile), typeof(TransactionsProfile));
 
             services.AddDbContext<WorkflowManagerDbContext>(options =>
                     options.UseInMemoryDatabase("Database"));
@@ -55,18 +64,17 @@ namespace WorkflowManagerMonolith.Web.Server
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+               // app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+             //   app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            // TODO: Extract to separate class
-            /*
-            app.UseExceptionHandler(x =>
+
+              app.UseExceptionHandler(x =>
                {
                    x.Run(async context =>
                    {
@@ -106,7 +114,6 @@ namespace WorkflowManagerMonolith.Web.Server
                        }
                    });
                });
-            */
 
             app.UseSwagger();
             app.UseSwaggerUI(cfg =>
