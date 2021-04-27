@@ -40,6 +40,16 @@ namespace WorkflowManagerMonolith.Web.Server.Domains.Applications
             return Single(result);
         }
 
+        [HttpGet("{Id}/can-handle")]
+        public async Task<IActionResult> IsUserAsigned([FromRoute] Guid Id)
+        {
+           var application = await applicationService.GetApplicationByIdAsync(Id);
+           if(application.AssignedUserId != _userId)
+            {
+                return 
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] RegisterApplicationDto registerApplicationDto)
         {
