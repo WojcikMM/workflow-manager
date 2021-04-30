@@ -7,6 +7,7 @@ using WorkflowManagerMonolith.Core.Domain;
 using WorkflowManagerMonolith.Core.Repositories;
 using WorkflowManagerMonolith.Application.Transactions;
 using WorkflowManagerMonolith.Core.Exceptions;
+using WorkflowManagerMonolith.Application.Transactions.Commands;
 
 namespace WorkflowManagerMonolith.Infrastructure.Services
 {
@@ -50,6 +51,12 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
                 command.OutgoingStatusId);
 
             await transactionRepository.CreateAsync(application);
+        }
+
+        public async Task<IEnumerable<TransactionDto>> GetInitialTransactionsAsync()
+        {
+            var result = await transactionRepository.GetByIncomingStatusAsync(null);
+            return mapper.Map<IEnumerable<TransactionDto>>(result);
         }
 
         public async Task<TransactionDto> GetTransactionByIdAsync(Guid id)

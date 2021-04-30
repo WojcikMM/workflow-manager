@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WorkflowManagerMonolith.Application.Statuses.Commands;
 using WorkflowManagerMonolith.Application.Statuses.DTOs;
+using WorkflowManagerMonolith.Application.Statuses.Queries;
 
 namespace WorkflowManagerMonolith.Application.Statuses
 {
