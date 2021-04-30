@@ -1,6 +1,20 @@
-﻿@page "/handling"
+﻿@page "/handling/{applicationId:guid}"
+@inject HttpClient http
+@inject NavigationManager navigator
 <h3>HandlingPage</h3>
 
 @code {
+    [Parameter]
+    public Guid ApplicationId { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var httpResponseMessage = await http.GetAsync($"/api/handling/{ApplicationId}/can-handle");
+        if (!httpResponseMessage.IsSuccessStatusCode)
+        {
+            navigator.NavigateTo("/");
+        }
+
+    }
 }

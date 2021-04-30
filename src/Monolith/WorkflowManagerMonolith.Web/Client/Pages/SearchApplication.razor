@@ -89,23 +89,21 @@
 
     private async Task HandleValidSubmit()
     {
-        string baseUrl = "/api/applications";
-        string url = baseUrl;
+        Dictionary<string, string> keyValues = new Dictionary<string, string>();
 
         if (Guid.TryParse(model.ApplicationId, out var applicationId))
         {
-            url += $"?applicationId={applicationId.ToString()}";
+            keyValues.Add("applicationId", model.ApplicationId);
         }
 
         if (Guid.TryParse(model.StatusId, out var statusId))
         {
-            url += url != baseUrl ? "&" : "";
-            url += $"statusId=${statusId.ToString()}";
+            keyValues.Add("statusId", model.StatusId);
         }
 
+        var queryParams = string.Join('&', keyValues.Select(queryValue => $"{queryValue.Key}={queryValue.Value}").ToArray());
 
-
-        var result = await http.GetAsync(url);
+        var result = await http.GetAsync($"/api/applications?{queryParams}");
 
         applications = !result.IsSuccessStatusCode ? null :
             await result.Content.ReadFromJsonAsync<IEnumerable<ApplicationDto>>();

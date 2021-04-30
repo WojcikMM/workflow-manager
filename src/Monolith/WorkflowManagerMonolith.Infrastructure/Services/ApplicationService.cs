@@ -42,6 +42,7 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             }
 
             application.ApplyTransaction(transaction, command.UserId);
+            await applicationRepository.UpdateAsync(application);
         }
 
         public async Task AssignUserHandling(AssignUserHandlingCommand command)
@@ -49,6 +50,8 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             var application = await GetApplication(command.ApplicationId);
 
             application.AssingnToHandling(command.UserId);
+
+            await applicationRepository.UpdateAsync(application);
         }
 
         public async Task<IEnumerable<ApplicationDto>> BrowseApplicationsAsync(GetApplicationsQuery query)
@@ -108,6 +111,7 @@ namespace WorkflowManagerMonolith.Infrastructure.Services
             var application = await GetApplication(command.ApplicationId);
 
             application.ReleaseHandling();
+            await applicationRepository.UpdateAsync(application);
         }
 
         private async Task<ApplicationEntity> GetApplication(Guid applicationId)
