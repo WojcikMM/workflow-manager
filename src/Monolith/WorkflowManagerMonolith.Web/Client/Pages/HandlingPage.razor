@@ -1,6 +1,5 @@
 ﻿@page "/handling/{applicationId:guid}"
-@inject HttpClient http
-@inject NavigationManager navigator
+@inject HttpClient http 
 <h3>HandlingPage</h3>
 
 @code {
@@ -10,11 +9,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        var httpResponseMessage = await http.GetAsync($"/api/handling/{ApplicationId}/can-handle");
-        if (!httpResponseMessage.IsSuccessStatusCode)
-        {
-            navigator.NavigateTo("/");
-        }
+      //  http.GetAsync($"/api/") TODO: Add here call to /api/handling/{id}/can-handle
 
     }
 }

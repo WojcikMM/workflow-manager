@@ -25,6 +25,7 @@ namespace WorkflowManagerMonolith.Core.Domain
         public ApplicationEntity(Guid Id)
         {
             this.Id = Id;
+            TransactionItems = new List<TransactionItem>();
         }
         public ApplicationEntity(Guid Id, Guid? AssignedUserId, IEnumerable<TransactionItem> transactionItems)
         {

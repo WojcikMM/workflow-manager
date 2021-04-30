@@ -1,9 +1,24 @@
 ﻿@page "/register"
 @inject HttpClient http
 @inject NavigationManager navigator
+
+@if (showSuccessAlert)
+{
+    <AlertComponent Status="@AlertComponent.AlertType.Success">
+        Application successfully created. Now you can create new one or <strong @onclick="HandleCreatedApplication"><a href="#">handle this</a></strong>.
+    </AlertComponent>
+}
+else if (showErrorAlert)
+{
+    <AlertComponent Status="@AlertComponent.AlertType.Error">
+        Cannot register application. Please contact with support or try again later.
+    </AlertComponent>
+}
+
 <h3>Registration</h3>
 
 <div class="container">
+
     <EditForm class="mb-5" Model="@model" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />
 
@@ -17,15 +32,16 @@
 
         <div class="row">
             <div class="col-md-5 col-xs-12 mb-3">
+
                 <label for="step-id" class="col-form-label">Select Step</label>
-                <InputSelect id="step-id" class="form-control" @bind-Value="model.InitialTransaction">
+                <InputSelect id="step-id" class="form-control" @bind-Value="model.InitialTransactionId">
                     <option></option>
                     @foreach (var item in initialTransactions)
                     {
                         <option value="@item.Id">@item.Name</option>
                     }
                 </InputSelect>
-                <ValidationMessage For="() => model.InitialTransaction" />
+                <ValidationMessage For="() => model.InitialTransactionId" />
             </div>
         </div>
 
@@ -38,7 +54,10 @@
 
 
 @code {
-    CreateApplicationModel model = new CreateApplicationModel();
+    bool showSuccessAlert = false;
+    bool showErrorAlert = false;
+    Guid createdApplicationId = Guid.Empty;
+    RegisterApplicationDto model = new RegisterApplicationDto();
     IEnumerable<TransactionDto> initialTransactions = new List<TransactionDto>();
 
     protected override async Task OnInitializedAsync()
@@ -55,26 +74,40 @@
 
     private async Task HandleValidSubmit()
     {
-        //string baseUrl = "/api/applications";
-        //string url = baseUrl;
+        showErrorAlert = false;
+        showSuccessAlert = false;
+        createdApplicationId = Guid.Empty;
 
-        //if (Guid.TryParse(model.ApplicationId, out var applicationId))
-        //{
-        //    url += $"?applicationId={applicationId.ToString()}";
-        //}
+        var result = await http.PostAsJsonAsync("/api/applications", model);
+        if (result.IsSuccessStatusCode)
+        {
+            var applicationCreatedResult = await result.Content.ReadFromJsonAsync<EntityCreatedDto>();
+            createdApplicationId = applicationCreatedResult.Id;
+            showSuccessAlert = true;
+        }
+        else
+        {
+            showErrorAlert = true;
+        }
 
-        //if (Guid.TryParse(model.StatusId, out var statusId))
-        //{
-        //    url += url != baseUrl ? "&" : "";
-        //    url += $"statusId=${statusId.ToString()}";
-        //}
+        model = new RegisterApplicationDto();
+        this.StateHasChanged();
 
+        await Task.Delay(TimeSpan.FromSeconds(10))
+            .ContinueWith((_) =>
+            {
+                showSuccessAlert = false;
+                showErrorAlert = false;
+            });
+    }
 
+    private async Task HandleCreatedApplication()
+    {
+        if (createdApplicationId == Guid.Empty)
+            return;
 
-        //var result = await http.GetAsync(url);
-
-        //applications = !result.IsSuccessStatusCode ? null :
-        //    await result.Content.ReadFromJsonAsync<IEnumerable<ApplicationDto>>();
+        await http.PatchAsync($"/api/applications/{createdApplicationId}/assign", null);
+        navigator.NavigateTo($"/handling/{createdApplicationId}");
     }
 
 }

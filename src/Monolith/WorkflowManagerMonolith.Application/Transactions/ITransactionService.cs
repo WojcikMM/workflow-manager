@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WorkflowManagerMonolith.Application.Transactions.Commands;
 using WorkflowManagerMonolith.Application.Transactions.DTOs;
 
 namespace WorkflowManagerMonolith.Application.Transactions

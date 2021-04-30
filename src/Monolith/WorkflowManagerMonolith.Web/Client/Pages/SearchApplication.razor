@@ -72,7 +72,7 @@
 
 </div>
 @code {
-    SearchModel model = new SearchModel();
+    SearchApplicationQueryDto model = new SearchApplicationQueryDto();
     IEnumerable<StatusDto> statuses = new List<StatusDto>();
     IEnumerable<ApplicationDto> applications = null;
 
@@ -111,10 +111,10 @@
 
     private async Task StartHandlingApplication(Guid applicationId)
     {
-        var request = await http.PatchAsync($"/api/applications/{applicationId}/assign", new StringContent(""));
+        var request = await http.PatchAsync($"/api/applications/{applicationId}/assign", null);
         if (request.IsSuccessStatusCode)
         {
-            navigator.NavigateTo("/handling");
+            navigator.NavigateTo($"/handling/{applicationId}");
         }
     }
 

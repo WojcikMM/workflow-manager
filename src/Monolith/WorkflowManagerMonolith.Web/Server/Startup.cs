@@ -11,14 +11,17 @@ using WorkflowManagerMonolith.Application.Applications;
 using WorkflowManagerMonolith.Application.Transactions;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework;
 using WorkflowManagerMonolith.Infrastructure.Mapper;
-using Microsoft.AspNetCore.Diagnostics;
-using WorkflowManagerMonolith.Core.Exceptions;
-using System.Net;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using WorkflowManagerMonolith.Web.Server.Dtos;
 using WorkflowManagerMonolith.Application.Statuses;
 using WorkflowManagerMonolith.Infrastructure.EntityFramework.Repositories;
+using Microsoft.AspNetCore.Http;
+using WorkflowManagerMonolith.Core.Exceptions;
+using System.Net;
+using Newtonsoft.Json;
+using WorkflowManagerMonolith.Web.Shared.Common;
+using Microsoft.AspNetCore.Diagnostics;
+using orkflowManagerMonolith.Web.Server.Domains.Applications;
+using WorkflowManagerMonolith.Web.Server.Domains.Statuses;
+using WorkflowManagerMonolith.Web.Server.Domains.Transactions;
 
 namespace WorkflowManagerMonolith.Web.Server
 {
@@ -40,7 +43,7 @@ namespace WorkflowManagerMonolith.Web.Server
             services.AddRazorPages();
           //  services.AddServerSideBlazor();
 
-            services.AddAutoMapper(typeof(ApplicationProfile), typeof(TransactionProfile));
+            services.AddAutoMapper(typeof(ApplicationProfile), typeof(TransactionProfile), typeof(StatusProfile), typeof(ApplicationsProfile), typeof(StatusesProfile), typeof(TransactionsProfile));
 
             services.AddDbContext<WorkflowManagerDbContext>(options =>
                     options.UseInMemoryDatabase("Database"));
@@ -59,14 +62,19 @@ namespace WorkflowManagerMonolith.Web.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
             {
+               // app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
+            }
+            else
+            {
+             //   app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            // TODO: Extract to separate class
-            app.UseExceptionHandler(x =>
+              app.UseExceptionHandler(x =>
                {
                    x.Run(async context =>
                    {
