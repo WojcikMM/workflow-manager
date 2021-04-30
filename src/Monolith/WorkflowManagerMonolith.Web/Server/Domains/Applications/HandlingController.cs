@@ -21,7 +21,7 @@ namespace WorkflowManagerMonolith.Web.Server.Domains.Applications
             this.mapper = mapper;
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}/can-handle")]
         public async Task<IActionResult> CanHandle([FromRoute]Guid Id)
         {
            var application = await applicationService.GetApplicationByIdAsync(Id);
